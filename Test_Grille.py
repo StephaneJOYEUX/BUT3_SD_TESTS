@@ -42,6 +42,21 @@ class TestGrille(unittest.TestCase):
         with self.assertRaises(ValueError):
             Grille(10, 0)
 
+    def test_creation_grille_de_jeu_modifiee(self):
+        # Modifie la grille après l'initialisation et teste si elle est correctement réinitialisée
+        self.grille.grille[0][0] = "X"  # Change un élément
+        self.grille.creation_grille_de_jeu()  # Réinitialise la grille
+        self.assertEqual(self.grille.grille[0][0], "-")  # Vérifie que la grille a été réinitialisée
+
+    def test_afficher_grille_personnalisee(self):
+        # Teste l'affichage d'une grille avec des valeurs spécifiques
+        self.grille.grille[0][0] = "X"
+        self.grille.grille[1][1] = "O"
+        try:
+            afficher_grille(self.grille.grille)
+        except Exception as e:
+            self.fail(f"afficher_grille raised an exception: {e}")
+
 
 if __name__ == "__main__":
     unittest.main()
