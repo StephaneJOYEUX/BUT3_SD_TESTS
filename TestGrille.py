@@ -1,7 +1,7 @@
 import unittest
 from Grille import Grille, afficher_grille, afficher_couple_grilles
 
-class MyTestCase(unittest.TestCase) :
+class TestGrille(unittest.TestCase) :
     def setUp(self) -> None:
         self.grille1: Grille = Grille(10,10)
         self.grille2: Grille = Grille(0,0)
@@ -9,7 +9,7 @@ class MyTestCase(unittest.TestCase) :
         self.grille4: Grille = Grille(10,10)
 
 
-    def test_init(self):
+    def test_initialisation_grille1(self):
         self.assertEqual(10, self.grille1.get_nb_lignes())
         self.assertEqual(10, self.grille1.get_nb_colonne())
 

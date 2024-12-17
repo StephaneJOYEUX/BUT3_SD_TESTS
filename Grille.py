@@ -18,7 +18,6 @@ pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 
 
 class Grille():
-
     # Variables privées
     __nb_lignes = 0
     __nb_colonnes = 0
