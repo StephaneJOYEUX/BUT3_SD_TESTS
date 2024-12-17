@@ -8,6 +8,11 @@ class MyTestCase(unittest.TestCase) :
         self.grille3: Grille = Grille(-1,-1)
         self.grille4: Grille = Grille(10,10)
 
+
+    def test_init(self):
+        self.assertEqual(10, self.grille1.get_nb_lignes())
+        self.assertEqual(10, self.grille1.get_nb_colonne())
+
     def test_creation_grille_de_jeu_input_positives(self):
         self.assertEqual(
                 [['-','-','-','-','-','-','-','-','-','-'],
