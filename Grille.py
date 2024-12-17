@@ -18,10 +18,22 @@ pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 
 
 class Grille():
+    
+    #Variables privées
+    __nb_lignes = 0
+    __nb_colonnes = 0
+    
+    # Getter :
+    def getNbLignes(self):
+        return self.__nb_lignes
+    
+    def getNbColonnes(self):
+        return self.__nb_colonnes
+
 
     def __init__(self, nombre_lignes, nombre_colonnes):
-        self.nb_lignes = nombre_lignes
-        self.nb_colonnes = nombre_colonnes
+        self.__nb_lignes = nombre_lignes
+        self.__nb_colonnes = nombre_colonnes
 
         self.grille = []
 
@@ -31,11 +43,15 @@ class Grille():
     # Créer une grille de jeu:
     def creation_grille_de_jeu(self):
         self.grille = []
-        for i in range(self.nb_lignes):
-            self.grille.append([])
-            for j in range(self.nb_colonnes):
-                self.grille[i].append("-")
-        return True
+        if self.getNbColonnes() >= 10 and self.getNbLignes() >= 10:
+            for i in range(self.getNbLignes()):
+                self.grille.append([])
+                for j in range(self.getNbColonnes()):
+                    self.grille[i].append("-")
+            return True
+        else:
+            raise ValueError('Votre grille doit avoir au moins 10 lignes et 10 colonnes')
+            return False
 
 
 
