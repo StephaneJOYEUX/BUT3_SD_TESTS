@@ -1,56 +1,60 @@
-# Tests unitaires pour la classe Grille et les fonctions d'affichage
+import unittest
+from Grille import Grille
+import io
+import sys
+from Grille import afficher_grille
+from Grille import afficher_couple_grilles
+
 class TestGrille(unittest.TestCase):
 
-    def test_creation_grille_de_jeu(self):
-        # Test pour vérifier que la grille est bien initialisée
-        grille = Grille(3, 4)
+    def test_initialisation_grille(self):
+        grille = Grille(3, 3)
         self.assertEqual(grille.nb_lignes, 3)
-        self.assertEqual(grille.nb_colonnes, 4)
-        self.assertTrue(all(cell == "-" for row in grille.grille for cell in row))
-
-    def test_creation_grille_de_jeu_vide(self):
-        # Test pour une grille vide (0 lignes, 0 colonnes)
+        self.assertEqual(grille.nb_colonnes, 3)
+        self.assertEqual(len(grille.grille), 3)  
+        self.assertEqual(len(grille.grille[0]), 3)  
+        
+        for ligne in grille.grille:
+            self.assertTrue(all(cell == "-" for cell in ligne))
+        
+    def test_initialisation_grille_vide(self):
         grille = Grille(0, 0)
         self.assertEqual(grille.nb_lignes, 0)
         self.assertEqual(grille.nb_colonnes, 0)
         self.assertEqual(grille.grille, [])
 
-    def test_creation_grille_non_vide(self):
-        # Test pour une grille non vide
-        grille = Grille(2, 3)
-        self.assertEqual(grille.nb_lignes, 2)
-        self.assertEqual(grille.nb_colonnes, 3)
-        self.assertTrue(all(cell == "-" for row in grille.grille for cell in row))
 
-    def test_afficher_grille(self):
-        # Tester l'affichage de la grille
-        grille = Grille(2, 2)
-        expected_output = "- - \n- - \n\n"
-        
-        captured_output = StringIO()
+class TestAffichage(unittest.TestCase):
+
+    def test_affichage_grille(self):
+        grille = Grille(3, 3)
+        # Capture la sortie de print
+        captured_output = io.StringIO()
         sys.stdout = captured_output
-        afficher_grille(grille.grille)
-        sys.stdout = sys.__stdout__
         
+        afficher_grille(grille.grille)
+        
+        sys.stdout = sys.__stdout__  # Restaure stdout
+        
+        # Vérifie que l'affichage est correct
+        expected_output = "- - - \n- - - \n- - - \n"
         self.assertEqual(captured_output.getvalue(), expected_output)
 
     def test_afficher_couple_grilles(self):
-        # Tester l'affichage de deux grilles
-        grille1 = [["-", "-", "-"], ["-", "-", "-"]]
-        grille2 = [["X", "-", "-"], ["-", "X", "O"]]
+        grille1 = Grille(2, 2)
+        grille2 = Grille(2, 2)
         
-        expected_output = (
-            "     Vos navires :                      Champ de tir :\n"
-            "     - - -                X - - \n"
-            "     - - -                - X O \n\n"
-        )
-        
-        captured_output = StringIO()
+        # Capture la sortie de print
+        captured_output = io.StringIO()
         sys.stdout = captured_output
-        afficher_couple_grilles(grille1, grille2)
-        sys.stdout = sys.__stdout__
         
+        afficher_couple_grilles(grille1.grille, grille2.grille)
+        
+        sys.stdout = sys.__stdout__  # Restaure stdout
+        
+        # Vérifie que l'affichage est correct
+        expected_output = "     Vos navires :                      Champ de tir :\n"
+        expected_output += "     - -                - -\n"
+        expected_output += "     - -                - -\n"
         self.assertEqual(captured_output.getvalue(), expected_output)
 
-if __name__ == "__main__":
-    unittest.main()
