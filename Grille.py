@@ -16,24 +16,33 @@ Cette classe contient aussi deux méthodes d'affichage très utile notamment
 pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 """
 
-
 class Grille():
 
+    # Getter et setter sur grille 
+    __nb_lignes = 0
+    __nb_colonnes = 0
+
+    def getNbLignes(self):
+        return self.__nb_lignes
+
+    def getNbColonnes(self):
+        return self.__nb_colonnes
+
     def __init__(self, nombre_lignes, nombre_colonnes):
-        self.nb_lignes = nombre_lignes
-        self.nb_colonnes = nombre_colonnes
-
+        if nombre_lignes <= 0 or nombre_colonnes <= 0:
+            raise ValueError("Les dimensions de la grille doivent être strictement positives.")
+        self.__nb_lignes = nombre_lignes
+        self.__nb_colonnes = nombre_colonnes
         self.grille = []
-
         self.creation_grille_de_jeu()
 
 
     # Créer une grille de jeu:
     def creation_grille_de_jeu(self):
         self.grille = []
-        for i in range(self.nb_lignes):
+        for i in range(self.__nb_lignes):
             self.grille.append([])
-            for j in range(self.nb_colonnes):
+            for j in range(self.__nb_colonnes):
                 self.grille[i].append("-")
         return True
 
