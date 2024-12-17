@@ -32,7 +32,10 @@ class Grille():
 
     # Setters
     def set_nb_lignes(self, nb_lignes:int):
-        self.__nb_lignes = nb_lignes
+        if nb_lignes >= 10 :
+            self.__nb_lignes = nb_lignes
+        else :
+            raise ValueError("Le nombre de lignes minimum est 10 !")
 
     def set_nb_colonnes(self, nb_colonnes:int):
         self.__nb_colonnes = nb_colonnes
