@@ -18,13 +18,13 @@ pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 
 
 class Grille():
-
     def __init__(self, nombre_lignes, nombre_colonnes):
+        if nombre_lignes <= 0 or nombre_colonnes <= 0:
+            raise ValueError("Le nombre de lignes et de colonnes doit être positif et supérieur à zéro.")
+        
         self.nb_lignes = nombre_lignes
         self.nb_colonnes = nombre_colonnes
-
         self.grille = []
-
         self.creation_grille_de_jeu()
 
 
@@ -41,18 +41,12 @@ class Grille():
 
 # Fonction d'affichage
 def afficher_grille(grille) :
-    result = ""
     for ligne in grille:
-        result = " ".join(ligne)+"\n"
         print(" ".join(ligne))
-    result+= "\n"
-    return result
+    print("")
 
 def afficher_couple_grilles(grille1, grille2):
-    result = ""
-    result += "     Vos navires :                      Champ de tir :"
+    print("     Vos navires :                      Champ de tir :")
     for index_ligne in range(len(grille1))  :
-        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"
-    result += "\n"
-    print(result)
-    return(result)
+        print("     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne]))
+    print("")
