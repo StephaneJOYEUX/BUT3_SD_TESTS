@@ -1,7 +1,7 @@
 import unittest
 from Grille import Grille, afficher_grille, afficher_couple_grilles
 
-class TestGrille(unittest.TestCase):
+class GrilleTest(unittest.TestCase):
     def setUp(self):
         self.grille = Grille(10, 10)
 
