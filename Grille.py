@@ -28,6 +28,7 @@ class Grille():
         self.creation_grille_de_jeu()
 
 
+
     # Créer une grille de jeu:
     def creation_grille_de_jeu(self):
         self.grille = []

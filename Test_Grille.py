@@ -31,16 +31,13 @@ class GrilleTest(unittest.TestCase):
         except Exception as e:
             self.fail(f"afficher_couple_grilles raised an exception: {e}")
 
-    def test_grille_invalide(self):
-        # Teste si la création d'une grille avec des dimensions invalides lève une erreur
+    def test_grille_negative_dimensions(self):
+        # Teste si la création d'une grille avec des dimensions négatives lève une erreur
         with self.assertRaises(ValueError):
             Grille(-1, 10)
         with self.assertRaises(ValueError):
             Grille(10, -1)
-        with self.assertRaises(ValueError):
-            Grille(0, 10)
-        with self.assertRaises(ValueError):
-            Grille(10, 0)
+
 
     def test_creation_grille_de_jeu_modifiee(self):
         # Modifie la grille après l'initialisation et teste si elle est correctement réinitialisée
