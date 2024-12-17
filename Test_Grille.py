@@ -57,6 +57,23 @@ class TestGrille(unittest.TestCase):
         except Exception as e:
             self.fail(f"afficher_grille raised an exception: {e}")
 
+    def test_afficher_couple_grilles_diff_size(self):
+        # Teste l'affichage de deux grilles de tailles différentes
+        grille_small = Grille(5, 5)
+        grille_large = Grille(10, 10)
+        try:
+            afficher_couple_grilles(grille_small.grille, grille_large.grille)
+        except Exception as e:
+            self.fail(f"afficher_couple_grilles raised an exception: {e}")
+
+    def test_creation_grille_de_jeu_vide(self):
+        # Crée une grille vide et teste la méthode de création
+        self.grille.grille = []
+        self.grille.creation_grille_de_jeu()
+        self.assertEqual(len(self.grille.grille), 10)  # Vérifie que la grille a bien 10 lignes
+        self.assertEqual(len(self.grille.grille[0]), 10)  # Vérifie que chaque ligne a bien 10 colonnes
+
+
 
 if __name__ == "__main__":
     unittest.main()
