@@ -1,3 +1,4 @@
+
 """
 Classe ChoixStrategie()
 Il s'agit de la classe qui permet l'interaction avec l'utilisateur. (!!ATTENTION!! : beaucoup d'input)
@@ -265,4 +266,3 @@ class ChoixStrategie() :
 
     def get_strategie(self):
         return self.strategie
-

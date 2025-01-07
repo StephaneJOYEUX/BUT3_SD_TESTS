@@ -205,4 +205,3 @@ class CreationStrategie():
 
     def get_instance_strategie(self) :
         return self.instance_strategie
-
