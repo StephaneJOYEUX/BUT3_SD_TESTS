@@ -32,8 +32,11 @@ class BatailleNavale:
         # Avec taille : la taille du navire sur la grille
         # Et symbole : sa lettre représentative dans la grille de jeu
 
+        self.instance_grille = instance_grille
+        self.instance_grille.create()
+        self.modele_plateau = self.instance_grille.plateau
+        # afficher_grille(self.modele_plateau)
 
-        self.modele_grille_de_jeu = instance_grille.grille
 
         self.pseudo_j1 = pseudo_j1
         self.pseudo_j2 = pseudo_j2
@@ -47,18 +50,18 @@ class BatailleNavale:
         # Création des grilles d'attaque et de défense de chaque joueur
         # Se définit bien dans la classe BatailleNavale car ces grilles sont propres à la partie.
         # La fonction deepcopy permet de rendre les grilles indépendantes les unes des autres.
-        self.grille_att_j1 = deepcopy(self.modele_grille_de_jeu)
+        self.grille_att_j1 = deepcopy(self.modele_plateau)
 
-        self.grille_att_j2 = deepcopy(self.modele_grille_de_jeu)
+        self.grille_att_j2 = deepcopy(self.modele_plateau)
 
-        self.grille_def_j1 = deepcopy(self.modele_grille_de_jeu)
+        self.grille_def_j1 = deepcopy(self.modele_plateau)
 
-        self.grille_def_j2 = deepcopy(self.modele_grille_de_jeu)
+        self.grille_def_j2 = deepcopy(self.modele_plateau)
 
 
+        afficher_grille(self.grille_def_j1)
 
         # Placement des navires pour chacun des joueurs
-
         self.strategie_j1.placement_navires_joueur(self.grille_def_j1, self.strategie_j1.informations)
         self.strategie_j2.placement_navires_joueur(self.grille_def_j2, self.strategie_j2.informations)
 
@@ -87,7 +90,7 @@ class BatailleNavale:
         # mettre CreationStrategie.instance_strategie qui une instance de la classe Strategie().
         try :
             strategie_joueur = input_strategie_joueur
-            grille_test = deepcopy(self.modele_grille_de_jeu)
+            grille_test = deepcopy(self.modele_plateau)
             strategie_joueur.placement_navires_joueur(grille_test, strategie_joueur.informations)
         except :
             print(input_strategie_joueur.instance_strategie)
@@ -145,7 +148,7 @@ class BatailleNavale:
     # Choix du numéro de ligne
     def ligne_tir(self):
         ligne = 0
-        while not (1 <= ligne  <= len(self.modele_grille_de_jeu)):
+        while not (1 <= ligne  <= len(self.modele_plateau)):
                     try:
                         ligne = int(input("Entrez le numéro de ligne: "))
                     except ValueError:
@@ -157,7 +160,7 @@ class BatailleNavale:
     # Choix du numéro de ligne
     def colonne_tir(self):
         colonne = 0
-        while not (1 <= colonne  <= len(self.modele_grille_de_jeu[1])):
+        while not (1 <= colonne  <= len(self.modele_plateau[1])):
                     try:
                         colonne = int(input("Entrez le numéro de colonne: "))
                     except ValueError:
@@ -204,9 +207,8 @@ class BatailleNavale:
     def play_ordinateur(self):
             tour_ordinateur = True
             while tour_ordinateur:
-    
-                ligne = random.randint(0, len(self.modele_grille_de_jeu[0]))
-                colonne = random.randint(0, len(self.modele_grille_de_jeu[1]))
+                ligne = random.randint(0, len(self.modele_plateau[0]))
+                colonne = random.randint(0, len(self.modele_plateau[1]))
                 grille_adverse = self.grille_def_j1
 
                 resultat= self.tir(2,ligne,colonne)
