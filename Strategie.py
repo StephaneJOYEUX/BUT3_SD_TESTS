@@ -34,28 +34,43 @@ class Strategie():
     def get_navires(self):
         return self._navires
 
-    def get_instance_grille(self):
-        return self._instance_grille
+    def get_informations(self):
+        return self.informations
+
+    def get_grille(self):
+        return self._grille
 
     # Setters
     def set_navires(self, navires):
-        self._navires = navires
+        # on ne set les navires que s'il n'y a pas 2 navires identiques
+        # On se sert de l'unicité du tuple
+        # Comparaison de la longueur d'un tuple avec celle d'une liste equivalente
+        # Si longueur différente => deux bateau sont les mêmes
+        if len(list(navires.keys())) == len(set(navires.keys())) :
+            self._navires = navires
+        else :
+            # deux bateau sont similaires
+            self._navires = None
 
-    def set_instance_grille(self, instance_grille):
-        self._instance_grille = instance_grille
 
+
+    def set_informations(self, informations):
+        self._infomations = informations
+
+    def set_grille(self, grille):
+        self._grille = grille
 
 
 
     def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
-        self.set_navires(navires)
-
-        self.instance_grille = Grille
-        # ligne suivante inutile ?
-        self.instance_grille.creation_grille_de_jeu()
-
+        self.navires = navires
         self.informations = inputs_strategie
-        self.verifier_validite()
+
+        # initialisation de la grille + creation du plateau
+        self.grille = Grille
+        self.grille.create()
+
+        #self.verifier_validite()
 
 
     # verification de la validité de la stratégie créée.
@@ -71,7 +86,7 @@ class Strategie():
     # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
         # à modifier, on ne vas pas afficher le message de validation a chaque itération de la boucle dans créer stratégie...
-        if self.placement_navires_joueur(self.instance_grille.grille, self.informations):
+        if self.placement_navires_joueur(self._grille.plateau, self.informations):
             return True
         else :
             return False

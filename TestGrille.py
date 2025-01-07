@@ -4,9 +4,6 @@ from inspect import GEN_RUNNING
 from Grille import Grille, afficher_grille, afficher_couple_grilles
 
 
-
-
-
 class TestGrille(unittest.TestCase) :
     # Tests sur la creation
     def test_creation_grille_cas_nominal(self) -> None:
@@ -98,7 +95,7 @@ class TestGrille(unittest.TestCase) :
 
 
     # Tests d'affichage
-    def test_afficher_grille(self)-> None:
+    def test_afficher_grille_10_10(self)-> None:
         self.grille = Grille(10,10)
         self.grille.create()
         self.assertEqual(("- - - - - - - - - -\n"
