@@ -1,4 +1,4 @@
-class Grille():
+class Grille:
 
     def __init__(self, nombre_lignes: int, nombre_colonnes: int):
         self.__nb_lignes = abs(nombre_lignes) if nombre_lignes >= 2 else 2
