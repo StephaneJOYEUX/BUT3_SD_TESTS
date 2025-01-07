@@ -159,16 +159,16 @@ class ChoixStrategie() :
             print(f"{self.pseudo_joueur}, votre stratégie a bien été définie.")
             print("")
 
-            self.instance_grille.creation_grille_de_jeu()
-            self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
-            afficher_grille(self.instance_grille.grille)
+            self.instance_grille.create()
+            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            afficher_grille(self.instance_grille.plateau)
             return True
 
         elif choix == 'choisir':
 
             strategie_correctement_choisie = False
             while not strategie_correctement_choisie :
-                self.instance_grille.creation_grille_de_jeu()
+                self.instance_grille.create()
                 print('Voici la liste des stratégies enregistrée :')
 
                 for index_strat in range(len(self.referentiel)) :
@@ -202,9 +202,9 @@ class ChoixStrategie() :
                 print(f"Vous avez choisi la stratégie n°{choix_numero_strategie} :\n")
 
                 # On place la strategie dans la grille
-                strategie_choisie.placement_navires_joueur(self.instance_grille.grille, strategie_choisie.informations)
+                strategie_choisie.placement_navires_joueur(self.instance_grille.plateau, strategie_choisie.informations)
                 # On l'affiche
-                afficher_grille(self.instance_grille.grille)
+                afficher_grille(self.instance_grille.plateau)
 
                 # Confirmation du choix de la strategie
                 choix_action_confirmation_strategie = "Confirmez votre choix ?"
@@ -223,9 +223,9 @@ class ChoixStrategie() :
             print(f"{self.pseudo_joueur}, votre stratégie a bien été définie.")
             print("")
 
-            self.instance_grille.creation_grille_de_jeu()
-            self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
-            afficher_grille(self.instance_grille.grille)
+            self.instance_grille.create()
+            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            afficher_grille(self.instance_grille.plateau)
             return True
 
 
