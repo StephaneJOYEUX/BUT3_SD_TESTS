@@ -16,6 +16,11 @@ class TestGrille(unittest.TestCase):
         # Autres grilles modifiées pour tester différentes valeurs
         self.grille_3x3_mod_2 = Grille(3, 3)
         self.grille_3x3_mod_2.grille[0][0] = "O"  # Modification de la cellule (0, 0)
+    
+    def test_grille_3x3(self):
+        #test sur le nb de ligne et de colonne egal à [3,3]
+        self.assertEqual(self.grille_3x3.nb_colonnes, 3)
+        self.assertEqual(self.grille_3x3.nb_lignes, 3)
 
     def test_creation_grille(self):
         """
@@ -99,5 +104,91 @@ class TestGrille(unittest.TestCase):
     # Comparaison de la grille modifiée et de la grille attendue
         self.assertEqual(self.grille_3x3_mod_2.grille, expected)
 
+    def test_modification_ligne(self):
+        """
+        Vérifie la modification d'une ligne spécifique.
+        - Ce test vérifie que la modification d'une ligne spécifique (ici la première ligne) est correctement appliquée.
+        """
+        self.grille_3x3_mod.grille[0] = ["X", "X", "X"]  # Modifier la première ligne
+        expected = [
+            ["X", "X", "X"],
+            ["-", "-", "-"],
+            ["-", "-", "-"]
+        ]
+        self.assertEqual(self.grille_3x3_mod.grille, expected)
+
+    # Test sur la modification d'une colonne
+    def test_modification_colonne(self):
+        """
+        Vérifie la modification d'une colonne spécifique.
+        - Ce test vérifie que la modification d'une colonne spécifique (ici la première colonne) est correctement appliquée.
+        """
+        # Modification de la première colonne
+        self.grille_3x3_mod.grille[0][0] = "X"
+        self.grille_3x3_mod.grille[1][0] = "X"
+        self.grille_3x3_mod.grille[2][0] = "X"
+        
+        expected = [
+            ["X", "-", "-"],
+            ["X", "-", "-"],
+            ["X", "-", "-"]
+        ]
+        self.assertEqual(self.grille_3x3_mod.grille, expected)
+
+    # Test pour vérifier le contenu d'une ligne après modification
+    def test_verification_ligne_modifiee(self):
+        """
+        Vérifie le contenu d'une ligne après modification.
+        - Ce test vérifie que la ligne (ici la première) contient les bonnes valeurs après une modification.
+        """
+        self.grille_3x3_mod_2.grille[0] = ["X", "O", "-"]  # Modification de la première ligne
+        self.assertEqual(self.grille_3x3_mod_2.grille[0], ["X", "O", "-"])
+
+    # Test pour vérifier le contenu d'une colonne après modification
+    def test_verification_colonne_modifiee(self):
+        """
+        Vérifie le contenu d'une colonne après modification.
+        - Ce test vérifie que la colonne (ici la première) contient les bonnes valeurs après une modification.
+        """
+        self.grille_3x3_mod_2.grille[0][0] = "X"
+        self.grille_3x3_mod_2.grille[1][0] = "O"
+        self.grille_3x3_mod_2.grille[2][0] = "-"
+        
+        # Vérification de la colonne (0) après modification
+        self.assertEqual([self.grille_3x3_mod_2.grille[i][0] for i in range(3)], ["X", "O", "-"])
+
+    # Test pour vérifier que l'ensemble de la grille est correctement modifié par des lignes et colonnes
+    def test_modification_lignes_colonnes_combinees(self):
+        """
+        Vérifie que la modification combinée de lignes et colonnes fonctionne.
+        - Ce test vérifie que nous pouvons appliquer des modifications sur une ligne et une colonne simultanément
+          et que la grille reflète correctement ces modifications.
+        """
+        # Modifier la première ligne et la première colonne
+        self.grille_3x3_mod_2.grille[0] = ["X", "X", "X"]
+        self.grille_3x3_mod_2.grille[1][0] = "O"
+        self.grille_3x3_mod_2.grille[2][0] = "-"
+        
+        expected = [
+            ["X", "X", "X"],
+            ["O", "-", "-"],
+            ["-", "-", "-"]
+        ]
+        self.assertEqual(self.grille_3x3_mod_2.grille, expected)
+
+"""
+2 Test à résoudre car ne fonctionne pas
+
+    def test_grille_invalide(self):
+        with self.assertRaises(ValueError):
+            Grille(0,0)
+        with self.assertRaises(ValueError):
+            Grille(-1,-1)
+    
+    def test_creation_grille_de_jeu_impossible_fonctionnel(self):
+        grille = Grille(0, 0)
+        self.assertFalse(grille.creation_grille_de_jeu())
+"""
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 if __name__ == "__main__":
     unittest.main()

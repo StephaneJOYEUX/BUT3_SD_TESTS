@@ -265,4 +265,3 @@ class ChoixStrategie() :
 
     def get_strategie(self):
         return self.strategie
-
