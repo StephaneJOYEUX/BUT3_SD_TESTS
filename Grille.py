@@ -1,8 +1,8 @@
 class Grille():
 
     def __init__(self, nombre_lignes: int, nombre_colonnes: int):
-        self.__nb_lignes = abs(nombre_lignes) if nombre_lignes != 0 else 1 #or if nombre_lignes >= 10 else 10
-        self.__nb_colonnes = abs(nombre_colonnes) if nombre_colonnes != 0 else 1 #or if nombre_colonnes >= 10 else 10
+        self.__nb_lignes = abs(nombre_lignes) if nombre_lignes >= 2 else 2
+        self.__nb_colonnes = abs(nombre_colonnes) if nombre_colonnes >= 2 else 2
         self.grille = []
         self.creation_grille_de_jeu()
 

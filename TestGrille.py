@@ -3,10 +3,10 @@ from Grille import *
 
 class MyTestCase(unittest.TestCase):
 
-    def setUp(self) -> None :
+    def setUp(self):
 
         self.grille3x4 = Grille(3, 4)
-        self.grille2x2 = Grille(2, 2)
+        self.grille2x2 = Grille(2, 2)#Grille(0, 0)
 
         #self.grilleError = Grille(1.2, 2.3)
         #self.grilleError1 = Grille("", "")
@@ -38,8 +38,9 @@ class MyTestCase(unittest.TestCase):
         self.grille3x4.grille[1][1] = "O"
 
         expected = "     Vos navires :                      Champ de tir :\n"
-        expected += "     X -                - - \n"
-        expected += "     - -                - O \n\n"
+        expected += "X -                - - - -\n"
+        expected += "- -                - O - -\n"
+        expected += "                - - - -\n"
 
         reslt = afficher_couple_grilles(self.grille2x2.grille, self.grille3x4.grille)
 
