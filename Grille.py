@@ -3,7 +3,7 @@ class Grille:
     def __init__(self, nombre_lignes: int, nombre_colonnes: int):
         self.__nb_lignes = abs(nombre_lignes) if nombre_lignes >= 2 else 2
         self.__nb_colonnes = abs(nombre_colonnes) if nombre_colonnes >= 2 else 2
-        self.grille = []
+        self.plateau = []
         self.creation_grille_de_jeu()
 
     def get_nb_lignes(self):
@@ -13,11 +13,11 @@ class Grille:
         return self.__nb_colonnes
 
     def creation_grille_de_jeu(self):
-        self.grille = []
+        self.plateau = []
         for i in range(self.get_nb_lignes()):
-            self.grille.append([])
+            self.plateau.append([])
             for j in range(self.get_nb_colonnes()):
-                self.grille[i].append("-")
+                self.plateau[i].append("-")
         return True
 
 # Fonction d'affichage

@@ -2,7 +2,7 @@ import unittest
 from Grille import *
 
 
-class MyTestCase(unittest.TestCase):
+class TestGrille(unittest.TestCase):
 
     def setUp(self):
 
@@ -13,37 +13,36 @@ class MyTestCase(unittest.TestCase):
         #self.grilleError1 = Grille("", "")
         #self.grilleError2 = Grille(-1,-1)
 
-    def test_initialisation_grille(self):
+    def test_initialisation(self):
 
         self.assertEqual(self.grille3x4.get_nb_lignes(), 3)
         self.assertEqual(self.grille3x4.get_nb_colonnes(), 4)
 
-    def test_init_grille(self):
+        self.assertEqual(len(self.grille3x4.plateau), 3)
+        self.assertEqual(len(self.grille3x4.plateau[0]), 4)
 
-        self.assertEqual(len(self.grille3x4.grille), 3)
-        self.assertEqual(len(self.grille3x4.grille[0]), 4)
-
-    def test_creation_grille_de_jeu(self):
+    def test_creation(self):
 
         self.assertTrue(self.grille2x2.creation_grille_de_jeu())
+        self.assertEqual(self.grille2x2.plateau, [['-','-'], ['-','-']])
 
-    def test_afficher_grille(self):
+    def test_afficher(self):
 
-        reslt = afficher_grille(self.grille2x2.grille)
+        reslt = afficher_grille(self.grille2x2.plateau)
 
         expected = "- -\n- -\n"
         self.assertEqual(reslt, expected)
 
-    def test_afficher_couple_grilles(self):
-        self.grille2x2.grille[0][0] = "X"
-        self.grille3x4.grille[1][1] = "O"
+    def test_couple_grilles(self):
+        self.grille2x2.plateau[0][0] = "X"
+        self.grille3x4.plateau[1][1] = "O"
 
         expected = "     Vos navires :                      Champ de tir :\n"
         expected += "X -                - - - -\n"
         expected += "- -                - O - -\n"
         expected += "                - - - -\n"
 
-        reslt = afficher_couple_grilles(self.grille2x2.grille, self.grille3x4.grille)
+        reslt = afficher_couple_grilles(self.grille2x2.plateau, self.grille3x4.plateau)
 
         self.assertEqual(reslt, expected)
 

@@ -60,7 +60,7 @@ class ChoixStrategie() :
         self.referentiel = []
         self.lire_fichier_sauvegarde()
 
-        self.instance_grille=Grille
+        self.instance_grille = Grille
         self.pseudo_joueur = pseudo_joueur
 
         self.strategie : Strategie
@@ -160,8 +160,8 @@ class ChoixStrategie() :
             print("")
 
             self.instance_grille.creation_grille_de_jeu()
-            self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
-            afficher_grille(self.instance_grille.grille)
+            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            afficher_grille(self.instance_grille.plateau)
             return True
 
         elif choix == 'choisir':
@@ -202,9 +202,9 @@ class ChoixStrategie() :
                 print(f"Vous avez choisi la stratégie n°{choix_numero_strategie} :\n")
 
                 # On place la strategie dans la grille
-                strategie_choisie.placement_navires_joueur(self.instance_grille.grille, strategie_choisie.informations)
+                strategie_choisie.placement_navires_joueur(self.instance_grille.plateau, strategie_choisie.informations)
                 # On l'affiche
-                afficher_grille(self.instance_grille.grille)
+                afficher_grille(self.instance_grille.plateau)
 
                 # Confirmation du choix de la strategie
                 choix_action_confirmation_strategie = "Confirmez votre choix ?"
@@ -224,8 +224,8 @@ class ChoixStrategie() :
             print("")
 
             self.instance_grille.creation_grille_de_jeu()
-            self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
-            afficher_grille(self.instance_grille.grille)
+            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            afficher_grille(self.instance_grille.plateau)
             return True
 
 

@@ -33,7 +33,7 @@ class BatailleNavale:
         # Et symbole : sa lettre représentative dans la grille de jeu
 
 
-        self.modele_grille_de_jeu = instance_grille.grille
+        self.modele_grille_de_jeu = instance_grille.plateau
 
         self.pseudo_j1 = pseudo_j1
         self.pseudo_j2 = pseudo_j2

@@ -26,7 +26,7 @@ from Grille import Grille, afficher_grille
 from copy import deepcopy
 
 
-class Strategie():
+class Strategie:
     def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
         self.navires = navires
 
@@ -50,7 +50,7 @@ class Strategie():
     # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
         # à modifier, on ne vas pas afficher le message de validation a chaque itération de la boucle dans créer stratégie...
-        if self.placement_navires_joueur(self.instance_grille.grille, self.informations):
+        if self.placement_navires_joueur(self.instance_grille.plateau, self.informations):
             return True
         else :
             return False
@@ -109,7 +109,7 @@ class Strategie():
     # Méthode pour afficher la stratégie
     def affichage_strategie(self):
         if self.verifier_validite() :
-            afficher_grille(self.instance_grille.grille)
+            afficher_grille(self.instance_grille.plateau)
         else:
             print('Stratégie non valide !')
 
