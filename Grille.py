@@ -18,68 +18,35 @@ pour la classe BatailleNavale() et pour la classe ChoixStrategie().
 
 
 class Grille():
-    # Variables privées
-    __nb_lignes = 0
-    __nb_colonnes = 0
 
-    # Getters
-    def get_nb_lignes(self):
-        return self.__nb_lignes
-
-    def get_nb_colonne(self):
-        return self.__nb_colonnes
-
-
-    # Setters
-    def set_nb_lignes(self, nb_lignes:int):
-        if nb_lignes >= 10 :
-            self.__nb_lignes = nb_lignes
-        else :
-            raise ValueError("Le nombre de lignes minimum est 10 !")
-
-    def set_nb_colonnes(self, nb_colonnes:int):
-        self.__nb_colonnes = nb_colonnes
-
-
-    # Constructeur
     def __init__(self, nombre_lignes, nombre_colonnes):
-        self.set_nb_lignes(nb_lignes=nombre_lignes)
-        self.set_nb_colonnes(nb_colonnes=nombre_colonnes)
+        self.nb_lignes = nombre_lignes
+        self.nb_colonnes = nombre_colonnes
 
-        self.plateau = []
+        self.grille = []
+
+        self.creation_grille_de_jeu()
 
 
     # Créer une grille de jeu:
     def creation_grille_de_jeu(self):
-        if (self.nb_lignes <= 0 or self.nb_colonnes <=0):
-            return False
-        if (self.nb_lignes == 1 and self.nb_colonnes < 2):
-            return False
-        if (self.nb_colonnes == 1 and self.nb_lignes < 2):
-            return False
-        self.plateau = []
+        self.grille = []
         for i in range(self.nb_lignes):
-            self.plateau.append([])
+            self.grille.append([])
             for j in range(self.nb_colonnes):
-                self.plateau[i].append("-")
+                self.grille[i].append("-")
         return True
 
 
 
 # Fonction d'affichage
 def afficher_grille(grille) :
-    result = ""
     for ligne in grille:
-        result += " ".join(ligne)+"\n"
         print(" ".join(ligne))
-    #result+= "\n"
-    return result
+    print("")
 
 def afficher_couple_grilles(grille1, grille2):
-    result = ""
-    result += "     Vos navires :                      Champ de tir :\n"
+    print("     Vos navires :                      Champ de tir :")
     for index_ligne in range(len(grille1))  :
-        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"
-    #result += "\n"
-    print(result)
-    return(result)
+        print("     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne]))
+    print("")
