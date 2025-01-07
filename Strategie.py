@@ -27,10 +27,31 @@ from copy import deepcopy
 
 
 class Strategie():
+    # Variable privées
+
+
+    # Getters
+    def get_navires(self):
+        return self._navires
+
+    def get_instance_grille(self):
+        return self._instance_grille
+
+    # Setters
+    def set_navires(self, navires):
+        self._navires = navires
+
+    def set_instance_grille(self, instance_grille):
+        self._instance_grille = instance_grille
+
+
+
+
     def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
-        self.navires = navires
+        self.set_navires(navires)
 
         self.instance_grille = Grille
+        # ligne suivante inutile ?
         self.instance_grille.creation_grille_de_jeu()
 
         self.informations = inputs_strategie

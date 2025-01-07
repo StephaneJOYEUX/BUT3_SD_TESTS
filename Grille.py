@@ -32,32 +32,57 @@ class Grille():
 
     # Setters
     def set_nb_lignes(self, nb_lignes:int):
-        if nb_lignes >= 10 :
+        if nb_lignes >= self.taille_min :
             self.__nb_lignes = nb_lignes
         else :
-            raise ValueError("Le nombre de lignes minimum est 10 !")
+            self.__nb_lignes = None
+            raise ValueError(f"Le nombre de lignes minimum est {self.taille_min} !")
 
     def set_nb_colonnes(self, nb_colonnes:int):
-        self.__nb_colonnes = nb_colonnes
+        if nb_colonnes >= self.taille_min:
+            self.__nb_colonnes = nb_colonnes
+        else:
+            self.__nb_colonnes = None
+            raise ValueError(f"Le nombre de colonnes minimum est {self.taille_min} !")
 
 
     # Constructeur
-    def __init__(self, nombre_lignes, nombre_colonnes):
-        self.set_nb_lignes(nb_lignes=nombre_lignes)
-        self.set_nb_colonnes(nb_colonnes=nombre_colonnes)
+    def __init__(self, nombre_lignes, nombre_colonnes, taille_min : int = 2):
+        self.taille_min = taille_min
+        self.nombre_colonnes = nombre_colonnes
+        self.nombre_lignes = nombre_lignes
 
-        self.grille = []
+        self.plateau = []
 
-        self.creation_grille_de_jeu()
+
+
+        # Appeler manuellement cette fonction de creation de grille.
+        # self.create()
 
 
     # Créer une grille de jeu:
-    def creation_grille_de_jeu(self):
-        self.grille = []
+    def create(self):
+        # verifications de la validite du nb de lignes et de colonnes
+        observateur = 0
+        # Condition sur les lignes
+        try :
+            self.set_nb_lignes(nb_lignes=self.nombre_lignes)
+        except :
+            observateur = 1
+        # Condition sur les colonnes
+        try :
+            self.set_nb_colonnes(nb_colonnes=self.nombre_colonnes)
+        except :
+            observateur = 1
+        # Return False si l'une des valeurs est non-conforme.
+        if observateur == 1 :
+            return False
+
+        self.plateau = []
         for i in range(self.__nb_lignes):
-            self.grille.append([])
+            self.plateau.append([])
             for j in range(self.__nb_colonnes):
-                self.grille[i].append("-")
+                self.plateau[i].append("-")
         return True
 
 
@@ -68,14 +93,13 @@ def afficher_grille(grille) :
     for ligne in grille:
         result += " ".join(ligne)+"\n"
         print(" ".join(ligne))
-    #result+= "\n"
     return result
+
 
 def afficher_couple_grilles(grille1, grille2):
     result = ""
     result += "     Vos navires :                      Champ de tir :\n"
     for index_ligne in range(len(grille1))  :
         result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"
-    #result += "\n"
     print(result)
     return(result)
