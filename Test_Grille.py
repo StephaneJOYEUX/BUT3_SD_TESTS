@@ -71,5 +71,6 @@ class GrilleTest(unittest.TestCase):
         self.assertEqual(len(self.grille.grille), 10, "La grille doit avoir 10 lignes après réinitialisation.")
         self.assertEqual(len(self.grille.grille[0]), 10, "Chaque ligne doit avoir 10 colonnes après réinitialisation.")
 
+
 if __name__ == "__main__":
     unittest.main()
