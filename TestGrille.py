@@ -95,8 +95,8 @@ class TestGrille(unittest.TestCase) :
 
 
     # Tests d'affichage
-    def test_afficher_grille_10_10(self)-> None:
-        self.grille = Grille(10,10)
+    def test_afficher_grille_10_10(self) -> None:
+        self.grille = Grille(10, 10)
         self.grille.create()
         self.assertEqual(("- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
@@ -109,7 +109,32 @@ class TestGrille(unittest.TestCase) :
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"), afficher_grille(self.grille.plateau))
 
-    def test_afficher_couple_grilles(self):
+
+    def test_afficher_grille_10_5(self)-> None:
+        self.grille = Grille(10,5)
+        self.grille.create()
+        self.assertEqual(("- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"
+                          "- - - - -\n"), afficher_grille(self.grille.plateau))
+
+    def test_afficher_grille_5_10(self) -> None:
+        self.grille = Grille(5, 10)
+        self.grille.create()
+        self.assertEqual(("- - - - - - - - - -\n"
+                          "- - - - - - - - - -\n"
+                          "- - - - - - - - - -\n"
+                          "- - - - - - - - - -\n"
+                          "- - - - - - - - - -\n"), afficher_grille(self.grille.plateau))
+
+
+    def test_afficher_couple_grilles_2_10_10(self):
         # intialisation des grilles
         self.grille1 = Grille(10,10)
         self.grille2 = Grille(10,10)
@@ -130,3 +155,75 @@ class TestGrille(unittest.TestCase) :
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"),
             afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+
+
+    def test_afficher_couple_grilles_2_5_5(self):
+        # intialisation des grilles
+        self.grille1 = Grille(5,5)
+        self.grille2 = Grille(5,5)
+        # creation des plateau
+        self.grille1.create()
+        self.grille2.create()
+        # test sur l'affichage simultané des 2 grilles
+        self.assertEqual(
+            "     Vos navires :                      Champ de tir :\n"
+            "     - - - - -                - - - - -\n"
+            "     - - - - -                - - - - -\n"
+            "     - - - - -                - - - - -\n"
+            "     - - - - -                - - - - -\n"
+            "     - - - - -                - - - - -\n",
+            afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+
+
+
+    def test_afficher_couple_grilles_tailles_differentes_lignes(self):
+        # intialisation des grilles
+        self.grille1 = Grille(10,10)
+        self.grille2 = Grille(10,5)
+        # creation des plateau
+        self.grille1.create()
+        self.grille2.create()
+        # test sur l'affichage simultané des 2 grilles
+        try :
+            self.assertEqual((
+                "     Vos navires :                      Champ de tir :\n"
+                "     - - - - - - - - - -                - - - - - - - - - -\n"
+                "     - - - - - - - - - -                - - - - - - - - - -\n"
+                "     - - - - - - - - - -                - - - - - - - - - -\n"
+                "     - - - - - - - - - -                - - - - - - - - - -\n"
+                "     - - - - - - - - - -                - - - - - - - - - -\n"
+                "                                        - - - - - - - - - -\n"
+                "                                        - - - - - - - - - -\n"
+                "                                        - - - - - - - - - -\n"
+                "                                        - - - - - - - - - -\n"
+                "                                        - - - - - - - - - -\n"),
+                afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+        except ValueError as current_error :
+            self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
+
+
+
+    def test_afficher_couple_grilles_tailles_differentes_colonnes(self):
+        # intialisation des grilles
+        self.grille1 = Grille(10,10)
+        self.grille2 = Grille(10,5)
+        # creation des plateau
+        self.grille1.create()
+        self.grille2.create()
+        # test sur l'affichage simultané des 2 grilles
+        try :
+            self.assertEqual((
+                "     Vos navires :                      Champ de tir :\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"
+                "     - - - - - - - - - -                - - - - -\n"),
+                afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
+        except ValueError as current_error :
+            self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
