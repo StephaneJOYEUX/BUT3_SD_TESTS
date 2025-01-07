@@ -43,16 +43,16 @@ class Grille():
 def afficher_grille(grille) :
     result = ""
     for ligne in grille:
-        result = " ".join(ligne)+"\n"
+        result += " ".join(ligne)+"\n"    #Ajout du "+=" pour garder toutes les valeurs et pas écrasés l'ancienne valeurs.
         print(" ".join(ligne))
     result+= "\n"
     return result
 
 def afficher_couple_grilles(grille1, grille2):
     result = ""
-    result += "     Vos navires :                      Champ de tir :"
+    result += "     Vos navires :                      Champ de tir :\n"
     for index_ligne in range(len(grille1))  :
-        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"
+        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"    #f"     {' '.join(grille1[index_ligne])}     {' '.join(grille2[index_ligne])}\n" Utilisation du fstring pour une meilleure lisibilité et une concaténation 
     result += "\n"
     print(result)
     return(result)
