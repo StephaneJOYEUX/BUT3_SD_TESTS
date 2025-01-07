@@ -27,8 +27,6 @@ from copy import deepcopy
 
 
 class Strategie():
-    # Variable privées
-
 
     # Getters
     def get_navires(self):
@@ -40,14 +38,15 @@ class Strategie():
     def get_grille(self):
         return self._grille
 
+
     # Setters
     def set_navires(self, navires):
         # on ne set les navires que s'il n'y a pas 2 navires identiques
         # On se sert de l'unicité du tuple
         # Comparaison de la longueur d'un tuple avec celle d'une liste equivalente
         # Si longueur différente => deux bateaux sont les mêmes
-        print(list(navires.keys()))
-        print(set(navires.keys()))
+        #print(list(navires.keys()))
+        #print(set(navires.keys()))
         if len(list(navires.keys())) == len(set(navires.keys())) :
             self._navires = navires
         else :
@@ -55,24 +54,21 @@ class Strategie():
             self._navires = None
 
 
-
     def set_informations(self, informations):
         self._infomations = informations
 
     def set_grille(self, grille):
         self._grille = grille
+        self._grille.create()
 
 
-
+    # Constructeur
     def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
         self.navires = navires
         self.informations = inputs_strategie
 
-        # initialisation de la grille + creation du plateau
         self.grille = Grille
-        self.grille.create()
 
-        #self.verifier_validite()
 
 
     # verification de la validité de la stratégie créée.
@@ -147,13 +143,28 @@ class Strategie():
     # Méthode pour afficher la stratégie
     def affichage_strategie(self):
         if self.verifier_validite() :
-            afficher_grille(self.instance_grille.grille)
+            afficher_grille(self.grille.plateau)
         else:
             print('Stratégie non valide !')
 
+
+    # redefinition de l'operateur d'egalité pour la classe Strategie.
     def __eq__(self, other):
         try :
             if self.informations == other.informations :
                 return True
         except :
             print('Vous ne comparez pas 2 instances de la classe Strategie')
+
+
+
+
+class FactoryStrategie() :
+    def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
+        # intialisation de la classe Strategie
+        self.strategie = Strategie(inputs_strategie, navires,  Grille)
+        self.strategie.set_navires(self.strategie.navires)
+        self.strategie.set_informations(self.strategie.informations)
+        self.strategie.set_grille(self.strategie.grille)
+
+        self.strategie.verifier_validite()

@@ -18,6 +18,7 @@ Remarque :
     A voir.
 """
 
+import os
 import random
 from copy import deepcopy
 from Grille import Grille, afficher_grille, afficher_couple_grilles
@@ -176,12 +177,16 @@ class BatailleNavale:
             while tour_joueur:
                 
                 if numJoueur == 1:
-                    print(f"Au tour du Joueur {self.pseudo_j1}")
+                    os.system('cls')
+                    input(f"Au tour du Joueur {self.pseudo_j1} (taper 'entrer' pour continuer)")
+                    os.system('cls')
                     print("Grille de jeu actuelle :")
                     grille_adverse = self.grille_def_j2
                     afficher_couple_grilles(self.grille_def_j1, self.grille_att_j1)
                 else:
-                    print(f"Au tour du Joueur {self.pseudo_j2}")
+                    os.system('cls')
+                    input(f"Au tour du Joueur {self.pseudo_j2} (taper 'entrer' pour continuer)")
+                    os.system('cls')
                     print("Grille de jeu actuelle :")
                     grille_adverse = self.grille_def_j1
                     afficher_couple_grilles(self.grille_def_j2, self.grille_att_j2)
@@ -199,6 +204,9 @@ class BatailleNavale:
                     tour_joueur = True
                     if self.tous_les_navires_ont_coule(grille_adverse) :
                         return True
+
+                input("taper 'entrer' pour continuer")
+                os.system('cls')
             return False
 
 

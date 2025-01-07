@@ -16,17 +16,20 @@ Remarques :
 '''
 from Grille import Grille, afficher_grille
 from copy import deepcopy
-from Strategie import Strategie
+from Strategie import Strategie, FactoryStrategie
 
 
 class CreationStrategie():
     def __init__(self, navires : dict,Grille = Grille(10,10), test : bool = False):
         self.navires = navires
 
+        self.grille = Grille
+        self.grille.create()
+
         self.premiere_ligne_grille = 1
-        self.derniere_ligne_grille = Grille.nb_lignes
+        self.derniere_ligne_grille = self.grille.get_nb_lignes()
         self.premiere_colonne_grille = 1
-        self.derniere_colonne_grille = Grille.nb_colonnes
+        self.derniere_colonne_grille = self.grille.get_nb_colonne()
 
         self.inputs_strategie = {}
 
@@ -58,7 +61,7 @@ class CreationStrategie():
 
 
             self.inputs_strategie [f'{navire}'] = self.input_donnees_placement_navire(navire)
-            self.instance_strategie = Strategie(self.inputs_strategie,self.navires)
+            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires).strategie
 
 
 
@@ -66,7 +69,9 @@ class CreationStrategie():
                 print('Stratégie invalide !!!')
                 print('Vous devez re-saisir les caractéristiques du dernier navire.')
                 self.inputs_strategie [f'{navire}'] = self.input_donnees_placement_navire(navire)
-                self.instance_strategie = Strategie(self.inputs_strategie,self.navires)
+                # initialisation de l'instance de la classe Strategie
+                self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires)
+
 
 
             print("Voici votre strategie actuelle :\n")
