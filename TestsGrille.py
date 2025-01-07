@@ -9,6 +9,7 @@ class MyTestCase(unittest.TestCase) :
         self.grille4 : Grille = Grille(10,10)
 
     def test_creation_grille_de_jeu_input_positives(self):
+        print('test')
         self.assertEqual(self.grille1.grille,
                [['-','-','-','-','-','-','-','-','-','-'],
                 ['-','-','-','-','-','-','-','-','-','-'],
@@ -54,3 +55,5 @@ class MyTestCase(unittest.TestCase) :
                - - - - - - - - - -\n
                - - - - - - - - - -\n\n""")
 
+if __name__ == '__main__':
+    unittest.main()

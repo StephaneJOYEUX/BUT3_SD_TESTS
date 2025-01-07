@@ -23,18 +23,22 @@ class Grille():
         self.nb_lignes = nombre_lignes
         self.nb_colonnes = nombre_colonnes
 
-        self.grille = []
-
-        self.creation_grille_de_jeu()
+        self.plateau = []
 
 
     # Créer une grille de jeu:
     def creation_grille_de_jeu(self):
-        self.grille = []
+        if (self.nb_lignes <= 0 or self.nb_colonnes <=0):
+            return False
+        if (self.nb_lignes == 1 and self.nb_colonnes < 2):
+            return False
+        if (self.nb_colonnes == 1 and self.nb_lignes < 2):
+            return False
+        self.plateau = []
         for i in range(self.nb_lignes):
-            self.grille.append([])
+            self.plateau.append([])
             for j in range(self.nb_colonnes):
-                self.grille[i].append("-")
+                self.plateau[i].append("-")
         return True
 
 
