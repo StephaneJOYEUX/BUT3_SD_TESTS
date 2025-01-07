@@ -61,7 +61,7 @@ class TestGrille(unittest.TestCase):
         grille2 = Grille(10,10)
         self.assertTrue(grille1.creation_grille())
         self.assertTrue(grille2.creation_grille())
-        self.assertEqual((afficher_couple_grilles(grille1.plateau, grille2.plateau),
+        self.assertEqual(afficher_couple_grilles(grille1.plateau, grille2.plateau),
             "     Vos navires :                      Champ de tir :\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
@@ -72,7 +72,6 @@ class TestGrille(unittest.TestCase):
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
-            "     - - - - - - - - - -                - - - - - - - - - -\n"))
-    
+            "     - - - - - - - - - -                - - - - - - - - - -\n")    
 if __name__ == '__main__': 
     unittest.main()

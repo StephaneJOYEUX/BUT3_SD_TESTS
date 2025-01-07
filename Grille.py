@@ -31,16 +31,16 @@ class Grille():
         return self.__nb_colonnes
     
     def setNbLignes(self, nb_lignes : int):
-        if ((nb_lignes < 2 and self.__nb_colonnes == 1) or (self.__nb_colonnes < 2 and nb_lignes == 1)):
+        if ((nb_lignes < 2 and self.__nb_colonnes == 1) or (self.__nb_colonnes < 2 and nb_lignes == 1) or (nb_lignes < 1 and self.__nb_colonnes < 1)):
             raise ValueError('Votre grille ne respecte pas les normes')
         else:
             self.__nb_lignes = nb_lignes
         
     def setNbColonnes(self, nb_colonnes : int):
-        if ((self.__nb_lignes < 2 and nb_colonnes == 1) or (nb_colonnes < 2 and self.__nb_lignes == 1)):
-            self.__nb_colonnes = nb_colonnes
-        else:
+        if ((self.__nb_lignes < 2 and nb_colonnes == 1) or (nb_colonnes < 2 and self.__nb_lignes == 1) or (self.__nb_lignes < 1 and nb_colonnes < 1)):
             raise ValueError('Votre grille ne respecte pas les normes')
+        else:
+            self.__nb_colonnes = nb_colonnes
 
     def __init__(self, nombre_lignes, nombre_colonnes):
         self.__nb_lignes = nombre_lignes
@@ -55,7 +55,7 @@ class Grille():
             self.setNbLignes(self.__nb_lignes)
             self.setNbColonnes(self.__nb_colonnes)
         except:
-            raise ValueError('Votre grille ne respecte pas les normes')
+            #raise ValueError('Votre grille ne respecte pas les normes')
             return False
 
         self.plateau = []
