@@ -45,11 +45,13 @@ class Strategie():
         # on ne set les navires que s'il n'y a pas 2 navires identiques
         # On se sert de l'unicité du tuple
         # Comparaison de la longueur d'un tuple avec celle d'une liste equivalente
-        # Si longueur différente => deux bateau sont les mêmes
+        # Si longueur différente => deux bateaux sont les mêmes
+        print(list(navires.keys()))
+        print(set(navires.keys()))
         if len(list(navires.keys())) == len(set(navires.keys())) :
             self._navires = navires
         else :
-            # deux bateau sont similaires
+            # deux bateaux sont similaires
             self._navires = None
 
 
