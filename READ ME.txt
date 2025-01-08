@@ -12,9 +12,27 @@ A faire pour la suite du projet :
 	
 	
 Etapes :
-	1. Modifier la façon dont sont implémenter les navires -> remplacer le dictionnaire par un set contenant des instance de la classe Navire.
+	1. Modifier la façon dont sont implémenter les navires -> remplacer le dictionnaire par un set contenant des instance de la classe Navire. (exemple dans la classe TestModeJeu
 	2. Modifier la façon dont les strategies sont sauvegardées, en utilisant pandas + ajout du mode de jeu dans le tableau pandas.
 	3. Créer une classe ChoixModeJeu suivant la même structure que la classe ChoixStrategie + utilisation de pandas pour les fichiers de sauvegarde. 
 	4. Créer un classe CreationModeJeu suivant la même structure que la classe CreationStrategie.
 	
+	
+
+
+Etat du code actuel :
+	- Navire : X
+	- TestNavire : X
+	- Grille : X
+	- TestGrille : X
+	- Strategie : 
+	- TestStrategie :
+	- ModeJeu :
+	- TestModeJeu :
+	- ChoixModeJeu : 
+	- TestChoixModeJeu :
+	- ChoixStrategie : 
+	- TestChoixStrategie :
+	- BatailleNavale : 
+	- TestBtailleNavale : 
 	

@@ -32,32 +32,35 @@ class Grille():
 
     # Setters
     def set_nb_lignes(self, nb_lignes:int):
-        if nb_lignes >= self.taille_min :
-            self.__nb_lignes = nb_lignes
-        else :
+        if nb_lignes < self.taille_min :
             self.__nb_lignes = None
             raise ValueError(f"Le nombre de lignes minimum est {self.taille_min} !")
+        elif nb_lignes > self.taille_max :
+            self.__nb_lignes = None
+            raise ValueError(f"Le nombre de lignes maximum est {self.taille_max} !")
+        else :
+            self.__nb_lignes = nb_lignes
 
     def set_nb_colonnes(self, nb_colonnes:int):
-        if nb_colonnes >= self.taille_min:
-            self.__nb_colonnes = nb_colonnes
-        else:
+        if nb_colonnes < self.taille_min:
             self.__nb_colonnes = None
             raise ValueError(f"Le nombre de colonnes minimum est {self.taille_min} !")
+        elif nb_colonnes > self.taille_max:
+            self.__nb_colonnes = None
+            raise ValueError(f"Le nombre de colonnes maximum est {self.taille_max} !")
+        else:
+            self.__nb_colonnes = nb_colonnes
 
 
     # Constructeur
-    def __init__(self, nombre_lignes, nombre_colonnes, taille_min : int = 2):
-        self.taille_min = taille_min
+    def __init__(self, nombre_lignes, nombre_colonnes):
+        self.taille_min : int = 2
+        self.taille_max : int = 20
         self.nombre_colonnes = nombre_colonnes
         self.nombre_lignes = nombre_lignes
 
         self.plateau = []
 
-
-
-        # Appeler manuellement cette fonction de creation de grille.
-        # self.create()
 
 
     # Créer une grille de jeu:
@@ -76,7 +79,7 @@ class Grille():
             observateur = 1
         # Return False si l'une des valeurs est non-conforme.
         if observateur == 1 :
-            return False
+            raise ValueError("Impossible de créer la grille !")
 
         self.plateau = []
         for i in range(self.__nb_lignes):

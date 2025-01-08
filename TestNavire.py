@@ -53,7 +53,7 @@ class TestNavire(unittest.TestCase) :
         try :
             self.navire.set_taille()
         except ValueError as current_error :
-            self.assertEqual("Taille non valide ! Elle doit être supérieure à 2 !", str(current_error))
+            self.assertEqual("Taille non valide ! Elle doit être supérieure ou égale à 2 !", str(current_error))
 
 
     def test_setter_taille_trop_long(self):

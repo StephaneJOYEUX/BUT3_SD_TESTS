@@ -25,14 +25,21 @@ class TestGrille(unittest.TestCase) :
 
     def test_creation_grille_cas_nul(self) -> None :
         self.grille: Grille = Grille(0, 0)
-        self.assertEqual(False, self.grille.create())
+        try :
+            self.grille.create()
+        except ValueError as current_error:
+            self.assertEqual("Impossible de créer la grille !", str(current_error))
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(None, self.grille.get_nb_lignes())
         self.assertEqual(None, self.grille.get_nb_colonne())
 
     def test_creation_grille_cas_negatif(self) -> None :
         self.grille: Grille = Grille(-1, -1)
-        self.assertEqual(False, self.grille.create())
+        try :
+            self.grille.create()
+        except ValueError as current_error:
+            self.assertEqual("Impossible de créer la grille !", str(current_error))
+
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(None, self.grille.get_nb_lignes())
         self.assertEqual(None, self.grille.get_nb_colonne())

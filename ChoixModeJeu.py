@@ -1,37 +1,9 @@
 class ChoixModeJeu() :
-    # Getters
-    def get_nom(self):
-        return self._nom
 
-    def get_navire(self):
-        return self._navires
-
-    def get_taille_grille(self):
-        return self._taille_grille
-
-
-    # Setters
-    def set_nom(self, nom = None):
-        if nom == None :
-            nom = self.nom
-        self._nom = nom
-
-
-    def set_navires(self, navires = None):
-        if navires == None :
-            navires = self.navires
-        self._navires = navires
-
-    def set_taille_grille(self, taille_grille = None):
-        if taille_grille == None :
-            taille_grille = self.taille_grille
-        self._taille_grille = taille_grille
 
 
     def __init__(self):
-        self._nom : str
-        self._navires :set
-        self._taille_grille : list[int]
+        pass
 
 
 

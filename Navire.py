@@ -37,7 +37,7 @@ class Navire():
 
         # choix arbitraire d'une taille minimale égale à 1.
         if taille < 2:
-            raise ValueError("Taille non valide ! Elle doit être supérieure à 2 !")
+            raise ValueError("Taille non valide ! Elle doit être supérieure ou égale à 2 !")
         elif taille > 9 :
             raise ValueError("Taille non valide ! Elle doit être inférieur à 10 !")
         else:
