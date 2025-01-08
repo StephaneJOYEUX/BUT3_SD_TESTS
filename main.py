@@ -13,7 +13,7 @@ La fin de partie est gérée dans la classe BatailleNavale().
 from ChoixStrategie import ChoixStrategie
 from Strategie import Strategie
 from BatailleNavale import BatailleNavale
-from Grille import Grille, afficher_grille
+from Grille import Grille
 
 # Fonction d'input.
 # Prend en parametre le n° du joueur.
@@ -57,6 +57,7 @@ def choix_nom_et_strategie_joueur(numero_joueur):
 if __name__ == "__main__":
     print('Bienvenue dans le jeu de Bataille Navale !')
 
+    ### Choix de l'adversaire
     choix_adversaire=''
 
     # Le booléen choix_valide_joueur permet de gérer les cas d'erreur sur les inputs et d'y répondre de manière efficace :
@@ -75,26 +76,26 @@ if __name__ == "__main__":
         except AssertionError :
             print('Erreur !\nVeuillez saisir une valeur valide.')
 
-
     print("")
     choix_adversaire.lower()
 
+    ### Initialisation des navires - a modifier en fonction des mode de jeux
     navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
 
 
-    # Choix des stratégie -> appel de la classe ChoixStrategie()
+    ### Choix des stratégie -> appel de la classe ChoixStrategie()
     if choix_adversaire == 'joueur' :
         # 1er joueur
-        information_j1 = choix_nom_et_strategie_joueur(1)
-        nom_j1 = information_j1[0]
-        strategie_j1 = information_j1[1]
+        informations_j1 = choix_nom_et_strategie_joueur(1)
+        nom_j1 = informations_j1[0]
+        strategie_j1 = informations_j1[1]
 
         print("")
 
         # 2eme joueur
-        information_j2 = choix_nom_et_strategie_joueur(2)
-        nom_j2 = information_j2[0]
-        strategie_j2 = information_j2[1]
+        informations_j2 = choix_nom_et_strategie_joueur(2)
+        nom_j2 = informations_j2[0]
+        strategie_j2 = informations_j2[1]
 
     elif choix_adversaire == 'ordinateur':
         # 1er joueur
@@ -105,6 +106,7 @@ if __name__ == "__main__":
         # Rajouter du code pour initialiser la strategie de l'ordinateur (définie par défault).
         # La privatisation (théorique) du nom permet dans la classe BatailleNavale() de passer le jeu de l'ordinateur en auto.
         nom_j2 = '_Ordinateur'
+        # modifier ici, popur que l'ordinateur est une strategie aléatoire parmis les stratégies enregistrées.
         strategie_j2 = Strategie({'Torpilleur': [2, 1, 1, 'S'],
                                   'Sous-marin': [3, 5, 1, 'S'],
                                   'Frégate': [3, 3, 5, 'E'],

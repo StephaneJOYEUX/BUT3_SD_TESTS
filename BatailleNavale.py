@@ -26,7 +26,10 @@ from Strategie import Strategie
 
 # Declariation et initialisation des variables utilisées dans la classe :
 class BatailleNavale:
-    def __init__(self, navires, strategie_joueur1 : Strategie, strategie_joueur2 :Strategie, instance_grille = Grille(10, 10) , pseudo_j1 : str ='Ordinateur 1' ,  pseudo_j2 : str='Ordinateur 2', test : bool = False):
+    def __init__(self, navires: object, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
+                 instance_grille: object = Grille(10, 10), pseudo_j1 : str = 'Ordinateur 1',
+                 pseudo_j2: str = 'Ordinateur 2',
+                 test: bool = False) -> object:
 
         self.navires = navires  # de la forme : {nom : [taille, symbole]}
         # répertoire de tout les navires de chacun des joueurs à placer sur la grille

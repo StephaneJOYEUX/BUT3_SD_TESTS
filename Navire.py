@@ -57,5 +57,3 @@ class FactoryNavire():
         self.navire.set_nom()
         self.navire.set_taille()
         self.navire.set_symbole()
-
-cuirassé = Navire(nom="cuirassé", taille=2)
