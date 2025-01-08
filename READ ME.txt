@@ -1,10 +1,20 @@
 A faire pour la suite du projet :
 
-	- Tester la classe Navire 
-	- Rajouter dans le main la possibilité de choisir entre 3 mode de jeu différents :
+	- Tester la classe Navire : X
+	- Rajouter dans le main la possibilité de choisir entre 3 mode de jeu différents :Creation du classe ChoixModeJeu (similaire à ChoixStrategie)
 		- Normal => grille de 10x10 & 5 bateaux
 		- Blitz => grille de 5x5 ? & 3 bateaux 
 		- Personnalisé => taille de la grille au choix du joueur et nb de bateaux aussi.
-	- Enregistrer les différents mode de jeu dans un fichier txt de sauvegarde / une bd ?
+	- Enregistrer les différents mode de jeu dans un fichier txt de sauvegarde / une bd ? => utiliser pandas ?
 	
 	- Finir de tester la classe Strategie (apres avoir implementer la classe Navire et l'avoir tester)
+	
+	
+	
+Etapes :
+	1. Modifier la façon dont sont implémenter les navires -> remplacer le dictionnaire par un set contenant des instance de la classe Navire.
+	2. Modifier la façon dont les strategies sont sauvegardées, en utilisant pandas + ajout du mode de jeu dans le tableau pandas.
+	3. Créer une classe ChoixModeJeu suivant la même structure que la classe ChoixStrategie + utilisation de pandas pour les fichiers de sauvegarde. 
+	4. Créer un classe CreationModeJeu suivant la même structure que la classe CreationStrategie.
+	
+	

@@ -28,7 +28,6 @@ def choix_nom_et_strategie_joueur(numero_joueur):
     # en redemandant à l'utilisateur de rentrer sa données en précisant pourquoi cela n'a pas marché la 1ère fois.
     choix_valide_joueur = False
 
-
     while not choix_valide_joueur :
         pseudo_joueur = input(f"Joueur {numero_joueur}, quel est votre pseudo ? \n")
 
@@ -57,6 +56,13 @@ def choix_nom_et_strategie_joueur(numero_joueur):
 if __name__ == "__main__":
     print('Bienvenue dans le jeu de Bataille Navale !')
 
+    ### Choix mode de jeu (normal - 10*10, blitz - 5*5, personnalisé - dépend des choix du joueur)
+    # /!\ Cela implique une modification des classes de création et d'enregistrement de stratégie (prise en compte du mode de jeu)
+
+
+    ### Initialisation des navires - a modifier en fonction des mode de jeux
+    navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
+
     ### Choix de l'adversaire
     choix_adversaire=''
 
@@ -79,8 +85,6 @@ if __name__ == "__main__":
     print("")
     choix_adversaire.lower()
 
-    ### Initialisation des navires - a modifier en fonction des mode de jeux
-    navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
 
 
     ### Choix des stratégie -> appel de la classe ChoixStrategie()
