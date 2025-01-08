@@ -47,6 +47,10 @@ class ModeJeu():
         self._taille_grille = taille_grille
 
     def __init__(self, nom :str, navires : set, taille_grille :list[int]):
+        self._nom = None
+        self._navires = None
+        self._taille_grille = None
+
         self.nom = nom
         self.navires = navires
         self.taille_grille = taille_grille

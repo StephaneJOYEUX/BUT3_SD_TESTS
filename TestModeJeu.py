@@ -45,12 +45,16 @@ class TestModeJeu(unittest.TestCase) :
         except ValueError as current_error :
             self.assertEqual("Nom du mode de jeu trop court !", str(current_error))
 
+        self.assertEqual(None, self.mode_jeu.get_nom())
+
     def test_set_nom_cas_trop_long(self):
         self.mode_jeu = ModeJeu(nom='rfjvjbsdkhvbdkhvbhbhbcdhkcb', navires=self.navires, taille_grille=[10, 10])
         try:
             self.mode_jeu.set_nom()
         except ValueError as current_error:
             self.assertEqual("Nom du mode de jeu trop long !", str(current_error))
+
+        self.assertEqual(None, self.mode_jeu.get_nom())
 
     # navires
     def test_set_navires_cas_nominal(self):
@@ -82,10 +86,10 @@ class TestModeJeu(unittest.TestCase) :
         try :
             # modification de cette taille rentrée en paramètre avec le setter.
             self.mode_jeu.set_taille_grille([1,1])
-            self.assertEqual([], self.mode_jeu.get_taille_grille())
         except ValueError as current_error :
             self.assertEqual("La taille de la grille est invalide !", str(current_error))
 
+        self.assertEqual(None, self.mode_jeu.get_taille_grille())
 
     def test_set_taille_grille_cas_trop_grand(self):
         # initialisation avec une taille conforme (car il existe deja un test sur l'initialisation)
@@ -93,6 +97,7 @@ class TestModeJeu(unittest.TestCase) :
         try :
             # modification de cette taille rentrée en paramètre avec le setter.
             self.mode_jeu.set_taille_grille([21,21])
-            self.assertEqual([], self.mode_jeu.get_taille_grille())
         except ValueError as current_error :
             self.assertEqual("La taille de la grille est invalide !", str(current_error))
+
+        self.assertEqual(None, self.mode_jeu.get_taille_grille())

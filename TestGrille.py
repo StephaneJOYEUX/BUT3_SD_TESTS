@@ -1,10 +1,10 @@
 import unittest
-from inspect import GEN_RUNNING
-
 from Grille import Grille, afficher_grille, afficher_couple_grilles
 
 
 class TestGrille(unittest.TestCase) :
+    grille: Grille
+
     # Tests sur la creation
     def test_creation_grille_cas_nominal(self) -> None:
         self.grille: Grille = Grille(10, 10)
