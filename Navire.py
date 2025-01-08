@@ -10,28 +10,52 @@ class Navire():
         return self._taille
 
     # Setter
-    def set_nom(self, nom):
-        # choix arbitraire de la longueur de la chaine de caractère (3).
-        if len(nom) > 3:
-            self._nom = nom
-        else:
-            raise ValueError("Le nom de ce navire est invalide - trop court.")
+    def set_nom(self, nom = None):
+        # cas d'initialisation
+        if nom == None :
+            nom = self.nom
 
-    def set_symbole(self, symbole):
+        # choix arbitraire de la longueur de la chaine de caractère (3).
+        if len(nom) <= 3:
+            raise ValueError("Le nom de ce navire est invalide - trop court.")
+        elif len(nom) > 20 :
+            raise ValueError("Le nom de ce navire est invalide - trop long.")
+        else:
+            self._nom = nom
+
+
+    def set_symbole(self, symbole = None):
+        # cas d'initialisation
+        if symbole == None :
+            symbole = self.symbole
+
         self._symbole = symbole
 
-    def set_taille(self, taille):
-        if taille > 1:
-            self._taille = taille
-        else:
+    def set_taille(self, taille = None):
+        if taille == None :
+            taille = self.taille
+
+        # choix arbitraire d'une taille minimale égale à 1.
+        if taille < 2:
             raise ValueError("Taille non valide ! Elle doit être supérieure à 2 !")
+        elif taille > 9 :
+            raise ValueError("Taille non valide ! Elle doit être inférieur à 10 !")
+        else:
+            self._taille = self.taille
+
 
     def __init__(self, nom: str, taille: int):
         self.nom = nom.lower()
         self.taille = taille
         self.symbole = self.nom[0].upper()
-        print(self.nom)
-        print(self.symbole)
+        # Affichage utile pour tester simplement (a supprimer quand le module de tests sera prêt).
 
+
+class FactoryNavire():
+    def __init__(self, nom: str, taille: int):
+        self.navire = Navire(nom, taille)
+        self.navire.set_nom()
+        self.navire.set_taille()
+        self.navire.set_symbole()
 
 cuirassé = Navire(nom="cuirassé", taille=2)

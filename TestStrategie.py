@@ -2,7 +2,7 @@ import unittest
 from Strategie import Strategie
 
 
-class MyTestCase(unittest.TestCase) :
+class TestStrategie(unittest.TestCase) :
     def setUp(self) -> None:
         pass
 
