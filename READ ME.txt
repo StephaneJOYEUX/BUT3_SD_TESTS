@@ -31,8 +31,8 @@ Etat du code actuel :
 	- TestModeJeu : Tester les fonctions qui dépendent de l'implémentation de la méthode de classe "verifier_validiter_navires"
 	- ChoixModeJeu : 
 	- TestChoixModeJeu :
-	- ChoixStrategie : 
-	- TestChoixStrategie :
+	- ChoixStrategie : Modifier l'écriture et le lecture du fichier de sauvegarde en utilisant pandas (cf. projet brouillon)
+	- TestChoixStrategie : Tout tester.
 	- BatailleNavale : 
 	- TestBtailleNavale : 
 	
