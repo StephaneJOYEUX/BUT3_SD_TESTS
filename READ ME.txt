@@ -27,8 +27,8 @@ Etat du code actuel :
 	- TestGrille : X
 	- Strategie : 
 	- TestStrategie :
-	- ModeJeu :
-	- TestModeJeu :
+	- ModeJeu : Implémenter la fonction "verifier_validiter_navires" selon des critères à définir
+	- TestModeJeu : Tester les fonctions qui dépendent de l'implémentation de la méthode de classe "verifier_validiter_navires"
 	- ChoixModeJeu : 
 	- TestChoixModeJeu :
 	- ChoixStrategie : 
