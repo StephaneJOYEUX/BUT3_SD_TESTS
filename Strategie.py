@@ -21,6 +21,7 @@ Tests : (à programmer et automatiser)
 
     Il est aussi tout à fait possible de tester les autres fonctions de la classe.
 """
+import pandas as pd
 
 from Grille import Grille, afficher_grille
 from copy import deepcopy
@@ -192,7 +193,7 @@ class Strategie_2():
         return self._navires
 
     def get_informations(self):
-        return self.informations
+        return self._informations
 
     def get_grille(self):
         return self._grille
@@ -207,20 +208,32 @@ class Strategie_2():
 
 
 
-    def set_informations(self, informations):
-        self._infomations = informations
+    def set_informations(self, informations = None):
+        if informations == None :
+            informations = self.informations
+        self._informations = informations
 
-    def set_grille(self, grille):
+    def set_grille(self, grille = None):
+        if grille == None :
+            grille = self.grille
         self._grille = grille
         self._grille.create()
 
 
     # Constructeur
-    def __init__(self, inputs_strategie : dict, navires : set,  Grille = Grille(10,10)):
+    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10)):
+        # initialisation variables privées
+        self._grille : Grille
+        self._navires : set
+        self._infomations : pd.DataFrame
+
+        # variables publiques
         self.navires = navires
         self.informations = inputs_strategie
-
         self.grille = Grille
+
+        if len(self.navires) != len(self.informations) :
+            raise ValueError("Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.")
 
 
 
