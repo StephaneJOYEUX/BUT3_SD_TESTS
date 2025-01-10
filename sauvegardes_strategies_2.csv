@@ -4,3 +4,8 @@ Normal,1,cuirassé,4,2,2,S
 Normal,1,torpilleur,2,3,3,S
 Normal,1,porte-avions,5,4,4,S
 Normal,1,frégate,3,5,5,S
+Normal,2,porte-avions,5,1,1,S
+Normal,2,torpilleur,2,1,6,S
+Normal,2,frégate,3,5,5,S
+Normal,2,sous-marin,3,6,9,N
+Normal,2,cuirassé,4,9,1,E

@@ -32,6 +32,7 @@ class TestChoixStrategie(TestCase):
         self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires, test=True)
         self.choix_strategie.lire_fichier_sauvegarde()
 
+    # a modifier
     def test_intialisation(self):
         # Initialisation
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}

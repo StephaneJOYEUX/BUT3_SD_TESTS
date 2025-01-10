@@ -258,7 +258,8 @@ class Strategie_2():
 
         # vérifions la correspondance entre les navires des informations de placement et les navires du set de paramètre.
         copy_set_navire = deepcopy(self._navires)
-        for i in range(len(self._informations)):
+
+        for i in list(self._informations.index):
             for navire_set in self._navires :
                 if self._informations.loc[i, "nom"] == navire_set.get_nom() :
                     copy_set_navire.remove(navire_set)
@@ -287,7 +288,7 @@ class Strategie_2():
     # retourne un booléen pour indiquer si les navires ont correctement été placés ou non
     def placement_navires(self, plateau, informations : pd.DataFrame):
         try :
-            for i in range(len(informations)) :
+            for i in list(informations.index) :
                 informations_navires = informations.loc[i]
                 #print(informations_navires)
                 if not self.placement_un_navire(plateau, informations_navires) :

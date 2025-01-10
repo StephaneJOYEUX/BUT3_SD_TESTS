@@ -272,7 +272,7 @@ class ChoixStrategie() :
 
 
 
-from Strategie import Strategie_2
+from Strategie import Strategie_2, FactoryStrategie_2
 from CreationStrategie import CreationStrategie_2, FactoryCreationStrategie_2
 
 
@@ -384,14 +384,9 @@ class ChoixStrategie_2() :
                 liste_index_strategie = set(df_strategie_to_choose.index_strategie)
                 # Boucle pour l'affichage
                 for i in liste_index_strategie:
-                    if i != 0 :
-                        print(self.referentiel[self.referentiel.index_strategie==i])
-                        print("------------------")
-
-                for index_strat in range(len(self.referentiel)) :
-                    print("Stratégie n°"+str(index_strat)+ "  "+str(self.referentiel[index_strat].informations))
-
-
+                    print(f"Strategie n°{i} :")
+                    print(self.referentiel[self.referentiel.index_strategie==i])
+                    print("------------------")
 
                 print("")
 
@@ -402,27 +397,30 @@ class ChoixStrategie_2() :
                     choix_numero_strategie = input("Quelle stratégie voulez-vous choisir ?  (Choisir une numéro de stratégie)\n")
                     print("")
 
-                    try :
-                        choix_numero_strategie = int(choix_numero_strategie)
+                    #try :
+                    choix_numero_strategie = int(choix_numero_strategie)
 
-                        # On associe la strategie choisie en input à la variable locale strategie_choisie.
-                        strategie_choisie = self.referentiel[choix_numero_strategie]
-                        print(strategie_choisie.informations)
+                    # On associe la strategie choisie en input à la variable locale strategie_choisie.
+                    print("AAAAAAAAAAAAA")
+                    inputs_strategie_choisie = self.referentiel[self.referentiel.index_strategie == choix_numero_strategie]
 
-                        valider_choix_numero_strategie = True
-                    except IndexError :
+                    strategie_choisie = FactoryStrategie_2(inputs_strategie_choisie, self.navires, self.instance_grille).strategie
+                    print(strategie_choisie.get_informations())
+
+                    valider_choix_numero_strategie = True
+                    """except IndexError :
                         print(f"La stratégie n°{choix_numero_strategie} n'existe pas !")
                         print("Choisissez une stratégie existante.")
                     except :
                         print("Erreur de saisie !")
-                        print('Choisissez le numéro de la stratégie parmis les stratégie existantes.')
+                        print('Choisissez le numéro de la stratégie parmis les stratégie existantes.')"""
 
 
 
                 print(f"Vous avez choisi la stratégie n°{choix_numero_strategie} :\n")
 
                 # On place la strategie dans la grille
-                strategie_choisie.placement_navires_joueur(self.instance_grille.plateau, strategie_choisie.informations)
+                strategie_choisie.placement_navires(self.instance_grille.plateau, strategie_choisie.informations)
                 # On l'affiche
                 afficher_grille(self.instance_grille.plateau)
 
@@ -444,7 +442,7 @@ class ChoixStrategie_2() :
             print("")
 
             self.instance_grille.create()
-            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
             afficher_grille(self.instance_grille.plateau)
             return True
 
