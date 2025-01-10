@@ -17,6 +17,7 @@ class TestStrategie(unittest.TestCase) :
 
         self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
+    # Setters & Getters
     def test_set_navires_cas_nominal(self)->None:
         navires = {'Torpilleur': [2, 'T'], 'Sous-marin': [3, 'S'], 'Frégate': [3, 'F'], 'Cuirassé': [4, 'C'],
                    'Porte-avions': [5, 'P']}
@@ -99,6 +100,7 @@ class TestStrategie_2(unittest.TestCase) :
 
         try:
             self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+            self.strategie.set_navires()
             raise ValueError("Test non passé !")
         except ValueError as current_error:
             self.assertEqual(
@@ -116,6 +118,7 @@ class TestStrategie_2(unittest.TestCase) :
 
         try :
             self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+            self.strategie.set_navires()
             raise ValueError("Test non passé !")
         except ValueError as current_error :
             self.assertEqual("Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.",

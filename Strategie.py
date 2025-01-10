@@ -205,11 +205,13 @@ class Strategie_2():
         # Il ne peut pas y avoir de Navire identiques du à la propriété ensembliste des sets en Python
         if navires == None :
             navires = self.navires
+
+        self.verifier_correspondance_parametres_navires()
         self._navires = navires
 
 
     def set_informations(self, informations = None):
-        if informations == None :
+        if informations is None :
             informations = self.informations
         self._informations = informations
 
@@ -223,7 +225,7 @@ class Strategie_2():
 
 
     # Constructeur
-    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10)):
+    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10), complete = True):
         # Variables privées
         self._grille : Grille
         self._navires : set
@@ -233,11 +235,7 @@ class Strategie_2():
         self.navires = navires
         self.informations = inputs_strategie
         self.grille = Grille
-
-        # Test de validité à l'initialisation
-        if len(self.navires) != len(self.informations) :
-            raise ValueError("Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.")
-
+        self.complete = complete
 
 
     # verification de la validité de la stratégie créée.
@@ -252,6 +250,9 @@ class Strategie_2():
     # Elle nous permet, à chaque ajout de données dans l'objet strategie, de vérifier que ces données sont valides.
     # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
+
+        self.verifier_correspondance_parametres_navires()
+
         # vérifions la correspondance entre les navires des informations de placement et les navires du set de paramètre.
         copy_set_navire = deepcopy(self._navires)
         for i in range(len(self._informations)):
@@ -261,11 +262,23 @@ class Strategie_2():
         if len(copy_set_navire) != 0 :
             return False
 
+        return self.verifier_placabilite()
+
+
+    # permet de vérifier si un navire est plçable dans le plateau ou non
+    # methode utilisée lors de la création de strategie.
+    def verifier_placabilite(self):
+        # vérification que le navire est bien plaçable sur la grille
         if self.placement_navires(self._grille.get_plateau(), self.informations):
             return True
-        else :
+        else:
             return False
 
+    def verifier_correspondance_parametres_navires(self):
+        # Test de validité : nombre de navire égaux entre les différents paramètres d'initialisation.
+        if len(self.navires) != len(self.informations):
+            raise ValueError(
+                "Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.")
 
     # boucle sur tous les navire de la strategie et essaie de les placer dans la grille
     # retourne un booléen pour indiquer si les navires ont correctement été placés ou non
@@ -281,6 +294,8 @@ class Strategie_2():
             return True
         except :
             return False
+
+
 
 
     # fonction permettant de placer un navire sur la grille
@@ -329,7 +344,12 @@ class Strategie_2():
 
     # Méthode pour afficher la stratégie
     def affichage_strategie(self):
-        if self.verifier_validite() :
+        if self.complete :
+            critere_bool = self.verifier_validite()
+        else :
+            critere_bool = self.verifier_placabilite()
+
+        if critere_bool :
             afficher_grille(self.grille.plateau)
             return True
         else:
@@ -344,3 +364,19 @@ class Strategie_2():
                 return True
         except :
             print('Vous ne comparez pas 2 instances de la classe Strategie')
+
+
+
+
+class FactoryStrategie_2() :
+    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10), complete = True):
+        # intialisation de la classe Strategie
+        self.strategie = Strategie_2(inputs_strategie, navires,  Grille, complete)
+        self.strategie.set_navires(self.strategie.navires)
+        self.strategie.set_informations(self.strategie.informations)
+        self.strategie.set_grille(self.strategie.grille)
+
+        if complete :
+            self.strategie.verifier_validite()
+        else :
+            self.strategie.verifier_placabilite()

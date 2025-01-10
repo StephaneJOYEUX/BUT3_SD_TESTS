@@ -272,15 +272,24 @@ class ChoixStrategie() :
 
 
 
-
+from Strategie import Strategie_2
+from CreationStrategie import CreationStrategie_2, FactoryCreationStrategie_2
 
 
 
 class ChoixStrategie_2() :
-    def __init__(self, pseudo_joueur, navires, Grille = Grille(10,10), test : bool = False):
-
+    def __init__(self, pseudo_joueur, navires, mode_jeu = "Normal",  Grille = Grille(10,10), test : bool = False):
+        self.mode_jeu : str = mode_jeu
         self.navires = navires
-        self.referentiel : set[Strategie]
+        self.referentiel : pd.DataFrame = pd.DataFrame({
+            "mode_jeu":[],
+            "index_strategie":[],
+            "nom":[],
+            "taille":[],
+            "coord_x":[],
+            "coord_y": [],
+            "orientation":[],
+        })
         self.lire_fichier_sauvegarde()
 
         self.instance_grille=Grille
@@ -295,40 +304,15 @@ class ChoixStrategie_2() :
         # dernière méthode : écriture des données du référentiel dans le fichier de sauvegarde.
         self.ecrire_fichier_sauvegarde()
 
-    # Lecture du fichier et récupération des strategie enregistrées dans le référentiel.
+    # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
         # Ouverture du fichier + lecture des lignes une à une + fermeture du fichier.
-        donnees_lecture = pd.read_csv('sauvegardes_strategies_2.csv', encoding="UTF-8")
-
-        for line in donnees_lecture.value :
-            #self.referentiel.add(Strategie(line))
-            pass
-
-
+        self.referentiel = pd.read_csv('sauvegardes_strategies_2.csv', encoding="UTF-8")
 
 
     # On écrit le fichier de sauvegarde à partir des données du référentiel.
     def ecrire_fichier_sauvegarde(self):
-        # Variable locale pour 'protéger' notre référentiel.
-        liste_ecriture = []
-
-
-        # Formatage des données pour l'écriture (passage en str)
-
-        for instance_strategie in self.referentiel :
-            donnee = instance_strategie.informations
-            # Vérification du type (attendu : dict)
-            donnee = str(donnee) + '\n'
-            liste_ecriture.append(donnee)
-
-
-        # Création d'une chaine unique -> application unique de la fonction write()
-        chaine_ecriture = "".join(liste_ecriture)
-
-        # Ouverture du fichier + écriture + fermeture du fichier
-        test = open('sauvegardes_strategies_2.csv', 'w', encoding='UTF-8')
-        test.write(chaine_ecriture)
-        test.close()
+        self.referentiel.to_csv('sauvegardes_strategies_2.csv', index = False, encoding="UTF-8")
 
 
     # Méthode principale qui appelle toutes les autres en fonction des choix du joueur.
@@ -349,7 +333,7 @@ class ChoixStrategie_2() :
         if choix == 'creer' :
             # Appel de la classe CreationStrategie() -> lancement du code de création
             # Appel de la methode get_instance_strategie() qui retourne l'instance de la classe Strategie() créée.
-            self.strategie = CreationStrategie(self.navires, self.instance_grille).get_instance_strategie()
+            self.strategie = FactoryCreationStrategie_2(self.navires, self.instance_grille).get_instance_strategie()
 
             # Création de la chaine rentrée ensuite en paramètre de la fonction input()
             choix_action_enregistrement = "Voulez-vous enregistrer la stratégie créée ?"
@@ -357,9 +341,13 @@ class ChoixStrategie_2() :
             choix_enregistrement = self.valider_input_utilisateur(choix_action_enregistrement, choix_oui, choix_non)
 
             if choix_enregistrement == 'o' :
-                # Ajout de la stratégie au référentiel.
-                # il s'agit ici d'une instance de la classe Strategie().
-                self.referentiel.append(self.strategie)
+                # Ajout des inputs de la stratégie au référentiel.
+                # il s'agit ici des informations permettant d'instancier la classe Strategie
+                new_inputs_strategie = self.strategie.get_informations()
+                for line in new_inputs_strategie.values :
+                    new_data = [self.mode_jeu, max(self.referentiel["index_strategie"])+1] + list(line)
+                    self.referentiel.loc[len(self.referentiel.index)] = new_data
+
                 print("La stratégie a bien été enregistrée.")
             else :
                 print('Vous avez choisi de ne pas enregistrer la strategie.')

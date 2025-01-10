@@ -227,10 +227,19 @@ class CreationStrategie():
 
 
 import pandas as pd
+from Strategie import FactoryStrategie_2
+
 
 class CreationStrategie_2():
     # Getters
+    def get_navires(self):
+        return self._navires
 
+    def get_grille(self):
+        return self._grille
+
+    def get_instance_strategie(self) :
+        return self.instance_strategie
 
     # Setters
     def set_navires(self, navires = None):
@@ -292,21 +301,22 @@ class CreationStrategie_2():
 
         # il faut boucler sur tous les navires du référentiel
         # on ne peut pas choisir de ne pas placer un navire, c'est impossible !
-        for navire in self.navires.keys() :
+        for navire in self.navires :
+            print(type(navire))
+            print(len(self.inputs_strategie.index))
+            new_data =self.input_donnees_placement_navire(navire)
+            print(new_data)
+            self.inputs_strategie.loc[len(self.inputs_strategie.index)] = new_data
+            print(self.inputs_strategie)
+            self.instance_strategie = FactoryStrategie_2(self.inputs_strategie,self.navires, complete=False).strategie
 
 
-            self.inputs_strategie [f'{navire}'] = self.input_donnees_placement_navire(navire)
-            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires).strategie
-
-
-
-            while not self.instance_strategie.verifier_validite() :
+            while not self.instance_strategie.verifier_placabilite() :
                 print('Stratégie invalide !!!')
                 print('Vous devez re-saisir les caractéristiques du dernier navire.')
                 self.inputs_strategie [f'{navire}'] = self.input_donnees_placement_navire(navire)
                 # initialisation de l'instance de la classe Strategie
-                self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires)
-
+                self.instance_strategie = FactoryStrategie_2(self.inputs_strategie,self.navires, complete=False).strategie
 
 
             print("Voici votre strategie actuelle :\n")
@@ -321,9 +331,10 @@ class CreationStrategie_2():
     # Il s'agit principalement d'une fonction d'input avec beaucoup de condition sur le placement des navires.
     # Le but est de poser un cadre au placement des navires afin que les navires puisse être représentés dans la grille ensuite.
     def input_donnees_placement_navire(self, navire):
-        taille = self.navires[navire][0]
+        nom = navire.get_nom()
+        taille = navire.get_taille()
 
-        print(f'Choisissez les caractéritiques du navire suivant : {navire}.')
+        print(f'Choisissez les caractéritiques du navire suivant : {nom}.')
         coord_valides = False
 
         while not coord_valides:
@@ -352,9 +363,9 @@ class CreationStrategie_2():
             # La condition de validité du sens du navire dépend de la taille de ce dernier,
             # Exemple : un navire de taille 4 peut se positionner sur la 3ème ligne,
             # mais il ne peut dans ce cas pas s'orienter vers le nord !
-            if coord_ligne < self.navires[navire][0]:
+            if coord_ligne < taille:
                 # Coin supérieur gauche
-                if coord_colonne < self.navires[navire][0]:
+                if coord_colonne < taille:
                     sens = input("Choisissez l'orientation du navire : (E/S)\n")
                     sens = sens.upper()
                     if sens == 'E' or sens == 'S':
@@ -363,7 +374,7 @@ class CreationStrategie_2():
                         print('Orientation du navire non valide.')
 
                 # Coin supérieur droit
-                elif coord_colonne + self.navires[navire][0] > self.derniere_colonne_grille+1:
+                elif coord_colonne + taille > self.derniere_colonne_grille+1:
                     sens = input("Choisissez l'orientation du navire : (S/O)\n")
                     sens = sens.upper()
                     if sens == 'S' or sens == 'O':
@@ -381,9 +392,9 @@ class CreationStrategie_2():
                         print('Orientation du navire non valide.')
 
             # Dernière ligne
-            elif coord_ligne + self.navires[navire][0] > self.derniere_ligne_grille+1:
+            elif coord_ligne + taille > self.derniere_ligne_grille+1:
                 # Coin inférieur gauche
-                if coord_colonne < self.navires[navire][0]:
+                if coord_colonne < taille:
                     sens = input("Choisissez l'orientation du navire : (E/N)\n")
                     sens = sens.upper()
                     if sens == 'E' or sens == 'N':
@@ -392,7 +403,7 @@ class CreationStrategie_2():
                         print('Orientation du navire non valide.')
 
                 # Coin inférieur droit
-                elif coord_colonne + self.navires[navire][0] > self.derniere_colonne_grille+1:
+                elif coord_colonne + taille > self.derniere_colonne_grille+1:
                     sens = input("Choisissez l'orientation du navire : (N/O)\n")
                     sens = sens.upper()
                     if sens == 'N' or sens == 'O':
@@ -413,7 +424,7 @@ class CreationStrategie_2():
             # Cas des lignes générales
             else:
                 # Première colonne sans les coins
-                if coord_colonne < self.navires[navire][0]:
+                if coord_colonne < taille:
                     sens = input("Choisissez l'orientation du navire : (E/N/S)\n")
                     sens = sens.upper()
                     if sens == 'E' or sens == 'S' or sens == 'N':
@@ -422,7 +433,7 @@ class CreationStrategie_2():
                         print('Orientation du navire non valide.')
 
                 # Dernière colonne sans les coins
-                elif coord_colonne + self.navires[navire][0] > self.derniere_colonne_grille+1:
+                elif coord_colonne + taille > self.derniere_colonne_grille+1:
                     sens = input("Choisissez l'orientation du navire : (N/O/S)\n")
                     sens = sens.upper()
                     if sens == 'S' or sens == 'O' or sens == 'N':
@@ -440,11 +451,15 @@ class CreationStrategie_2():
                         print('Orientation du navire non valide.')
 
         print("")
-        return [taille, coord_ligne, coord_colonne, sens]
+        return [nom, taille, coord_ligne, coord_colonne, sens]
 
 
-    def get_instance_strategie(self) :
-        return self.instance_strategie
+class FactoryCreationStrategie_2():
+    def get_instance_strategie(self):
+        return self.strategie
 
-navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
-test = CreationStrategie_2(navires)
+    def __init__(self, navires : set,grille = Grille(10,10), test : bool = False):
+        self.strategie = CreationStrategie_2(navires, grille, test)
+        self.strategie.set_navires()
+        self.strategie.set_grille()
+        self.strategie.creer_strategie()
