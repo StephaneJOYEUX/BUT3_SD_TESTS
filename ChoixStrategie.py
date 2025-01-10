@@ -347,12 +347,13 @@ class ChoixStrategie_2() :
                 # Ajout des inputs de la stratégie au référentiel.
                 # il s'agit ici des informations permettant d'instancier la classe Strategie
                 new_inputs_strategie = self.strategie.get_informations()
+                try:
+                    index_strategie = max(self.referentiel["index_strategie"]) + 1
+                except:
+                    index_strategie = 1
+
                 for line in new_inputs_strategie.values :
-                    try :
-                        index_strategie = max(self.referentiel["index_strategie"])
-                    except :
-                        index_strategie = 0
-                    new_data = [self.mode_jeu, index_strategie+1] + list(line)
+                    new_data = [self.mode_jeu, index_strategie] + list(line)
                     self.referentiel.loc[len(self.referentiel.index)] = new_data
 
                 print("La stratégie a bien été enregistrée.")
@@ -377,8 +378,21 @@ class ChoixStrategie_2() :
                 self.instance_grille.create()
                 print('Voici la liste des stratégies enregistrée :')
 
+                # correspondance avec le mode de jeu
+                df_strategie_to_choose = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu]
+                # extraction de l'ensemble des index_strategie correspondant au premier critère de filtrage (mode_jeu)
+                liste_index_strategie = set(df_strategie_to_choose.index_strategie)
+                # Boucle pour l'affichage
+                for i in liste_index_strategie:
+                    if i != 0 :
+                        print(self.referentiel[self.referentiel.index_strategie==i])
+                        print("------------------")
+
                 for index_strat in range(len(self.referentiel)) :
                     print("Stratégie n°"+str(index_strat)+ "  "+str(self.referentiel[index_strat].informations))
+
+
+
                 print("")
 
 
