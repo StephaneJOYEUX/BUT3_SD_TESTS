@@ -171,7 +171,8 @@ class TestStrategie_2(unittest.TestCase) :
         self.strategie.set_informations()
         self.strategie.set_grille()
 
-        self.assertEqual(True, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(), inputs_strategie.loc[0]))
+        self.assertEqual(True, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(),
+                                                                  inputs_strategie.loc[0]))
         self.assertEqual([['T', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['T', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -181,9 +182,67 @@ class TestStrategie_2(unittest.TestCase) :
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
+                         self.strategie.get_grille().get_plateau())
+
+    def test_placement_un_navire_conflit_ligne(self):
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 1, 3, 5, 9],
+                                 "coord_y": [1, 3, 5, 6, 9], "orientation": ["S", "O", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+
+        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie.set_navires()
+        self.strategie.set_informations()
+        self.strategie.set_grille()
+
+        self.assertEqual(True, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(),
+                                                                  inputs_strategie.loc[0]))
+        self.assertEqual(False, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(),
+                                                                   inputs_strategie.loc[1]))
+        self.assertEqual([['T', 'S', 'S', '-', '-', '-', '-', '-', '-', '-'],
+                          ['T', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
+                         self.strategie.get_grille().get_plateau())
+
+
+    def test_placement_un_navire_conflit_colonne(self):
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 4, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+
+        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie.set_navires()
+        self.strategie.set_informations()
+        self.strategie.set_grille()
+
+        self.assertEqual(True, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(), inputs_strategie.loc[0]))
+        self.assertEqual(False, self.strategie.placement_un_navire(self.strategie.get_grille().get_plateau(), inputs_strategie.loc[1]))
+        self.assertEqual([['T', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['T', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['S', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['S', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']], self.strategie.get_grille().get_plateau())
 
-    ## Rajouter les cas_erreur
 
     # Fonction : placement_navires
     def test_placement_navires_cas_nominal(self):
@@ -232,7 +291,7 @@ class TestStrategie_2(unittest.TestCase) :
 
         self.strategie.placement_navires(plateau=self.strategie.get_grille().get_plateau(),
                                          informations=self.strategie.get_informations())
-        """self.assertEqual([['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+        self.assertEqual([['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -242,7 +301,7 @@ class TestStrategie_2(unittest.TestCase) :
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
-                            self.strategie.get_grille().get_plateau())"""
+                            self.strategie.get_grille().get_plateau())
 
 
     def test_placement_navires_conflit_colonne(self):
@@ -276,6 +335,52 @@ class TestStrategie_2(unittest.TestCase) :
 
 
     # Fonction : verifier_validite
+    def test_verifier_validite_cas_nominal(self):
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+
+        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie.set_navires()
+        self.strategie.set_informations()
+        self.strategie.set_grille()
+        self.assertEqual(True, self.strategie.verifier_validite())
+
+
+    def test_verifier_validite_navires_differents(self):
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.chaloupe}
+
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+
+        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie.set_navires()
+        self.strategie.set_informations()
+        self.strategie.set_grille()
+        self.assertEqual(False, self.strategie.verifier_validite())
+
+
+    def test_verifier_validite_chevauchement_placement(self):
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 4, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+
+        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie.set_navires()
+        self.strategie.set_informations()
+        self.strategie.set_grille()
+        self.assertEqual(False, self.strategie.verifier_validite())
 
 
     # Fonction : affichage_strategie
@@ -296,22 +401,24 @@ class TestStrategie_2(unittest.TestCase) :
 
         self.assertEqual(True, self.strategie.affichage_strategie())
 
+
     def test_affichage_strategie_cas_invalide(self):
         ## avec une strategie invalide => definir les critère de validité d'une strategie
         # + attente des test de la methode verifier_validite
         ## Initialisation
-        """navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+        # Initialisation
+        navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
         data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
-                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
-                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 4, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
         self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
+        self.assertEqual(False, self.strategie.verifier_validite())
 
-        self.assertEqual(False, self.strategie.affichage_strategie())"""
-        pass
+        self.assertEqual(False, self.strategie.affichage_strategie())
 

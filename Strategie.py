@@ -252,6 +252,15 @@ class Strategie_2():
     # Elle nous permet, à chaque ajout de données dans l'objet strategie, de vérifier que ces données sont valides.
     # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
+        # vérifions la correspondance entre les navires des informations de placement et les navires du set de paramètre.
+        copy_set_navire = deepcopy(self._navires)
+        for i in range(len(self._informations)):
+            for navire_set in self._navires :
+                if self._informations.loc[i, "nom"] == navire_set.get_nom() :
+                    copy_set_navire.remove(navire_set)
+        if len(copy_set_navire) != 0 :
+            return False
+
         if self.placement_navires(self._grille.get_plateau(), self.informations):
             return True
         else :
@@ -303,6 +312,7 @@ class Strategie_2():
                 plateau[coord_ligne][coord_colonne] = navire.get_symbole()
                 taille_navire -= 1
             else:
+
                 return False
 
             if orientation == 'N':
@@ -330,7 +340,7 @@ class Strategie_2():
     # redefinition de l'operateur d'egalité pour la classe Strategie.
     def __eq__(self, other):
         try :
-            if self.informations == other.informations :
+            if self._informations == other._informations :
                 return True
         except :
             print('Vous ne comparez pas 2 instances de la classe Strategie')

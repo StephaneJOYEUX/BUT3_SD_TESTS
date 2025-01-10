@@ -50,6 +50,17 @@ class Navire():
         self.symbole = self.nom[0].upper()
         # Affichage utile pour tester simplement (a supprimer quand le module de tests sera prêt).
 
+    def __eq__(self, other):
+        try :
+            if self.nom == other.nom and self.taille == other.taille :
+                return True
+            return False
+        except :
+            print("Vous ne comparez pas 2 instances de la classe Navire")
+
+    def __hash__(self):
+        return hash((self.nom, self.taille))
+
 
 class FactoryNavire():
     def __init__(self, nom: str, taille: int):
