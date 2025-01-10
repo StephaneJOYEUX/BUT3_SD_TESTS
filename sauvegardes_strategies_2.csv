@@ -1,1 +1,6 @@
 mode_jeu,index_strategie,nom,taille,coord_x,coord_y,orientation
+Normal,1,sous-marin,3,1,1,S
+Normal,2,cuirassé,4,2,2,S
+Normal,3,torpilleur,2,3,3,S
+Normal,4,porte-avions,5,4,4,S
+Normal,5,frégate,3,5,5,S

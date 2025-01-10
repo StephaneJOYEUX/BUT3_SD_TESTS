@@ -22,7 +22,6 @@ class TestChoixStrategie(TestCase):
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}
         self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires, test=True)
 
-
         # avant d'ecrire dans le fichier de sauvegarde, il faut set_artificiellement le self.referentiel
         self.choix_strategie.ecrire_fichier_sauvegarde()
 
@@ -32,7 +31,6 @@ class TestChoixStrategie(TestCase):
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}
         self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires, test=True)
         self.choix_strategie.lire_fichier_sauvegarde()
-        print(self.choix_strategie.get_referentiel())
 
     def test_intialisation(self):
         # Initialisation

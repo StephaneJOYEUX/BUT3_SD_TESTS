@@ -333,7 +333,10 @@ class ChoixStrategie_2() :
         if choix == 'creer' :
             # Appel de la classe CreationStrategie() -> lancement du code de création
             # Appel de la methode get_instance_strategie() qui retourne l'instance de la classe Strategie() créée.
-            self.strategie = FactoryCreationStrategie_2(self.navires, self.instance_grille).get_instance_strategie()
+            creation_strategie = FactoryCreationStrategie_2(self.navires, self.instance_grille)
+            self.strategie = creation_strategie.get_instance_strategie()
+            print(type(creation_strategie))
+            print(type(self.strategie))
 
             # Création de la chaine rentrée ensuite en paramètre de la fonction input()
             choix_action_enregistrement = "Voulez-vous enregistrer la stratégie créée ?"
@@ -345,7 +348,11 @@ class ChoixStrategie_2() :
                 # il s'agit ici des informations permettant d'instancier la classe Strategie
                 new_inputs_strategie = self.strategie.get_informations()
                 for line in new_inputs_strategie.values :
-                    new_data = [self.mode_jeu, max(self.referentiel["index_strategie"])+1] + list(line)
+                    try :
+                        index_strategie = max(self.referentiel["index_strategie"])
+                    except :
+                        index_strategie = 0
+                    new_data = [self.mode_jeu, index_strategie+1] + list(line)
                     self.referentiel.loc[len(self.referentiel.index)] = new_data
 
                 print("La stratégie a bien été enregistrée.")
@@ -359,7 +366,7 @@ class ChoixStrategie_2() :
             print("")
 
             self.instance_grille.create()
-            self.strategie.placement_navires_joueur(self.instance_grille.plateau, self.strategie.informations)
+            self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
             afficher_grille(self.instance_grille.plateau)
             return True
 

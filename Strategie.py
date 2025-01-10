@@ -205,8 +205,11 @@ class Strategie_2():
         # Il ne peut pas y avoir de Navire identiques du à la propriété ensembliste des sets en Python
         if navires == None :
             navires = self.navires
+        # le nombre de navires dans les informations de la strategie rentrés en paramètre peut ne pas être forcement
+        # égal au nombre de navires dans le set : navires
+        if self.complete :
+            self.verifier_correspondance_parametres_navires()
 
-        self.verifier_correspondance_parametres_navires()
         self._navires = navires
 
 

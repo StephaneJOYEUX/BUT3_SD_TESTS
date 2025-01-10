@@ -302,7 +302,6 @@ class CreationStrategie_2():
         # il faut boucler sur tous les navires du référentiel
         # on ne peut pas choisir de ne pas placer un navire, c'est impossible !
         for navire in self.navires :
-            print(type(navire))
             print(len(self.inputs_strategie.index))
             new_data =self.input_donnees_placement_navire(navire)
             print(new_data)
@@ -334,7 +333,7 @@ class CreationStrategie_2():
         nom = navire.get_nom()
         taille = navire.get_taille()
 
-        print(f'Choisissez les caractéritiques du navire suivant : {nom}.')
+        print(f'Choisissez les caractéritiques du navire suivant : {nom} (longueur : {taille}).')
         coord_valides = False
 
         while not coord_valides:
@@ -459,7 +458,8 @@ class FactoryCreationStrategie_2():
         return self.strategie
 
     def __init__(self, navires : set,grille = Grille(10,10), test : bool = False):
-        self.strategie = CreationStrategie_2(navires, grille, test)
-        self.strategie.set_navires()
-        self.strategie.set_grille()
-        self.strategie.creer_strategie()
+        self.creation_strategie = CreationStrategie_2(navires, grille, test)
+        self.creation_strategie.set_navires()
+        self.creation_strategie.set_grille()
+        self.creation_strategie.creer_strategie()
+        self.strategie = self.creation_strategie.get_instance_strategie()
