@@ -266,6 +266,8 @@ class Strategie_2():
                 informations_navires = informations.loc[i]
                 #print(informations_navires)
                 if not self.placement_un_navire(plateau, informations_navires) :
+                    # Ré-itialisation du plateau
+                    self._plateau= self._grille.reinit_plateau()
                     return False
             return True
         except :
@@ -274,21 +276,21 @@ class Strategie_2():
 
     # fonction permettant de placer un navire sur la grille
     # retourne un booléen pour indiquer si le navire a correctement été placé ou non
-    def placement_un_navire(self, plateau, informations):
+    def placement_un_navire(self, plateau, informations_navire):
         # définition des variables propres au placement d'un navire
-        taille_navire = informations.loc["taille"]
+        taille_navire = informations_navire.loc["taille"]
 
         # Pour les coordonnées, il faut retirer 1 afin d'être en raccord avec l'idexation de la grille.
         # Il est plus simple de modifier ça ici qu'avant car avant, l'information est accessible par les joueurs et ce '-1'
         # n'est pas compréhensible pour tous
-        coord_ligne = informations.loc["coord_x"]-1
-        coord_colonne = informations.loc["coord_y"]-1
-        orientation = informations.loc["orientation"]
+        coord_ligne = informations_navire.loc["coord_x"]-1
+        coord_colonne = informations_navire.loc["coord_y"]-1
+        orientation = informations_navire.loc["orientation"]
 
         # variable associée au navire :
         navire : None | Navire = None
         for navire_set in self.navires :
-            if navire_set.get_nom() == informations.loc["nom"] :
+            if navire_set.get_nom() == informations_navire.loc["nom"] :
                 navire = navire_set
                 break
 
@@ -311,7 +313,7 @@ class Strategie_2():
                 coord_colonne += 1
             else :
                 coord_colonne -= 1
-                
+
         return True
 
 
@@ -319,8 +321,10 @@ class Strategie_2():
     def affichage_strategie(self):
         if self.verifier_validite() :
             afficher_grille(self.grille.plateau)
+            return True
         else:
             print('Stratégie non valide !')
+            return False
 
 
     # redefinition de l'operateur d'egalité pour la classe Strategie.

@@ -234,3 +234,21 @@ class TestGrille(unittest.TestCase) :
                 afficher_couple_grilles(self.grille1.plateau, self.grille2.plateau))
         except ValueError as current_error :
             self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
+
+
+    # Tests fonction : reinit_plateau
+    def test_reinit_plateau_cas_nominal(self):
+        # initialisation d'une grille
+        self.grille = Grille(10, 10)
+        # Ne pas appeler la methode 'create' ! elle fait appelle à la méthode que nous souhaitons tester !
+
+        self.assertEqual([['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+                          ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']], self.grille.reinit_plateau())

@@ -65,6 +65,10 @@ class Grille():
         self.plateau = []
 
 
+    def reinit_plateau(self):
+        self.create()
+        return self.plateau
+
 
     # Créer une grille de jeu:
     def create(self):
@@ -89,6 +93,7 @@ class Grille():
             self.plateau.append([])
             for j in range(self.__nb_colonnes):
                 self.plateau[i].append("-")
+
         return True
 
 
