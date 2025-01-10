@@ -24,6 +24,7 @@ Tests : (à programmer et automatiser)
 import pandas as pd
 
 from Grille import Grille, afficher_grille
+from Navire import Navire
 from copy import deepcopy
 
 
@@ -207,31 +208,33 @@ class Strategie_2():
         self._navires = navires
 
 
-
     def set_informations(self, informations = None):
         if informations == None :
             informations = self.informations
         self._informations = informations
+
 
     def set_grille(self, grille = None):
         if grille == None :
             grille = self.grille
         self._grille = grille
         self._grille.create()
+        self._plateau = self._grille.plateau
 
 
     # Constructeur
     def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10)):
-        # initialisation variables privées
+        # Variables privées
         self._grille : Grille
         self._navires : set
         self._infomations : pd.DataFrame
 
-        # variables publiques
+        # Variables publiques
         self.navires = navires
         self.informations = inputs_strategie
         self.grille = Grille
 
+        # Test de validité à l'initialisation
         if len(self.navires) != len(self.informations) :
             raise ValueError("Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.")
 
@@ -249,8 +252,7 @@ class Strategie_2():
     # Elle nous permet, à chaque ajout de données dans l'objet strategie, de vérifier que ces données sont valides.
     # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
-        # à modifier, on ne vas pas afficher le message de validation a chaque itération de la boucle dans créer stratégie...
-        if self.placement_navires_joueur(self._grille.plateau, self.informations):
+        if self.placement_navires(self._grille.get_plateau(), self.informations):
             return True
         else :
             return False
@@ -258,10 +260,12 @@ class Strategie_2():
 
     # boucle sur tous les navire de la strategie et essaie de les placer dans la grille
     # retourne un booléen pour indiquer si les navires ont correctement été placés ou non
-    def placement_navires_joueur(self, grille, strategie):
+    def placement_navires(self, plateau, informations : pd.DataFrame):
         try :
-            for navire in strategie.keys():
-                if not self.placement_un_navire(grille, strategie, navire) :
+            for i in range(len(informations)) :
+                informations_navires = informations.loc[i]
+                #print(informations_navires)
+                if not self.placement_un_navire(plateau, informations_navires) :
                     return False
             return True
         except :
@@ -270,39 +274,44 @@ class Strategie_2():
 
     # fonction permettant de placer un navire sur la grille
     # retourne un booléen pour indiquer si le navire a correctement été placé ou non
-    def placement_un_navire(self, grille, strategie, navire):
+    def placement_un_navire(self, plateau, informations):
         # définition des variables propres au placement d'un navire
-        taille_navire = strategie[navire][0]
+        taille_navire = informations.loc["taille"]
 
         # Pour les coordonnées, il faut retirer 1 afin d'être en raccord avec l'idexation de la grille.
         # Il est plus simple de modifier ça ici qu'avant car avant, l'information est accessible par les joueurs et ce '-1'
         # n'est pas compréhensible pour tous
-        coord_ligne = strategie[navire][1]-1
-        coord_colonne = strategie[navire][2]-1
-        sens = strategie[navire][3]
+        coord_ligne = informations.loc["coord_x"]-1
+        coord_colonne = informations.loc["coord_y"]-1
+        orientation = informations.loc["orientation"]
 
-        if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1] :
-            grille[coord_ligne][coord_colonne] = self.navires[navire][1]
-            taille_navire -= 1
-        else :
-            return False
+        # variable associée au navire :
+        navire : None | Navire = None
+        for navire_set in self.navires :
+            if navire_set.get_nom() == informations.loc["nom"] :
+                navire = navire_set
+                break
+
 
         # Cette boucle permet d'ajouter l'ensemble du navire à la grille si la taille du navire est >1.
         while taille_navire != 0 :
-            if sens == 'N':
-                coord_ligne -= 1
-            elif sens == 'S':
-                coord_ligne += 1
-            elif sens == 'E':
-                coord_colonne += 1
-            else :
-                coord_colonne -= 1
-
-            if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1]:
-                grille[coord_ligne][coord_colonne] = self.navires[navire][1]
+            # Modification du symbole dans le plateau de la grille.
+            if plateau[coord_ligne][coord_colonne] == '-' or plateau[coord_ligne][
+                coord_colonne] == navire.get_symbole():
+                plateau[coord_ligne][coord_colonne] = navire.get_symbole()
                 taille_navire -= 1
             else:
                 return False
+
+            if orientation == 'N':
+                coord_ligne -= 1
+            elif orientation == 'S':
+                coord_ligne += 1
+            elif orientation == 'E':
+                coord_colonne += 1
+            else :
+                coord_colonne -= 1
+                
         return True
 
 

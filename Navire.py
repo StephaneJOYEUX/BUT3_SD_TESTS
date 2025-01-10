@@ -57,3 +57,6 @@ class FactoryNavire():
         self.navire.set_nom()
         self.navire.set_taille()
         self.navire.set_symbole()
+
+    def get_navire(self):
+        return self.navire

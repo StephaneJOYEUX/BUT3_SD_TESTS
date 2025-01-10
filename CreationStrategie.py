@@ -229,16 +229,40 @@ class CreationStrategie():
 import pandas as pd
 
 class CreationStrategie_2():
-    def __init__(self, navires : dict,Grille = Grille(10,10), test : bool = False):
-        self.navires = navires
+    # Getters
 
-        self.grille = Grille
-        self.grille.create()
+
+    # Setters
+    def set_navires(self, navires = None):
+        if navires == None :
+            navires = self.navires
+        self._navires = navires
+
+    def set_grille(self, grille = None):
+        if grille == None :
+            grille = self.grille
+        self._grille = grille
+        self._grille.create()
 
         self.premiere_ligne_grille = 1
         self.derniere_ligne_grille = self.grille.get_nb_lignes()
         self.premiere_colonne_grille = 1
         self.derniere_colonne_grille = self.grille.get_nb_colonne()
+
+
+    def __init__(self, navires : set,Grille = Grille(10,10), test : bool = False):
+        # Variables privées
+        self._navires : set
+        self._grille : Grille
+
+        # Variables publiques
+        self.navires = navires
+        self.grille = Grille
+
+        self.premiere_ligne_grille : int
+        self.derniere_ligne_grille : int
+        self.premiere_colonne_grille : int
+        self.derniere_colonne_grille : int
 
         self.inputs_strategie = pd.DataFrame({"nom" : [], "taille":[], "coord_x":[], "coord_y":[], "orientation": []})
 
