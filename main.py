@@ -9,6 +9,8 @@ Elle permet de regrouper les phases d'initialisation et de jeu :
 
 La fin de partie est gérée dans la classe BatailleNavale().
 '''
+import os
+
 import pandas as pd
 
 from ChoixStrategie import ChoixStrategie
@@ -31,6 +33,7 @@ def choix_nom_et_strategie_joueur(numero_joueur):
     choix_valide_joueur = False
 
     while not choix_valide_joueur :
+        os.system('cls')
         pseudo_joueur = input(f"Joueur {numero_joueur}, quel est votre pseudo ? \n")
 
         try :

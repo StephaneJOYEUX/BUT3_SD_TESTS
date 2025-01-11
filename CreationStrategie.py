@@ -98,7 +98,7 @@ class CreationStrategie():
             print(new_data)
             self.inputs_strategie.loc[len(self.inputs_strategie.index)] = new_data
             print(self.inputs_strategie)
-            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).strategie
+            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).get_strategie()
 
 
             while not self.instance_strategie.verifier_placabilite() :

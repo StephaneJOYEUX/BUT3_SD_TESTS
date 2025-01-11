@@ -114,8 +114,7 @@ class ChoixStrategie() :
             # Appel de la methode get_instance_strategie() qui retourne l'instance de la classe Strategie() créée.
             creation_strategie = FactoryCreationStrategie(self.navires, self.instance_grille)
             self.strategie = creation_strategie.get_instance_strategie()
-            print(type(creation_strategie))
-            print(type(self.strategie))
+
 
             # Création de la chaine rentrée ensuite en paramètre de la fonction input()
             choix_action_enregistrement = "Voulez-vous enregistrer la stratégie créée ?"
@@ -148,6 +147,8 @@ class ChoixStrategie() :
             self.instance_grille.create()
             self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
             afficher_grille(self.instance_grille.plateau)
+            # permet au joueur d'apprécier l'affichage de sa strategie et l'input sert aussi de confirmation
+            input("Tapez 'entrer' pour continuer\n")
             return True
 
         elif choix == 'choisir':
@@ -176,23 +177,22 @@ class ChoixStrategie() :
                     choix_numero_strategie = input("Quelle stratégie voulez-vous choisir ?  (Choisir une numéro de stratégie)\n")
                     print("")
 
-                    #try :
-                    choix_numero_strategie = int(choix_numero_strategie)
+                    try :
+                        choix_numero_strategie = int(choix_numero_strategie)
 
-                    # On associe la strategie choisie en input à la variable locale strategie_choisie.
-                    print("AAAAAAAAAAAAA")
-                    inputs_strategie_choisie = self.referentiel[self.referentiel.index_strategie == choix_numero_strategie]
+                        # On associe la strategie choisie en input à la variable locale strategie_choisie.
+                        inputs_strategie_choisie = self.referentiel[self.referentiel.index_strategie == choix_numero_strategie]
 
-                    strategie_choisie = FactoryStrategie(inputs_strategie_choisie, self.navires, self.instance_grille).strategie
-                    print(strategie_choisie.get_informations())
+                        strategie_choisie = FactoryStrategie(inputs_strategie_choisie, self.navires, self.instance_grille).strategie
+                        print(strategie_choisie.get_informations())
 
-                    valider_choix_numero_strategie = True
-                    """except IndexError :
+                        valider_choix_numero_strategie = True
+                    except IndexError :
                         print(f"La stratégie n°{choix_numero_strategie} n'existe pas !")
                         print("Choisissez une stratégie existante.")
                     except :
                         print("Erreur de saisie !")
-                        print('Choisissez le numéro de la stratégie parmis les stratégie existantes.')"""
+                        print('Choisissez le numéro de la stratégie parmis les stratégie existantes.')
 
 
 
@@ -223,6 +223,8 @@ class ChoixStrategie() :
             self.instance_grille.create()
             self.strategie.placement_navires(self.instance_grille.plateau, self.strategie.informations)
             afficher_grille(self.instance_grille.plateau)
+            # permet au joueur d'apprécier l'affichage de sa strategie et l'input sert aussi de confirmation
+            input("\nTapez 'entrer' pour continuer\n")
             return True
 
 

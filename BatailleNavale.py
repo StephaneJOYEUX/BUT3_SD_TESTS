@@ -21,7 +21,7 @@ Remarque :
 import os
 import random
 from copy import deepcopy
-from Grille import Grille, afficher_grille, afficher_couple_grilles
+from Grille import Grille, afficher_couple_grilles
 from Strategie import Strategie
 
 # Declariation et initialisation des variables utilisées dans la classe :
@@ -46,8 +46,8 @@ class BatailleNavale:
 
         # La methode instanciation strategie n'est peut etre pas utile ici
         # A voir avec des test : l'important est que les self.strategie soit des instance de la classe Strategie().
-        self.strategie_j1 = self.instansiation_strategie(strategie_joueur1)
-        self.strategie_j2 = self.instansiation_strategie(strategie_joueur2)
+        self.strategie_j1 = strategie_joueur1
+        self.strategie_j2 = strategie_joueur2
 
 
         # Création des grilles d'attaque et de défense de chaque joueur
@@ -61,9 +61,6 @@ class BatailleNavale:
 
         self.grille_def_j2 = deepcopy(self.modele_plateau)
 
-
-        afficher_grille(self.grille_def_j1)
-
         # Placement des navires pour chacun des joueurs
         self.strategie_j1.placement_navires(self.grille_def_j1, self.strategie_j1.informations)
         self.strategie_j2.placement_navires(self.grille_def_j2, self.strategie_j2.informations)
@@ -71,35 +68,9 @@ class BatailleNavale:
 
         # Permet de gérer le cas où l'on se trouve dans le code de test ou non -> viter les inputs
         if not test :
-            # Code optionel :
-            print(f"{self.pseudo_j1}, voici vos grilles :\n")
-            afficher_couple_grilles(self.grille_def_j1, self.grille_att_j1)
-
-            print('-----')
-
-            print(f"{self.pseudo_j2}, voici vos grilles :\n")
-            afficher_couple_grilles(self.grille_def_j2, self.grille_att_j2)
-
             # Activation de la boucle principale permettant de gerer le tour par tour.
             self.jeu()
 
-
-
-    # Règlage du problème du 'niveau' différent entre les classes Strategie() et CreationStrategie().
-    # Fonction peut etre inutile -> a verifier avec les tests
-    def instansiation_strategie(self, inputs_strategie_joueur):
-        # Pour résoudre le problème, on applique une méthode propre à la classe Strategie,
-        # S'il y a une erreur, on sait qu'il faut changer d'objet :
-        # mettre CreationStrategie.instance_strategie qui une instance de la classe Strategie().
-        print(type(inputs_strategie_joueur))
-        try :
-            strategie_joueur = inputs_strategie_joueur
-            grille_test = deepcopy(self.modele_plateau)
-            strategie_joueur.placement_navires(grille_test, strategie_joueur.get_informations())
-        except :
-            print(inputs_strategie_joueur.instance_strategie)
-            strategie_joueur = inputs_strategie_joueur.instance_strategie
-        return strategie_joueur
 
 
     # Permet de vérifier si un bateau est coulé
@@ -181,14 +152,14 @@ class BatailleNavale:
                 
                 if numJoueur == 1:
                     os.system('cls')
-                    input(f"Au tour du Joueur {self.pseudo_j1} (taper 'entrer' pour continuer)")
+                    input(f"Au tour du Joueur {self.pseudo_j1} (tapez 'entrer' pour continuer)\n")
                     os.system('cls')
                     print("Grille de jeu actuelle :")
                     grille_adverse = self.grille_def_j2
                     afficher_couple_grilles(self.grille_def_j1, self.grille_att_j1)
                 else:
                     os.system('cls')
-                    input(f"Au tour du Joueur {self.pseudo_j2} (taper 'entrer' pour continuer)")
+                    input(f"Au tour du Joueur {self.pseudo_j2} (tapez 'entrer' pour continuer)\n")
                     os.system('cls')
                     print("Grille de jeu actuelle :")
                     grille_adverse = self.grille_def_j1
@@ -208,7 +179,7 @@ class BatailleNavale:
                     if self.tous_les_navires_ont_coule(grille_adverse) :
                         return True
 
-                input("taper 'entrer' pour continuer")
+                input("tapez 'entrer' pour continuer")
                 os.system('cls')
             return False
 
