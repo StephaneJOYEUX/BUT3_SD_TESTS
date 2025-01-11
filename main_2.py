@@ -9,9 +9,10 @@ Elle permet de regrouper les phases d'initialisation et de jeu :
 
 La fin de partie est gérée dans la classe BatailleNavale().
 '''
+import pandas as pd
 
-from ChoixStrategie import ChoixStrategie
-from Strategie import Strategie
+from ChoixStrategie import ChoixStrategie_2
+from Strategie import Strategie, Strategie_2, FactoryStrategie_2
 from BatailleNavale import BatailleNavale
 from Grille import Grille
 from Navire import FactoryNavire
@@ -48,7 +49,7 @@ def choix_nom_et_strategie_joueur(numero_joueur):
             print("Ce pseudo est privatisé, vous ne pouvez pas l'utiliser. Choisissez en un autre :\n")
 
     print("")
-    strategie_joueur = ChoixStrategie(pseudo_joueur, navires=navires).get_strategie()
+    strategie_joueur = ChoixStrategie_2(pseudo_joueur, navires=navires).get_strategie()
 
     return [pseudo_joueur, strategie_joueur]
 
@@ -62,7 +63,16 @@ if __name__ == "__main__":
 
 
     ### Initialisation des navires - a modifier en fonction des mode de jeux
-    navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
+    #navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
+
+    cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
+    fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
+    sous_marin = FactoryNavire(nom="sous-marin", taille=3).get_navire()
+    torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
+    porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
+
+    navires = {torpilleur, sous_marin, fregate, cuirasse, porte_avions}
+
 
     ### Choix de l'adversaire
     choix_adversaire=''
@@ -112,12 +122,12 @@ if __name__ == "__main__":
         # La privatisation (théorique) du nom permet dans la classe BatailleNavale() de passer le jeu de l'ordinateur en auto.
         nom_j2 = '_Ordinateur'
         # modifier ici, popur que l'ordinateur est une strategie aléatoire parmis les stratégies enregistrées.
-        strategie_j2 = Strategie({'Torpilleur': [2, 1, 1, 'S'],
-                                  'Sous-marin': [3, 5, 1, 'S'],
-                                  'Frégate': [3, 3, 5, 'E'],
-                                  'Cuirassé': [4, 5, 6, 'O'],
-                                  'Porte-avions': [5, 9, 9, 'N']},
+        data_inputs_strategie = {"nom": ["torpilleur", "sous-marin", "frégate", "cuirassé", "porte-avions"],
+                                 "taille": [2, 3, 3, 4, 5], "coord_x": [1, 5, 3, 5, 9],
+                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
+        inputs_strategie = pd.DataFrame(data_inputs_strategie)
+        strategie_j2 = FactoryStrategie_2(inputs_strategie,
                                  navires,
-                                 Grille(10, 10))
+                                 Grille(10, 10)).get_strategie()
 
     BatailleNavale(navires, strategie_j1, strategie_j2, Grille(10,10),nom_j1, nom_j2)

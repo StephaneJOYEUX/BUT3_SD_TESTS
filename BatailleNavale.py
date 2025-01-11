@@ -26,12 +26,12 @@ from Strategie import Strategie
 
 # Declariation et initialisation des variables utilisées dans la classe :
 class BatailleNavale:
-    def __init__(self, navires: object, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
-                 instance_grille: object = Grille(10, 10), pseudo_j1 : str = 'Ordinateur 1',
+    def __init__(self, navires: set, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
+                 instance_grille: Grille = Grille(10, 10), pseudo_j1 : str = 'Ordinateur 1',
                  pseudo_j2: str = 'Ordinateur 2',
-                 test: bool = False) -> object:
+                 test: bool = False) :
 
-        self.navires = navires  # de la forme : {nom : [taille, symbole]}
+        self.navires = navires  # de la forme : {Navire}
         # répertoire de tout les navires de chacun des joueurs à placer sur la grille
         # Avec taille : la taille du navire sur la grille
         # Et symbole : sa lettre représentative dans la grille de jeu
@@ -40,7 +40,6 @@ class BatailleNavale:
         self.instance_grille.create()
         self.modele_plateau = self.instance_grille.plateau
         # afficher_grille(self.modele_plateau)
-
 
         self.pseudo_j1 = pseudo_j1
         self.pseudo_j2 = pseudo_j2
@@ -66,8 +65,8 @@ class BatailleNavale:
         afficher_grille(self.grille_def_j1)
 
         # Placement des navires pour chacun des joueurs
-        self.strategie_j1.placement_navires_joueur(self.grille_def_j1, self.strategie_j1.informations)
-        self.strategie_j2.placement_navires_joueur(self.grille_def_j2, self.strategie_j2.informations)
+        self.strategie_j1.placement_navires(self.grille_def_j1, self.strategie_j1.informations)
+        self.strategie_j2.placement_navires(self.grille_def_j2, self.strategie_j2.informations)
 
 
         # Permet de gérer le cas où l'on se trouve dans le code de test ou non -> viter les inputs
@@ -88,22 +87,23 @@ class BatailleNavale:
 
     # Règlage du problème du 'niveau' différent entre les classes Strategie() et CreationStrategie().
     # Fonction peut etre inutile -> a verifier avec les tests
-    def instansiation_strategie(self, input_strategie_joueur):
+    def instansiation_strategie(self, inputs_strategie_joueur):
         # Pour résoudre le problème, on applique une méthode propre à la classe Strategie,
         # S'il y a une erreur, on sait qu'il faut changer d'objet :
         # mettre CreationStrategie.instance_strategie qui une instance de la classe Strategie().
+        print(type(inputs_strategie_joueur))
         try :
-            strategie_joueur = input_strategie_joueur
+            strategie_joueur = inputs_strategie_joueur
             grille_test = deepcopy(self.modele_plateau)
-            strategie_joueur.placement_navires_joueur(grille_test, strategie_joueur.informations)
+            strategie_joueur.placement_navires(grille_test, strategie_joueur.get_informations())
         except :
-            print(input_strategie_joueur.instance_strategie)
-            strategie_joueur = input_strategie_joueur.instance_strategie
+            print(inputs_strategie_joueur.instance_strategie)
+            strategie_joueur = inputs_strategie_joueur.instance_strategie
         return strategie_joueur
 
 
     # Permet de vérifier si un bateau est coulé
-    def navire_coule(self,initiale, grille):
+    def navire_coule(self, initiale, grille):
         for ligne in grille:
             if initiale in ligne:
                 return False   
@@ -112,8 +112,8 @@ class BatailleNavale:
 
     # Fonction de vérification de la victoire
     def tous_les_navires_ont_coule(self,grille):
-        for navire in self.navires.values():
-                if not self.navire_coule(navire[1],grille):
+        for navire in self.navires:
+                if not self.navire_coule(navire.get_symbole(),grille):
                     return False
         return True
 
