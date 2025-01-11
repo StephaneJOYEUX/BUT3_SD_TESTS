@@ -59,6 +59,7 @@ def choix_nom_et_strategie_joueur(numero_joueur):
 
 
 if __name__ == "__main__":
+    os.system('cls')
     print('Bienvenue dans le jeu de Bataille Navale !')
 
     ### Choix mode de jeu (normal - 10*10, blitz - 5*5, personnalisé - dépend des choix du joueur)
