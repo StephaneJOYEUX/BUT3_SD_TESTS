@@ -1,9 +1,8 @@
 from unittest import TestCase
-from Strategie import Strategie_2, FactoryStrategie
-from CreationStrategie import CreationStrategie_2
+from Strategie import Strategie, FactoryStrategie
 from Navire import Navire, FactoryNavire
 from Grille import Grille
-from ChoixStrategie import ChoixStrategie_2
+from ChoixStrategie import ChoixStrategie
 
 class TestChoixStrategie(TestCase):
     def setUp(self):
@@ -20,7 +19,7 @@ class TestChoixStrategie(TestCase):
     def test_ecriture_fichier_sauvegarde(self):
         # Initialisation
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}
-        self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires, test=True)
+        self.choix_strategie = ChoixStrategie("mon_pseudo", self.navires, test=True)
 
         # avant d'ecrire dans le fichier de sauvegarde, il faut set_artificiellement le self.referentiel
         self.choix_strategie.ecrire_fichier_sauvegarde()
@@ -29,12 +28,12 @@ class TestChoixStrategie(TestCase):
     def test_lecture_fichier_sauvegarde(self):
         # Initialisation
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}
-        self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires, test=True)
+        self.choix_strategie = ChoixStrategie("mon_pseudo", self.navires, test=True)
         self.choix_strategie.lire_fichier_sauvegarde()
 
     # a modifier
     def test_intialisation(self):
         # Initialisation
         self.navires = {self.torpilleur, self.sous_marin, self.fregate, self.cuirasse, self.porte_avions}
-        self.choix_strategie = ChoixStrategie_2("mon_pseudo", self.navires)
+        self.choix_strategie = ChoixStrategie("mon_pseudo", self.navires)
 

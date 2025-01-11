@@ -2,68 +2,14 @@ import unittest
 
 import pandas as pd
 
-from Strategie import Strategie, Strategie_2
+from Strategie import Strategie
 from Navire import Navire, FactoryNavire
 from Grille import Grille
 
 
+
+
 class TestStrategie(unittest.TestCase) :
-    def setUp(self) -> None:
-        self.cuirasse = Navire(nom="cuirassé", taille=4)
-        self.fregate = Navire(nom="frégate", taille=3)
-        self.sous_marin = Navire(nom="sous-marin", taille=3)
-        self.torpilleur = Navire(nom="torpilleur", taille=2)
-        self.porte_avions = Navire(nom="porte-avions", taille=5)
-
-        self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
-
-    # Setters & Getters
-    def test_set_navires_cas_nominal(self)->None:
-        navires = {'Torpilleur': [2, 'T'], 'Sous-marin': [3, 'S'], 'Frégate': [3, 'F'], 'Cuirassé': [4, 'C'],
-                   'Porte-avions': [5, 'P']}
-        inputs_strategie = {'Torpilleur': [2, 1, 1, 'S'],
-                                  'Sous-marin': [3, 5, 1, 'S'],
-                                  'Frégate': [3, 3, 5, 'E'],
-                                  'Cuirassé': [4, 5, 6, 'O'],
-                                  'Porte-avions': [5, 9, 9, 'N']}
-        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
-
-        self.strategie.set_navires(navires=self.strategie.navires)
-        self.strategie.set_informations(self.strategie.informations)
-
-        self.assertEqual({'Torpilleur': [2, 'T'], 'Sous-marin': [3, 'S'], 'Frégate': [3, 'F'], 'Cuirassé': [4, 'C'],
-                   'Porte-avions': [5, 'P']}, self.strategie.get_navires())
-        self.assertEqual({'Torpilleur': [2, 1, 1, 'S'],
-                                  'Sous-marin': [3, 5, 1, 'S'],
-                                  'Frégate': [3, 3, 5, 'E'],
-                                  'Cuirassé': [4, 5, 6, 'O'],
-                                  'Porte-avions': [5, 9, 9, 'N']}, self.strategie.get_informations())
-
-
-    def test_set_navires_cas_navires_similaires(self)->None:
-        navires = {'Torpilleur': [2, 'T'], 'Sous-marin': [3, 'S'], 'Frégate': [3, 'F'], 'Cuirassé': [4, 'C'],
-                   'Porte-avions': [5, 'P'], 'Sous-marin': [4, 'S']}
-        inputs_strategie = {'Torpilleur': [2, 1, 1, 'S'],
-                                  'Sous-marin': [3, 5, 1, 'S'],
-                                  'Frégate': [3, 3, 5, 'E'],
-                                  'Cuirassé': [4, 5, 6, 'O'],
-                                  'Porte-avions': [5, 9, 9, 'N']}
-        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
-
-        self.strategie.set_navires(navires=self.strategie.navires)
-        self.strategie.set_informations(self.strategie.informations)
-
-        self.assertEqual({'Torpilleur': [2, 'T'], 'Sous-marin': [3, 'S'], 'Frégate': [3, 'F'], 'Cuirassé': [4, 'C'],
-                   'Porte-avions': [5, 'P'], 'Sous-marin': [4, 'S']}, self.strategie.get_navires())
-        self.assertEqual({'Torpilleur': [2, 1, 1, 'S'],
-                                  'Sous-marin': [3, 5, 1, 'S'],
-                                  'Frégate': [3, 3, 5, 'E'],
-                                  'Cuirassé': [4, 5, 6, 'O'],
-                                  'Porte-avions': [5, 9, 9, 'N']}, self.strategie.get_informations())
-
-
-
-class TestStrategie_2(unittest.TestCase) :
     def setUp(self) -> None:
         self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
         self.fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
@@ -83,7 +29,7 @@ class TestStrategie_2(unittest.TestCase) :
                                 "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
 
         ## Tests
@@ -99,7 +45,7 @@ class TestStrategie_2(unittest.TestCase) :
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
         try:
-            self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+            self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
             self.strategie.set_navires()
             raise ValueError("Test non passé !")
         except ValueError as current_error:
@@ -117,7 +63,7 @@ class TestStrategie_2(unittest.TestCase) :
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
         try :
-            self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+            self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
             self.strategie.set_navires()
             raise ValueError("Test non passé !")
         except ValueError as current_error :
@@ -135,7 +81,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_informations()
         # test de l'assertion d'égalité de Dataframe avec le module pandas.
         pd.testing.assert_frame_equal(inputs_strategie, self.strategie.get_informations())
@@ -150,7 +96,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_grille()
         grille_test = Grille(10,10)
         grille_test.create()
@@ -169,7 +115,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -197,7 +143,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 3, 5, 6, 9], "orientation": ["S", "O", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -228,7 +174,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -257,7 +203,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -287,7 +233,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 3, 5, 6, 9], "orientation": ["S", "O", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -317,7 +263,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -347,7 +293,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -363,7 +309,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -379,7 +325,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -397,7 +343,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "S", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()
@@ -417,7 +363,7 @@ class TestStrategie_2(unittest.TestCase) :
                                  "coord_y": [1, 1, 5, 6, 9], "orientation": ["S", "N", "E", "O", "N"]}
         inputs_strategie = pd.DataFrame(data_inputs_strategie)
 
-        self.strategie = Strategie_2(inputs_strategie=inputs_strategie, navires=navires)
+        self.strategie = Strategie(inputs_strategie=inputs_strategie, navires=navires)
         self.strategie.set_navires()
         self.strategie.set_informations()
         self.strategie.set_grille()

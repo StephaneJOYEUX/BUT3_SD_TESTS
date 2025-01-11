@@ -1,6 +1,6 @@
 from unittest import TestCase
 from Navire import Navire
-from CreationStrategie import CreationStrategie_2
+from CreationStrategie import CreationStrategie
 from Grille import Grille
 
 class TestCreationStrategie(TestCase) :
@@ -15,14 +15,14 @@ class TestCreationStrategie(TestCase) :
     # navires
     def test_set_navires_cas_nominal(self):
         self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
-        self.creation_strategie = CreationStrategie_2(navires=self.navires)
+        self.creation_strategie = CreationStrategie(navires=self.navires)
         self.creation_strategie.set_navires()
         self.assertEqual(self.navires, self.creation_strategie.get_navires())
 
     # grille
     def test_set_grille_cas_nominal(self):
         self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
-        self.creation_strategie = CreationStrategie_2(navires=self.navires)
+        self.creation_strategie = CreationStrategie(navires=self.navires)
         self.creation_strategie.set_grille()
         taille_x = 10
         taille_y = 10
