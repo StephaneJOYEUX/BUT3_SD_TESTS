@@ -57,7 +57,7 @@ from CreationStrategie import CreationStrategie, FactoryCreationStrategie
 
 
 class ChoixStrategie() :
-    def __init__(self, pseudo_joueur, navires, mode_jeu = "Normal",  Grille = Grille(10,10), test : bool = False):
+    def __init__(self, pseudo_joueur, navires, mode_jeu = "Normal",  grille = Grille(10,10), test : bool = False):
         self.mode_jeu : str = mode_jeu
         self.navires = navires
         self.referentiel : pd.DataFrame = pd.DataFrame({
@@ -69,19 +69,11 @@ class ChoixStrategie() :
             "coord_y": [],
             "orientation":[],
         })
-        self.lire_fichier_sauvegarde()
 
-        self.instance_grille=Grille
+        self.instance_grille=grille
         self.pseudo_joueur = pseudo_joueur
-
         self.strategie : Strategie
 
-        if not test :
-            # lancement de la méthode principale.
-            self.main()
-
-        # dernière méthode : écriture des données du référentiel dans le fichier de sauvegarde.
-        self.ecrire_fichier_sauvegarde()
 
     # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
@@ -264,3 +256,16 @@ class ChoixStrategie() :
 
     def get_strategie(self):
         return self.strategie
+
+
+
+class FactoryChoixStrategie():
+    def get_strategie(self):
+        return self.choix_strategie.get_strategie()
+
+    def __init__(self,  pseudo_joueur, navires, mode_jeu = "Normal",  grille = Grille(10,10), test : bool = False):
+        self.choix_strategie = ChoixStrategie(pseudo_joueur, navires, mode_jeu, grille, test)
+        self.choix_strategie.lire_fichier_sauvegarde()
+        if not test:
+            self.choix_strategie.main()
+        self.choix_strategie.ecrire_fichier_sauvegarde()

@@ -10,9 +10,8 @@ A faire pour la suite du projet :
 	
 	
 Etapes :
-	1. Modifier fin de partie => afficher quand une personne gagne & empecher le tour du joueur suivant.
-	2. Finir les tests des classes existantes.
-	3. Implémenter la nouvelle fonctionnalité : les modes de jeu. Répercuter les changements aux autres classes et réaliser les tests associés.
+	1. Finir les tests des classes existantes.
+	2. Implémenter la nouvelle fonctionnalité : les modes de jeu. Répercuter les changements aux autres classes et réaliser les tests associés.
 	
 	
 

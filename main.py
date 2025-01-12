@@ -13,11 +13,13 @@ import os
 
 import pandas as pd
 
-from ChoixStrategie import ChoixStrategie
+from ChoixStrategie import FactoryChoixStrategie
 from Strategie import Strategie, FactoryStrategie
 from BatailleNavale import BatailleNavale
 from Grille import Grille
-from Navire import FactoryNavire
+from Navire import FactoryNavire, Navire
+from ChoixModeJeu import FactoryChoixModeJeu
+
 
 # Fonction d'input.
 # Prend en parametre le n° du joueur.
@@ -25,7 +27,7 @@ from Navire import FactoryNavire
 # Appel de la classe ChoisirStrategie() pour le joueur concerné.
 # La fonction renvoie une liste qui contient le nom du joueur saisi
 # et sa strategie sous la forme d'une instance de la classe Strategie.
-def choix_nom_et_strategie_joueur(numero_joueur):
+def choix_nom_et_strategie_joueur(numero_joueur, navires : Navire, grille : Grille, mode_jeu : str):
     # initialisation de variables locales
     pseudo_joueur = ''
     # Le booléen choix_valide_joueur permet de gérer les cas d'erreur sur les inputs et d'y répondre de manière efficace :
@@ -52,7 +54,7 @@ def choix_nom_et_strategie_joueur(numero_joueur):
             print("Ce pseudo est privatisé, vous ne pouvez pas l'utiliser. Choisissez en un autre :\n")
 
     print("")
-    strategie_joueur = ChoixStrategie(pseudo_joueur, navires=navires).get_strategie()
+    strategie_joueur = FactoryChoixStrategie(pseudo_joueur, navires=navires, grille = grille, mode_jeu=mode_jeu).get_strategie()
 
     return [pseudo_joueur, strategie_joueur]
 
@@ -64,19 +66,12 @@ if __name__ == "__main__":
 
     ### Choix mode de jeu (normal - 10*10, blitz - 5*5, personnalisé - dépend des choix du joueur)
     # /!\ Cela implique une modification des classes de création et d'enregistrement de stratégie (prise en compte du mode de jeu)
-
+    choix_mode_jeu = FactoryChoixModeJeu()
 
     ### Initialisation des navires - a modifier en fonction des mode de jeux
-    #navires = {'Torpilleur': [2, 'T'], 'Sous-marin':[3, 'S'], 'Frégate':[3, 'F'], 'Cuirassé':[4, 'C'], 'Porte-avions':[5, 'P']}
-
-    cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
-    fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
-    sous_marin = FactoryNavire(nom="sous-marin", taille=3).get_navire()
-    torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
-    porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
-
-    navires = {torpilleur, sous_marin, fregate, cuirasse, porte_avions}
-
+    navires = choix_mode_jeu.get_navires()
+    grille = choix_mode_jeu.get_grille()
+    mode_jeu = choix_mode_jeu.get_mode_jeu()
 
     ### Choix de l'adversaire
     choix_adversaire=''
@@ -85,7 +80,6 @@ if __name__ == "__main__":
     # en redemandant à l'utilisateur de rentrer sa données en précisant pourquoi cela n'a pas marché la 1ère fois.
     choix_adversaire_valide = False
     while not choix_adversaire_valide :
-
         # Choix de l'adversaire + rajouter une gestion d'erreur + texte de réponse adapté à la variable.
         choix_adversaire = input("Voulez-vous jouer contre un joueur ou contre l'ordinateur ? (joueur / ordinateur)\n")
 
@@ -105,20 +99,20 @@ if __name__ == "__main__":
     ### Choix des stratégie -> appel de la classe ChoixStrategie()
     if choix_adversaire == 'joueur' :
         # 1er joueur
-        informations_j1 = choix_nom_et_strategie_joueur(1)
+        informations_j1 = choix_nom_et_strategie_joueur(1, navires=navires, grille=grille, mode_jeu=mode_jeu)
         nom_j1 = informations_j1[0]
         strategie_j1 = informations_j1[1]
 
         print("")
 
         # 2eme joueur
-        informations_j2 = choix_nom_et_strategie_joueur(2)
+        informations_j2 = choix_nom_et_strategie_joueur(2, navires=navires, grille=grille, mode_jeu=mode_jeu)
         nom_j2 = informations_j2[0]
         strategie_j2 = informations_j2[1]
 
     elif choix_adversaire == 'ordinateur':
         # 1er joueur
-        information_j1 = choix_nom_et_strategie_joueur(1)
+        information_j1 = choix_nom_et_strategie_joueur(1, navires=navires, grille=grille, mode_jeu=mode_jeu)
         nom_j1 = information_j1[0]
         strategie_j1 = information_j1[1]
 

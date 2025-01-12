@@ -1,15 +1,15 @@
 from unittest import TestCase
-from Navire import Navire
+from Navire import Navire, FactoryNavire
 from CreationStrategie import CreationStrategie
 from Grille import Grille
 
 class TestCreationStrategie(TestCase) :
     def setUp(self):
-        self.cuirasse = Navire(nom="cuirassé", taille=4)
-        self.fregate = Navire(nom="frégate", taille=3)
-        self.sous_marin = Navire(nom="sous-marin", taille=3)
-        self.torpilleur = Navire(nom="torpilleur", taille=2)
-        self.porte_avions = Navire(nom="porte-avions", taille=5)
+        self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
+        self.fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
+        self.sous_marin = FactoryNavire(nom="sous-marin", taille=3).get_navire()
+        self.torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
+        self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
     ## Setters & Getters (pour cette classes, il ne me semble pas qu'il existe des cas non-nominaux)
     # navires
