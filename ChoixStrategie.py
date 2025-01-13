@@ -77,13 +77,12 @@ class ChoixStrategie() :
 
     # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
-        # Ouverture du fichier + lecture des lignes une à une + fermeture du fichier.
-        self.referentiel = pd.read_csv('sauvegardes_strategies_2.csv', encoding="UTF-8")
+        self.referentiel = pd.read_csv('sauvegardes_strategies.csv', encoding="UTF-8")
 
 
     # On écrit le fichier de sauvegarde à partir des données du référentiel.
     def ecrire_fichier_sauvegarde(self):
-        self.referentiel.to_csv('sauvegardes_strategies_2.csv', index = False, encoding="UTF-8")
+        self.referentiel.to_csv('sauvegardes_strategies.csv', index = False, encoding="UTF-8")
 
 
     # Méthode principale qui appelle toutes les autres en fonction des choix du joueur.

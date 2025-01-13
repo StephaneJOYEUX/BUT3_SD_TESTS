@@ -1,5 +1,7 @@
+import pandas as pd
 from Grille import Grille
 from Navire import Navire, FactoryNavire
+
 
 class ChoixModeJeu() :
     # Getters
@@ -17,6 +19,14 @@ class ChoixModeJeu() :
         self._grille : Grille
         self._navires : Navire
         self._mode_jeu : str
+        self.save :pd.DataFrame = pd.DataFrame({
+            "nom":["Normal", "Blitz"],
+            "taille_grille_x":[10, 5],
+            "taille_grille_y": [10, 5],
+            "liste_navires": [{"torpilleur":2, "sous-marin":3, "frégate":3, "cuirassé":4, "porte-avion":5},
+                              {"torpilleur":2, "sous-marin":3, "cuirassé":4}]
+        })
+
 
         # construction des navires "classiques" présents dans les modes : "Normal" & "Blitz"
         self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
@@ -27,11 +37,12 @@ class ChoixModeJeu() :
 
     # Lecture du fichier de sauvegarde csv
     def lecture_sauvegarde(self):
-        pass
+        self.save = pd.read_csv('sauvegardes_mode_jeux.csv', encoding="UTF-8")
 
     # Ecriture dans le fichier csv
     def ecriture_sauvegarde(self):
-        pass
+        self.save.to_csv('sauvegardes_mode_jeux.csv', index = False, encoding="UTF-8")
+
 
     def main(self):
         choix_creation_valide = False
@@ -74,7 +85,9 @@ class ChoixModeJeu() :
                     print("vous avez choisi 3")
 
         elif choix_creation == "creer" :
-            pass
+            # input sur le nom du mode de jeu
+            # assertion sur les noms des modes de jeu existant, la longueur de l
+            self.ecriture_sauvegarde()
 
 class FactoryChoixModeJeu() :
     # Getters
