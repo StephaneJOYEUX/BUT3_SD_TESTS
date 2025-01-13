@@ -34,6 +34,7 @@ class ChoixModeJeu() :
         self.torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
         self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
+
     # Lecture du fichier de sauvegarde csv
     def lecture_sauvegarde(self):
         self.save = pd.read_csv('sauvegardes_mode_jeux.csv', encoding="UTF-8")
@@ -85,11 +86,9 @@ class ChoixModeJeu() :
 
                     choix_validation = 'n'
                     while not choix_validation == "o" :
-
                         liste_choix = self.choisir_mode_jeu_personnalise()
                         choix_mode_jeu_personnalise = liste_choix[0]
                         dict_navires = liste_choix[1]
-
 
                         # confirmation du choix du mode de jeu
                         choix_validation_valide = False
@@ -113,9 +112,20 @@ class ChoixModeJeu() :
         elif choix_creation == "creer" :
             # input sur le nom du mode de jeu
             # assertion sur les noms des modes de jeu existant.
-            self.ecriture_sauvegarde()
+            choix_nom_valide = False
+            while not choix_nom_valide :
+                try :
+                    choix_nom = input("Choisissez un nom pour ce mode de jeu :\n")
+                    assert choix_nom not in (set(self.save["nom"]))
+                    choix_nom_valide = True
+                except :
+                    print("\nSaisie non-valide !")
+                    print("Le nom que vous avez choisi existe déjà.\n")
 
+            # Faire appel ensuite a la classe CreationModeJeu
+            # /!\ aux critère de validité des différents mode de jeu.
 
+    # Methode de classe utilisé dans le main si le choix est 'choisir'
     def choisir_mode_jeu_personnalise(self):
         print("Pour obtenir plus d'information sur une stratégie, choississez la.")
         print(self.save[["nom", "taille_grille_x", "taille_grille_y", "nombre_navires"]])
@@ -140,6 +150,8 @@ class ChoixModeJeu() :
         print(df_navires)
 
         return [choix_mode_jeu_personnalise, dict_navires]
+
+
 
 class FactoryChoixModeJeu() :
     # Getters
