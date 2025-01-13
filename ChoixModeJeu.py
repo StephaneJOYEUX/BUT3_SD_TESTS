@@ -1,7 +1,7 @@
 import pandas as pd
 from Grille import Grille
 from Navire import Navire, FactoryNavire
-
+from ast import literal_eval
 
 class ChoixModeJeu() :
     # Getters
@@ -17,16 +17,15 @@ class ChoixModeJeu() :
 
     def __init__(self):
         self._grille : Grille
-        self._navires : Navire
-        self._mode_jeu : str
+        self._navires : set = set()
+        self._mode_jeu : str = ""
         self.save :pd.DataFrame = pd.DataFrame({
-            "nom":["Normal", "Blitz"],
-            "taille_grille_x":[10, 5],
-            "taille_grille_y": [10, 5],
-            "liste_navires": [{"torpilleur":2, "sous-marin":3, "frégate":3, "cuirassé":4, "porte-avion":5},
-                              {"torpilleur":2, "sous-marin":3, "cuirassé":4}]
+            "nom":[],
+            "taille_grille_x":[],
+            "taille_grille_y": [],
+            "liste_navires": [],
+            "nombre_navires": []
         })
-
 
         # construction des navires "classiques" présents dans les modes : "Normal" & "Blitz"
         self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
@@ -82,12 +81,65 @@ class ChoixModeJeu() :
                     self._grille = Grille(5,5)
                     self._navires = {self.cuirasse, self.sous_marin, self.torpilleur}
                 case 3 :
-                    print("vous avez choisi 3")
+                    print("Vous avez choisi : Personnalisé.")
+
+                    choix_validation = 'n'
+                    while not choix_validation == "o" :
+
+                        liste_choix = self.choisir_mode_jeu_personnalise()
+                        choix_mode_jeu_personnalise = liste_choix[0]
+                        dict_navires = liste_choix[1]
+
+
+                        # confirmation du choix du mode de jeu
+                        choix_validation_valide = False
+                        while not choix_validation_valide:
+                            try :
+                                choix_validation = input("\nConfirmez-vous le choix de ce mode de jeu ? (o/n)\n")
+                                print("")
+                                assert choix_validation == "o" or choix_validation == "n"
+                                choix_validation_valide = True
+                            except :
+                                print("\nSaisie non valide ! Choisissez l'un des choix proposé !\n")
+
+                        if choix_validation == "o":
+                            # refaire la boucle de choix de strategie => passer par une fonction ?
+                            self._grille = Grille(self.save["taille_grille_x"][choix_mode_jeu_personnalise], self.save["taille_grille_y"][choix_mode_jeu_personnalise])
+                            for nom_navire, taille_navire in dict_navires.items() :
+                                self._navires.add(FactoryNavire(nom=nom_navire, taille=taille_navire))
+                            break
+
 
         elif choix_creation == "creer" :
             # input sur le nom du mode de jeu
-            # assertion sur les noms des modes de jeu existant, la longueur de l
+            # assertion sur les noms des modes de jeu existant.
             self.ecriture_sauvegarde()
+
+
+    def choisir_mode_jeu_personnalise(self):
+        print("Pour obtenir plus d'information sur une stratégie, choississez la.")
+        print(self.save[["nom", "taille_grille_x", "taille_grille_y", "nombre_navires"]])
+        print("")
+
+        choix_mode_jeu_personnalise_valide = False
+        while not choix_mode_jeu_personnalise_valide:
+            try:
+                choix_mode_jeu_personnalise = int(input("Choisissez un mode de jeu parmis la liste proposée :\n"))
+                assert (choix_mode_jeu_personnalise in set(self.save.index))
+                choix_mode_jeu_personnalise_valide = True
+            except:
+                print("\nSaisie invalide !")
+                print("Choississez un nombre correspondant à l'un des mode de jeu.\n")
+
+        print(f"\nVous avez choisi le mode de jeu : {self.save["nom"][choix_mode_jeu_personnalise]}")
+        print("Voici la liste des navires de ce mode de jeu :")
+
+        dict_navires = literal_eval(self.save["liste_navires"][choix_mode_jeu_personnalise])
+        # Conversion du dictionnaire en DataFrame
+        df_navires = pd.DataFrame(list(dict_navires.items()), columns=['Navire', 'Taille'])
+        print(df_navires)
+
+        return [choix_mode_jeu_personnalise, dict_navires]
 
 class FactoryChoixModeJeu() :
     # Getters
