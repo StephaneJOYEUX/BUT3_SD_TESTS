@@ -56,13 +56,6 @@ class ModeJeu():
         self.nom = nom
         self.navires = navires
         self.taille_grille = taille_grille
-        # on vérifie que le mode de jeu peut être créé => taille de la grille valide
-        try:
-            self.grille = Grille(taille_grille[0], taille_grille[1])
-            self.grille.create()
-        except:
-            raise ValueError('La taille de la grille est invalide !')
-
 
 
     # Cette méthode de classe permet de vérifier que l'ensemble de navire fourni en paramètre respecte bien
@@ -71,3 +64,14 @@ class ModeJeu():
     def verifier_validiter_navires(self):
         # definir ici les critère de conformité.
         pass
+
+
+
+
+
+class FactoryModeJeu():
+    def __init__(self, nom :str, navires : set, taille_grille :list[int]):
+        self.mode_jeu = ModeJeu(nom=nom, navires=navires, taille_grille=taille_grille)
+        self.mode_jeu.set_nom()
+        self.mode_jeu.set_navires()
+        self.mode_jeu.set_taille_grille()
