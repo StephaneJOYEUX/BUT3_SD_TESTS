@@ -12,6 +12,8 @@ A faire pour la suite du projet :
 Etapes :
 	1. Finir les tests des classes existantes.
 	2. Implémenter la nouvelle fonctionnalité : les modes de jeu. Répercuter les changements aux autres classes et réaliser les tests associés.
+		a. coder la classe CreationModeJeu => demander les inputs utilisateurs, verifier les criteres de validité des modes de jeux.
+		b. demander à l'utilisateur s'il souhaite enregistrer ce mode de jeu.
 	
 	
 
