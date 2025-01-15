@@ -50,14 +50,14 @@ class CreationStrategie():
         self.derniere_colonne_grille = self.grille.get_nb_colonne()
 
 
-    def __init__(self, navires : set,Grille = Grille(10,10), test : bool = False):
+    def __init__(self, navires : set, grille = Grille(10,10), test : bool = False):
         # Variables privées
         self._navires : set
-        self._grille : Grille
+        self._grille : grille
 
         # Variables publiques
         self.navires = navires
-        self.grille = Grille
+        self.grille = grille
 
         self.premiere_ligne_grille : int
         self.derniere_ligne_grille : int
