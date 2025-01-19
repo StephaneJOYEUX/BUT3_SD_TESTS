@@ -79,14 +79,16 @@ class Grille():
             self.set_nb_lignes(nb_lignes=self.nombre_lignes)
         except :
             observateur = 1
+            erreur = "lignes"
         # Condition sur les colonnes
         try :
             self.set_nb_colonnes(nb_colonnes=self.nombre_colonnes)
         except :
-            observateur = 1
+            observateur = 2
+            erreur = "colonnes"
         # Return False si l'une des valeurs est non-conforme.
-        if observateur == 1 :
-            raise ValueError("Impossible de créer la grille !")
+        if observateur > 0 :
+            raise ValueError(f"Impossible de créer la grille !\n La valeur du nombre de {erreur} est incorrecte !")
 
         self.plateau = []
         for i in range(self.__nb_lignes):

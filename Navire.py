@@ -29,7 +29,14 @@ class Navire():
         if symbole == None :
             symbole = self.symbole
 
+        # verification criteres symbole correct :
+        #   - longueur == 1
+        #   - est une lettre majuscule.
+        if len(symbole) != 1 or not symbole.isalpha() :
+            raise ValueError("Le symbole est invalide !")
+        symbole = symbole.upper()
         self._symbole = symbole
+
 
     def set_taille(self, taille = None):
         if taille == None :
@@ -44,10 +51,13 @@ class Navire():
             self._taille = self.taille
 
 
-    def __init__(self, nom: str, taille: int):
+    def __init__(self, nom: str, taille: int, symbole : str = None):
         self.nom = nom.lower()
         self.taille = taille
-        self.symbole = self.nom[0].upper()
+        if symbole is None :
+            self.symbole = self.nom[0].upper()
+        else :
+            self.symbole = symbole
         # Affichage utile pour tester simplement (a supprimer quand le module de tests sera prêt).
 
     def __eq__(self, other):
@@ -63,7 +73,7 @@ class Navire():
 
 
 class FactoryNavire():
-    def __init__(self, nom: str, taille: int):
+    def __init__(self, nom: str, taille: int, symbole : str = None):
         self.navire = Navire(nom, taille)
         self.navire.set_nom()
         self.navire.set_taille()

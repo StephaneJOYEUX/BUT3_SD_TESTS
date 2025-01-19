@@ -2,6 +2,7 @@ import pandas as pd
 from Grille import Grille
 from Navire import Navire, FactoryNavire
 from ast import literal_eval
+from CreationModeJeu import FactoryCreationModeJeu
 
 class ChoixModeJeu() :
     # Getters
@@ -123,6 +124,7 @@ class ChoixModeJeu() :
                     print("Le nom que vous avez choisi existe déjà.\n")
 
             # Faire appel ensuite a la classe CreationModeJeu
+            creation_mode_jeu = FactoryCreationModeJeu(choix_nom)
             # /!\ aux critère de validité des différents mode de jeu.
 
     # Methode de classe utilisé dans le main si le choix est 'choisir'
