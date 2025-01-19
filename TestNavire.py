@@ -42,6 +42,23 @@ class TestNavire(unittest.TestCase) :
         self.navire.set_symbole()
         self.assertEqual("C", self.navire.get_symbole())
 
+    def test_setter_symbole_cas_numerique(self):
+        self.navire = Navire("cuirassé", 3)
+        try:
+            self.navire.set_symbole('2')
+        except ValueError as current_error:
+            self.assertEqual("Le symbole est invalide !", str(current_error))
+        self.assertEqual(None, self.navire.get_symbole())
+
+
+    def test_setter_symbole_cas_trop_long(self):
+        self.navire = Navire("cuirassé", 3)
+        try :
+            self.navire.set_symbole('test')
+        except ValueError as current_error:
+            self.assertEqual("Le symbole est invalide !", str(current_error))
+        self.assertEqual(None, self.navire.get_symbole())
+
     # taille
     def test_setter_taille_cas_nominal(self):
         self.navire = Navire("cuirassé", 3)

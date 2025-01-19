@@ -33,7 +33,9 @@ class Navire():
         #   - longueur == 1
         #   - est une lettre majuscule.
         if len(symbole) != 1 or not symbole.isalpha() :
+            self._symbole = None
             raise ValueError("Le symbole est invalide !")
+
         symbole = symbole.upper()
         self._symbole = symbole
 
