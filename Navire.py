@@ -76,7 +76,7 @@ class Navire():
 
 class FactoryNavire():
     def __init__(self, nom: str, taille: int, symbole : str = None):
-        self.navire = Navire(nom, taille)
+        self.navire = Navire(nom, taille, symbole)
         self.navire.set_nom()
         self.navire.set_taille()
         self.navire.set_symbole()

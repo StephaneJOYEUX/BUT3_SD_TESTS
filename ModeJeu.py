@@ -61,15 +61,18 @@ class ModeJeu():
     # Cette méthode de classe permet de vérifier que l'ensemble de navire fourni en paramètre respecte bien
     # les contraintes liées à la taille de la grille.
     # Elle est appelée par le self.set_navires()
-    def verifier_validiter_navires(self):
+    def verifier_validiter_navires(self) -> bool:
         # definir ici les critère de conformité.
-        pass
+        return True
 
 
 
 
 
 class FactoryModeJeu():
+    def get_mode_jeu(self):
+        return self.mode_jeu
+
     def __init__(self, nom :str, navires : set, taille_grille :list[int]):
         self.mode_jeu = ModeJeu(nom=nom, navires=navires, taille_grille=taille_grille)
         self.mode_jeu.set_nom()

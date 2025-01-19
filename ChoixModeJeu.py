@@ -124,7 +124,7 @@ class ChoixModeJeu() :
                     print("Le nom que vous avez choisi existe déjà.\n")
 
             # Faire appel ensuite a la classe CreationModeJeu
-            creation_mode_jeu = FactoryCreationModeJeu(choix_nom)
+            creation_mode_jeu = FactoryCreationModeJeu(choix_nom).get_mode_jeu()
             # /!\ aux critère de validité des différents mode de jeu.
 
     # Methode de classe utilisé dans le main si le choix est 'choisir'
