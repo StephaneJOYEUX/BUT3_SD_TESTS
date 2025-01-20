@@ -28,6 +28,25 @@ class ChoixModeJeu() :
     def set_navires(self, navires : set):
         self._navires = navires
 
+    # methode permettant de set tous les attributs nécessaires
+    # appelée lors du choix et de la creation de strategie
+    def set_attributes(self, nb_lignes : int, nb_colonnes : int, navires : set, nom_mode_jeu : str):
+        # grille
+        grille = Grille(nb_lignes, nb_colonnes)
+        grille.create()
+        self.set_grille(grille)
+
+        # navires
+        self.set_navires(navires)
+
+        # mode_jeu
+        mode_jeu = FactoryModeJeu(nom=nom_mode_jeu,
+                                  navires=self.get_navires(),
+                                  taille_grille=[self.get_grille().get_nb_lignes(),
+                                                 self.get_grille().get_nb_colonnes()]
+                                  ).get_mode_jeu()
+        self.set_mode_jeu(mode_jeu)
+
     # Constructeur
     def __init__(self):
         self._grille : Grille
@@ -92,41 +111,32 @@ class ChoixModeJeu() :
                 match choix_mode_jeu :
                     case 1 :
                         # grille
-                        grille = Grille(10,10)
-                        grille.create()
-                        self.set_grille(grille)
+                        nb_lignes = 10
+                        nb_colonnes = 10
 
                         # navires
                         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
-                        self.set_navires(navires)
 
                         # mode_jeu
                         nom_mode_jeu = "Normal"
-                        mode_jeu = FactoryModeJeu(nom=nom_mode_jeu,
-                                                  navires=self.get_navires(),
-                                                  taille_grille=[self.get_grille().get_nb_lignes(),
-                                                                 self.get_grille().get_nb_colonnes()]
-                                                  ).get_mode_jeu()
-                        self.set_mode_jeu(mode_jeu)
+
+                        self.set_attributes(nb_lignes=nb_lignes, nb_colonnes=nb_colonnes, navires=navires,
+                                           nom_mode_jeu=nom_mode_jeu)
 
                     case 2 :
                         # grille
-                        grille = Grille(5, 5)
-                        grille.create()
-                        self.set_grille(grille)
+                        nb_lignes = 5
+                        nb_colonnes = 5
 
                         # navires
                         navires = {self.cuirasse, self.sous_marin, self.torpilleur}
-                        self.set_navires(navires)
 
                         # mode_jeu
                         nom_mode_jeu = "Blitz"
-                        mode_jeu = FactoryModeJeu(nom=nom_mode_jeu,
-                                                  navires=self.get_navires(),
-                                                  taille_grille=[self.get_grille().get_nb_lignes(),
-                                                                 self.get_grille().get_nb_colonnes()]
-                                                  ).get_mode_jeu()
-                        self.set_mode_jeu(mode_jeu)
+
+                        self.set_attributes(nb_lignes=nb_lignes, nb_colonnes=nb_colonnes, navires=navires,
+                                           nom_mode_jeu=nom_mode_jeu)
+
                     case 3 :
                         print("Vous avez choisi : Personnalisé.")
 
@@ -136,25 +146,15 @@ class ChoixModeJeu() :
                         dict_navires = liste_choix[2]
 
                         # grille
-                        grille = Grille(self.save["taille_grille_x"][choix_mode_jeu_personnalise],
-                                              self.save["taille_grille_y"][choix_mode_jeu_personnalise])
-                        grille.create()
-                        self.set_grille(grille)
+                        nb_lignes = self.save["taille_grille_x"][choix_mode_jeu_personnalise]
+                        nb_colonnes = self.save["taille_grille_y"][choix_mode_jeu_personnalise]
 
                         # navires
                         navires = set()
                         for nom_navire, taille_navire in dict_navires.items():
                             navires.add(FactoryNavire(nom=nom_navire, taille=taille_navire).get_navire())
-                        self.set_navires(navires)
 
-                        # mode_jeu
-                        mode_jeu = FactoryModeJeu(nom=nom_mode_jeu,
-                                                  navires=self.get_navires(),
-                                                  taille_grille=[self.get_grille().get_nb_lignes(),
-                                                                 self.get_grille().get_nb_colonnes()]
-                                                  ).get_mode_jeu()
-                        self.set_mode_jeu(mode_jeu)
-
+                        self.set_attributes(nb_lignes=nb_lignes, nb_colonnes=nb_colonnes, navires=navires, nom_mode_jeu=nom_mode_jeu)
 
 
 
@@ -257,6 +257,9 @@ class ChoixModeJeu() :
 
         df = pd.DataFrame({"noms" : list_noms, "symboles" : list_symboles, 'tailles' : list_tailles})
         print(df)
+
+
+
 
 
 class FactoryChoixModeJeu() :
