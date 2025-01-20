@@ -81,10 +81,14 @@ class Strategie:
         coord_colonne = strategie[navire][2]-1
         sens = strategie[navire][3]
 
-        if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1] :
+        # Vérification des limites de la grille
+        if not (0 <= coord_ligne < len(grille) and 0 <= coord_colonne < len(grille[0])):
+            return False
+
+        if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1]:
             grille[coord_ligne][coord_colonne] = self.navires[navire][1]
             taille_navire -= 1
-        else :
+        else:
             return False
 
         # Cette boucle permet d'ajouter l'ensemble du navire à la grille si la taille du navire est >1.
@@ -97,6 +101,9 @@ class Strategie:
                 coord_colonne += 1
             else :
                 coord_colonne -= 1
+
+            if not (0 <= coord_ligne < len(grille) and 0 <= coord_colonne < len(grille[0])):
+                return False
 
             if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1]:
                 grille[coord_ligne][coord_colonne] = self.navires[navire][1]
