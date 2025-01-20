@@ -85,23 +85,23 @@ class CreationStrategie():
         # il faut boucler sur tous les navires du référentiel
         # on ne peut pas choisir de ne pas placer un navire, c'est impossible !
         for navire in self.navires :
-            # print(len(self.inputs_strategie.index))
+            print(self.derniere_ligne_grille, self.derniere_colonne_grille)
             new_data =self.input_donnees_placement_navire(navire)
-            # print(new_data)
             self.inputs_strategie.loc[len(self.inputs_strategie.index)] = new_data
-            # print(self.inputs_strategie)
             self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).get_strategie()
 
 
             while not self.instance_strategie.verifier_placabilite() :
                 print('Stratégie invalide !!!')
                 print('Vous devez re-saisir les caractéristiques du dernier navire.')
+                print("L'orientation choisie peut être mauvaise, il est aussi possible que votre choix de placement soit incorrect (chevauchement de 2 navires)\n")
                 self.inputs_strategie [f'{navire}'] = self.input_donnees_placement_navire(navire)
                 # initialisation de l'instance de la classe Strategie
-                self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).strategie
+                self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, grille=self.get_grille(), complete=False).strategie
 
 
             print("Voici votre strategie actuelle :\n")
+            print(self.instance_strategie.get_grille().get_nb_lignes())
             self.instance_strategie.affichage_strategie()
 
         # A modifier

@@ -217,9 +217,9 @@ class FactoryStrategie() :
     def get_strategie(self):
         return self.strategie
 
-    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  Grille = Grille(10,10), complete = True):
+    def __init__(self, inputs_strategie : pd.DataFrame, navires : set,  grille = Grille(10,10), complete = True):
         # intialisation de la classe Strategie
-        self.strategie = Strategie(inputs_strategie, navires,  Grille, complete)
+        self.strategie = Strategie(inputs_strategie, navires,  grille, complete)
         self.strategie.set_navires(self.strategie.navires)
         self.strategie.set_informations(self.strategie.informations)
         self.strategie.set_grille(self.strategie.grille)
