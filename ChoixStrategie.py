@@ -46,6 +46,7 @@ Le référentiel :
 
 La classe contient aussi des méthodes de lecture et d'écriture dans un fichier de sauvegarde annexe (.txt).
 """
+import os
 from ast import literal_eval
 
 import pandas as pd
@@ -88,12 +89,20 @@ class ChoixStrategie() :
     # Méthode principale qui appelle toutes les autres en fonction des choix du joueur.
     def main(self):
 
-        print(f"C'est à {self.pseudo_joueur} de choisir sa stratégie de bataille.")
-        choix_choisir_creer = f"{self.pseudo_joueur}, voulez-vous choisir une stratégie enregistrée ou en créer une nouvelle ?"
-        choix_choisir = 'choisir'
-        choix_creer = 'creer'
-        # validation de l'input avec la méthode associée
-        choix = self.valider_input_utilisateur(choix_choisir_creer, choix_choisir, choix_creer)
+        os.system('cls')
+        print(f"C'est à {self.pseudo_joueur} de choisir sa stratégie de bataille.\n")
+        df_mode_jeu = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu]
+        if len(df_mode_jeu) > 0:
+            choix_choisir_creer = f"{self.pseudo_joueur}, voulez-vous choisir une stratégie enregistrée ou en créer une nouvelle ?"
+            choix_choisir = 'choisir'
+            choix_creer = 'creer'
+            # validation de l'input avec la méthode associée
+            choix = self.valider_input_utilisateur(choix_choisir_creer, choix_choisir, choix_creer)
+        else :
+            print("Il n'existe aucune strategie enregistrée pour ce mode de jeu.\nVous devez créer votre strategie.")
+            input("Tapez 'entrer' pour continuer.\n")
+            os.system('cls')
+            choix = 'creer'
 
         # Définition des variables associée aux choix OUI/NON.
         # Utile pour la méthode de validation d'input.

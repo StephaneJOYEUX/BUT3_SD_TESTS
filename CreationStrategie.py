@@ -66,15 +66,7 @@ class CreationStrategie():
 
         self.inputs_strategie = pd.DataFrame({"nom" : [], "taille":[], "coord_x":[], "coord_y":[], "orientation": []})
 
-        print(self.inputs_strategie)
-        """
-        if not test :
-            self.creer_strategie()
-        else :
-            self.instance_strategie = Strategie({'Torpilleur': [2, 4, 9, 'O'], 'Sous-marin': [3, 3, 6, 'S'], 'Frégate': [3, 6, 9, 'S'],
-                              'Cuirassé': [4, 9, 1, 'E'], 'Porte-avions': [5, 10, 7, 'N']}, self.navires,
-                                 Grille)
-        """
+
 
     # Fonction principale : elle permet la création de l'objet strategie : {nom : [taille, coord_x, coord_y, sens]}
     # Cet objet strategie reuni les placement de tous les navires dans la grille.
@@ -93,11 +85,11 @@ class CreationStrategie():
         # il faut boucler sur tous les navires du référentiel
         # on ne peut pas choisir de ne pas placer un navire, c'est impossible !
         for navire in self.navires :
-            print(len(self.inputs_strategie.index))
+            # print(len(self.inputs_strategie.index))
             new_data =self.input_donnees_placement_navire(navire)
-            print(new_data)
+            # print(new_data)
             self.inputs_strategie.loc[len(self.inputs_strategie.index)] = new_data
-            print(self.inputs_strategie)
+            # print(self.inputs_strategie)
             self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).get_strategie()
 
 
