@@ -59,15 +59,15 @@ Pour creer un mode_jeu il faut :
 		
 		
 		
-		
-		
+
+
 20/01/2025
 
 Rendu demain !!!!
 
 a faire : 
  - implementer les citeres de validité d'un mode de jeu !
- - ne pas offrir la possibilité au joueur de choisir une strategie s'il n'y a pas de strategie existante pour le mode de jeu choisi ! (eviter de se retrouver dans une boucle infinie)
+ - ne pas offrir la possibilité au joueur de choisir une strategie s'il n'y a pas de strategie existante pour le mode de jeu choisi ! (eviter de se retrouver dans une boucle infinie) : X
  - implementation des tests (essayer de tester un max) => ratio : nb lignes testées/nb lignes totales
 
 
