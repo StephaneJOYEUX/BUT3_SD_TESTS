@@ -11,7 +11,7 @@ class ModeJeu():
     def get_taille_grille(self):
         return self._taille_grille
 
-    def get_nb_navire(self):
+    def get_nb_navires(self):
         return len(self._navires)
 
     # Setters

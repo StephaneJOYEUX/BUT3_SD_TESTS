@@ -48,7 +48,7 @@ class CreationModeJeu() :
         choix_grille_valide = False
 
         while not choix_grille_valide :
-            print("Veillez définir la taille de la grille")
+            print("\nVeillez définir la taille de la grille")
             # Assertion sur les choix de l'utilisateur
             nb_lignes = int(input("Indiquez le nombre de lignes : "))
             nb_colonnes = int(input("Indiquez le nombre de colonnes : "))
@@ -67,7 +67,7 @@ class CreationModeJeu() :
 
         while not choix_nb_navires_valide :
             try :
-                nb_navires = int(input("Combien de navires souhaitez-vous dans ce mode de jeu ?\n"))
+                nb_navires = int(input("\nCombien de navires souhaitez-vous dans ce mode de jeu ?\n"))
 
                 # revoir le critère de validite : depend aussi (et surtout de la taille des navires)
                 critere_validite = nb_navires*taille_min_navire/(nb_lignes*nb_colonnes)
@@ -87,6 +87,16 @@ class CreationModeJeu() :
             inputs_navire_valide = False
 
             while not inputs_navire_valide :
+                os.system('cls')
+                print("Caractéritiques de la grille :")
+                print(f"Nombre de lignes : {nb_lignes}")
+                print(f"Nombre de lignes : {nb_colonnes}")
+                print('')
+                print(f'Il reste encore {nb_navires-i} caractéristiques de navires à définir')
+                print("")
+                print("")
+
+                print(f"\nDéfinissez les caractéristiques du navire n°{i+1}")
                 navire = self.inputs_navire(taille_grille)
 
                 ## a voir
@@ -117,7 +127,7 @@ class CreationModeJeu() :
 
         while not choix_taille_valide:
             try:
-                choix_taille = int(input("Choisissez la taille du navire :\n"))
+                choix_taille = int(input("\nChoisissez la taille du navire :\n"))
                 if choix_taille > max(taille_grille) :
                     raise ValueError ("La taille saisie est supérieure à la taille maximale des lignes et colonnes !")
 
@@ -127,7 +137,7 @@ class CreationModeJeu() :
                 choix_taille_valide = True
             except ValueError as current_error :
                 if str(current_error)[0:39] == "invalid literal for int() with base 10:" :
-                    print('La taille saisie doit être un nombre entier !\n')
+                    print('\nLa taille saisie doit être un nombre entier !\n')
                 else :
                     print(str(current_error)+"\n")
 
@@ -139,7 +149,7 @@ class CreationModeJeu() :
 
         while not choix_nom_valide :
             try :
-                choix_nom = input("Choisissez un nom au navire :\n")
+                choix_nom = input("\nChoisissez un nom au navire :\n")
                 if len(choix_nom) < 4 :
                     raise ValueError("Le nom est trop court !")
                 # passage en minuscule
