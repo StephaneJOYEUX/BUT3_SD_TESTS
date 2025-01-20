@@ -21,7 +21,7 @@ class TestGrille(unittest.TestCase) :
              ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
              ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']], self.grille.plateau)
         self.assertEqual(10, self.grille.get_nb_lignes())
-        self.assertEqual(10, self.grille.get_nb_colonne())
+        self.assertEqual(10, self.grille.get_nb_colonnes())
 
     def test_creation_grille_cas_nul_lignes(self) -> None :
         self.grille: Grille = Grille(0, 10)
@@ -31,7 +31,7 @@ class TestGrille(unittest.TestCase) :
             self.assertEqual("Impossible de créer la grille !\n La valeur du nombre de lignes est incorrecte !", str(current_error))
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(None, self.grille.get_nb_lignes())
-        self.assertEqual(10, self.grille.get_nb_colonne())
+        self.assertEqual(10, self.grille.get_nb_colonnes())
 
 
     def test_creation_grille_cas_nul_colonnes(self) -> None :
@@ -42,7 +42,7 @@ class TestGrille(unittest.TestCase) :
             self.assertEqual("Impossible de créer la grille !\n La valeur du nombre de colonnes est incorrecte !", str(current_error))
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(10, self.grille.get_nb_lignes())
-        self.assertEqual(None, self.grille.get_nb_colonne())
+        self.assertEqual(None, self.grille.get_nb_colonnes())
 
 
     def test_creation_grille_cas_negatif_lignes(self) -> None :
@@ -54,7 +54,7 @@ class TestGrille(unittest.TestCase) :
 
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(None, self.grille.get_nb_lignes())
-        self.assertEqual(3, self.grille.get_nb_colonne())
+        self.assertEqual(3, self.grille.get_nb_colonnes())
 
 
     def test_creation_grille_cas_negatif_colonnes(self) -> None :
@@ -66,7 +66,7 @@ class TestGrille(unittest.TestCase) :
 
         self.assertEqual([], self.grille.plateau)
         self.assertEqual(3, self.grille.get_nb_lignes())
-        self.assertEqual(None, self.grille.get_nb_colonne())
+        self.assertEqual(None, self.grille.get_nb_colonnes())
 
 
     # Tests sur le setter (lignes)
@@ -104,7 +104,7 @@ class TestGrille(unittest.TestCase) :
             self.grille.set_nb_colonnes(self.grille.nombre_colonnes)
         except ValueError as current_error:
             self.assertEqual(f"Le nombre de colonnes minimum est {self.grille.taille_min} !", str(current_error))
-        self.assertEqual(10, self.grille.get_nb_colonne())
+        self.assertEqual(10, self.grille.get_nb_colonnes())
 
 
     def test_setter_nb_colonnes_cas_nul(self) -> None:
@@ -113,7 +113,7 @@ class TestGrille(unittest.TestCase) :
             self.grille.set_nb_colonnes(self.grille.nombre_colonnes)
         except ValueError as current_error:
             self.assertEqual(f"Le nombre de colonnes minimum est {self.grille.taille_min} !", str(current_error))
-        self.assertEqual(None, self.grille.get_nb_colonne())
+        self.assertEqual(None, self.grille.get_nb_colonnes())
 
 
     def test_setter_nb_colonnes_cas_negatif(self) -> None:
@@ -122,7 +122,7 @@ class TestGrille(unittest.TestCase) :
             self.grille.set_nb_colonnes(self.grille.nombre_colonnes)
         except ValueError as current_error:
             self.assertEqual(f"Le nombre de colonnes minimum est {self.grille.taille_min} !", str(current_error))
-        self.assertEqual(None, self.grille.get_nb_colonne())
+        self.assertEqual(None, self.grille.get_nb_colonnes())
 
 
     # Tests d'affichage

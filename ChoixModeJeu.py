@@ -1,8 +1,11 @@
 import pandas as pd
-from Grille import Grille
+from Grille import Grille, afficher_grille
 from Navire import Navire, FactoryNavire
 from ast import literal_eval
 from CreationModeJeu import FactoryCreationModeJeu
+from ModeJeu import ModeJeu
+import os
+import pandas as pd
 
 class ChoixModeJeu() :
     # Getters
@@ -15,7 +18,17 @@ class ChoixModeJeu() :
     def get_mode_jeu(self):
         return self._mode_jeu
 
+    # Setters
+    def set_mode_jeu(self, mode_jeu : ModeJeu):
+        self._mode_jeu = mode_jeu
 
+    def set_grille(self, grille : Grille):
+        self._grille = grille
+
+    def set_navires(self, navires : set):
+        self._navires = navires
+
+    # Constructeur
     def __init__(self):
         self._grille : Grille
         self._navires : set = set()
@@ -76,11 +89,13 @@ class ChoixModeJeu() :
                     print("Vous avez choisi le mode de jeu : Normal.\n")
                     self._mode_jeu = "Normal"
                     self._grille = Grille(10,10)
+                    self._grille.create()
                     self._navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
                 case 2 :
                     print("Vous avez choisi le mode de jeu : Blitz.\n")
                     self._mode_jeu = "Blitz"
                     self._grille = Grille(5,5)
+                    self._grille.create()
                     self._navires = {self.cuirasse, self.sous_marin, self.torpilleur}
                 case 3 :
                     print("Vous avez choisi : Personnalisé.")
@@ -105,6 +120,7 @@ class ChoixModeJeu() :
                         if choix_validation == "o":
                             # refaire la boucle de choix de strategie => passer par une fonction ?
                             self._grille = Grille(self.save["taille_grille_x"][choix_mode_jeu_personnalise], self.save["taille_grille_y"][choix_mode_jeu_personnalise])
+                            self._grille.create()
                             for nom_navire, taille_navire in dict_navires.items() :
                                 self._navires.add(FactoryNavire(nom=nom_navire, taille=taille_navire))
                             break
@@ -123,9 +139,25 @@ class ChoixModeJeu() :
                     print("\nSaisie non-valide !")
                     print("Le nom que vous avez choisi existe déjà.\n")
 
-            # Faire appel ensuite a la classe CreationModeJeu
-            creation_mode_jeu = FactoryCreationModeJeu(choix_nom).get_mode_jeu()
-            # /!\ aux critère de validité des différents mode de jeu.
+            # Faire appel ensuite a la classe CreationModeJeu et au Setters.
+            creation_mode_jeu = FactoryCreationModeJeu(choix_nom).get_creation_mode_jeu()
+            self.set_mode_jeu(creation_mode_jeu.get_mode_jeu())
+            self.set_navires(creation_mode_jeu.get_navires())
+            self.set_grille(creation_mode_jeu.get_grille())
+
+        # présentation du mode de jeu créé :
+        os.system('cls')
+        print("Voici le mode de jeu créé :")
+        print(f"La grille fait : {self.get_grille().get_nb_lignes()}x{self.get_grille().get_nb_colonnes()}")
+        afficher_grille(self.get_grille().get_plateau())
+        print(f"\nDans ce mode de jeu, il y a {len(self.get_navires())} navires.")
+        print("Voici les navires de ce mode de jeu :")
+        # Afficher un df pandas présentant les différents navires.
+        self.afficher_navires(self.get_navires())
+
+        input("Tapez 'entrer' pour continuer  \n")
+        os.system('cls')
+
 
     # Methode de classe utilisé dans le main si le choix est 'choisir'
     def choisir_mode_jeu_personnalise(self):
@@ -153,6 +185,21 @@ class ChoixModeJeu() :
 
         return [choix_mode_jeu_personnalise, dict_navires]
 
+
+    # objectif de la méthode de classe :
+    # afficher un df.pandas à partir d'un set d'instance de la classe 'Navire'
+    def afficher_navires(self, navires : set):
+        list_noms = []
+        list_symboles = []
+        list_tailles = []
+
+        for navire in navires :
+            list_noms.append(navire.get_nom())
+            list_symboles.append(navire.get_symbole())
+            list_tailles.append(navire.get_taille())
+
+        df = pd.DataFrame({"noms" : list_noms, "symboles" : list_symboles, 'tailles' : list_tailles})
+        print(df)
 
 
 class FactoryChoixModeJeu() :

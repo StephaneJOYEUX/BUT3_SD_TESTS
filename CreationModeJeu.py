@@ -1,8 +1,8 @@
 from ModeJeu import FactoryModeJeu
 from ModeJeu import ModeJeu, FactoryModeJeu
-from Grille import Grille
+from Grille import Grille, afficher_grille
 from Navire import FactoryNavire
-
+import os
 
 class CreationModeJeu() :
     # Getters
@@ -10,7 +10,13 @@ class CreationModeJeu() :
         return self._nom
 
     def get_mode_jeu(self):
-        return self.mode_jeu
+        return self._mode_jeu
+
+    def get_navires(self):
+        return self._navires
+
+    def get_grille(self):
+        return self._grille
 
     # Setters
     def set_nom(self, nom = None):
@@ -18,17 +24,27 @@ class CreationModeJeu() :
             nom = self.nom
         self._nom = nom
 
+    def set_mode_jeu(self, mode_jeu : ModeJeu):
+        self._mode_jeu = mode_jeu
+
+    def set_navires(self, navires : set):
+        self._navires = navires
+
+    def set_grille(self, taille_grille : list):
+        self._grille = Grille(taille_grille[0], taille_grille[1])
+        self._grille.create()
+
 
     # Constructeur
     def __init__(self, nom:str):
         self.nom = nom
         self.navires : set = set()
 
-        self.mode_jeu : ModeJeu
+        self._mode_jeu : ModeJeu
 
 
     # inputs concernant la grille
-    def input_taille_grille(self):
+    def main(self):
         choix_grille_valide = False
 
         while not choix_grille_valide :
@@ -85,6 +101,10 @@ class CreationModeJeu() :
                 self.navires.remove(navire)
                 print("Le placement des navires/ leur taille est invalide !")
 
+        # On appelle les setters afin de paramétrer correctement les informations du mode de jeu.
+        self.set_mode_jeu(mode_jeu)
+        self.set_navires(self.navires)
+        self.set_grille(taille_grille)
 
 
 
@@ -120,7 +140,7 @@ class CreationModeJeu() :
         while not choix_nom_valide :
             try :
                 choix_nom = input("Choisissez un nom au navire :\n")
-                if len(choix_nom) < 2 :
+                if len(choix_nom) < 4 :
                     raise ValueError("Le nom est trop court !")
                 # passage en minuscule
                 choix_nom = choix_nom.lower()
@@ -182,10 +202,13 @@ class CreationModeJeu() :
 
 
 class FactoryCreationModeJeu():
+    def get_creation_mode_jeu(self):
+        return self.creation_mode_jeu
+
     def get_mode_jeu(self):
         self.creation_mode_jeu.get_mode_jeu()
 
 
     def __init__(self, nom:str):
         self.creation_mode_jeu = CreationModeJeu(nom=nom)
-        self.creation_mode_jeu.input_taille_grille()
+        self.creation_mode_jeu.main()

@@ -47,7 +47,7 @@ class CreationStrategie():
         self.premiere_ligne_grille = 1
         self.derniere_ligne_grille = self.grille.get_nb_lignes()
         self.premiere_colonne_grille = 1
-        self.derniere_colonne_grille = self.grille.get_nb_colonne()
+        self.derniere_colonne_grille = self.grille.get_nb_colonnes()
 
 
     def __init__(self, navires : set, grille = Grille(10,10), test : bool = False):

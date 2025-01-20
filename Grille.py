@@ -26,7 +26,7 @@ class Grille():
     def get_nb_lignes(self):
         return self.__nb_lignes
 
-    def get_nb_colonne(self):
+    def get_nb_colonnes(self):
         return self.__nb_colonnes
 
     def get_plateau(self)-> list:
