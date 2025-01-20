@@ -50,10 +50,10 @@ class CreationStrategie():
         self.derniere_colonne_grille = self.grille.get_nb_colonnes()
 
 
-    def __init__(self, navires : set, grille = Grille(10,10), test : bool = False):
+    def __init__(self, navires : set, grille, test : bool = False):
         # Variables privées
         self._navires : set
-        self._grille : grille
+        self._grille : Grille
 
         # Variables publiques
         self.navires = navires
@@ -85,10 +85,9 @@ class CreationStrategie():
         # il faut boucler sur tous les navires du référentiel
         # on ne peut pas choisir de ne pas placer un navire, c'est impossible !
         for navire in self.navires :
-            print(self.derniere_ligne_grille, self.derniere_colonne_grille)
             new_data =self.input_donnees_placement_navire(navire)
             self.inputs_strategie.loc[len(self.inputs_strategie.index)] = new_data
-            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, complete=False).get_strategie()
+            self.instance_strategie = FactoryStrategie(self.inputs_strategie,self.navires, grille=self.get_grille(), complete=False).get_strategie()
 
 
             while not self.instance_strategie.verifier_placabilite() :
@@ -101,7 +100,6 @@ class CreationStrategie():
 
 
             print("Voici votre strategie actuelle :\n")
-            print(self.instance_strategie.get_grille().get_nb_lignes())
             self.instance_strategie.affichage_strategie()
 
         # A modifier
@@ -116,6 +114,10 @@ class CreationStrategie():
         nom = navire.get_nom()
         taille = navire.get_taille()
 
+
+        print("Les caractéristiques de la grille de jeu sont :")
+        print(f"Nombre de lignes : {self.derniere_ligne_grille}")
+        print(f"Nombre de colonnes : {self.derniere_colonne_grille}\n")
         print(f'Choisissez les caractéritiques du navire suivant : {nom} (longueur : {taille}).')
         coord_valides = False
 
@@ -130,9 +132,9 @@ class CreationStrategie():
                     if coord_colonne <= self.derniere_colonne_grille and coord_colonne >= self.premiere_colonne_grille:
                         coord_valides = True
                     else:
-                        print("Les coordonnées doivent être des nombres compris entre 1 et 10")
+                        print(f"Les coordonnées doivent être des nombres compris entre {self.premiere_colonne_grille} et {self.derniere_colonne_grille}")
                 else:
-                    print("Les coordonnées doivent être des nombres compris entre 1 et 10")
+                        print(f"Les coordonnées doivent être des nombres compris entre {self.premiere_ligne_grille} et {self.derniere_ligne_grille}")
 
             except:
                 print("Veuillez rentrer un nombre !")
@@ -240,7 +242,7 @@ class FactoryCreationStrategie():
     def get_instance_strategie(self):
         return self.strategie
 
-    def __init__(self, navires : set,grille = Grille(10,10), test : bool = False):
+    def __init__(self, navires : set, grille, test : bool = False):
         self.creation_strategie = CreationStrategie(navires, grille, test)
         self.creation_strategie.set_navires()
         self.creation_strategie.set_grille()
