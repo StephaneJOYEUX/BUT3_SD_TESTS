@@ -50,15 +50,16 @@ class CreationModeJeu() :
         while not choix_grille_valide :
             print("\nVeillez définir la taille de la grille")
             # Assertion sur les choix de l'utilisateur
-            nb_lignes = int(input("Indiquez le nombre de lignes : "))
-            nb_colonnes = int(input("Indiquez le nombre de colonnes : "))
             try :
+                nb_lignes = int(input("Indiquez le nombre de lignes : "))
+                nb_colonnes = int(input("Indiquez le nombre de colonnes : "))
                 grille_test = Grille(nombre_lignes=nb_lignes, nombre_colonnes=nb_colonnes)
                 grille_test.create()
                 taille_grille = [nb_lignes, nb_colonnes]
                 choix_grille_valide = True
             except ValueError as current_error :
-                print(str(current_error))
+                if str(current_error)[0:39] == 'invalid literal for int() with base 10:' :
+                    print("Vous devez saisir des nombres entiers pour le nombre de lignes et de colonnes !")
 
 
         # Nombre de navires
@@ -145,24 +146,27 @@ class CreationModeJeu() :
 
         # 2. Demande du nom
         #       passage du nom en minuscule, sans espace (' ' => '-')
-        choix_nom_valide = False
+        choix_nom_symbole_valide = False
 
-        while not choix_nom_valide :
-            try :
-                choix_nom = input("\nChoisissez un nom au navire :\n")
-                if len(choix_nom) < 4 :
-                    raise ValueError("Le nom est trop court !")
-                # passage en minuscule
-                choix_nom = choix_nom.lower()
-                # remplacement des espaces par des tirets
-                choix_nom = choix_nom.replace(' ', '-')
-                # verification que le nom ne soit pas le même que celui d'un autre navire déjà présent de ce mode de jeu
-                for navire in self.navires :
-                    if navire.get_nom() == choix_nom :
-                        raise ValueError("Un navire avec un nom similaire existe déjà dans ce mode de jeu !\n")
-                choix_nom_valide = True
-            except ValueError as current_error:
-                print(str(current_error))
+        while not choix_nom_symbole_valide:
+            choix_nom_valide = False
+
+            while not choix_nom_valide:
+                try :
+                    choix_nom = input("\nChoisissez un nom au navire :\n")
+                    if len(choix_nom) < 4 :
+                        raise ValueError("Le nom est trop court !")
+                    # passage en minuscule
+                    choix_nom = choix_nom.lower()
+                    # remplacement des espaces par des tirets
+                    choix_nom = choix_nom.replace(' ', '-')
+                    # verification que le nom ne soit pas le même que celui d'un autre navire déjà présent de ce mode de jeu
+                    for navire in self.navires :
+                        if navire.get_nom() == choix_nom :
+                            raise ValueError("Un navire avec un nom similaire existe déjà dans ce mode de jeu !\n")
+                    choix_nom_valide = True
+                except ValueError as current_error:
+                    print(str(current_error))
 
             # 3. Extraction du symbole : premiere lettre du nom
             #       Si pas de symbole similaire dans la liste de navires => tout va bien on continue le code,
@@ -175,32 +179,34 @@ class CreationModeJeu() :
                 for navire in self.navires :
                     if navire.get_symbole() == choix_symbole :
                         raise ValueError("Le symbole existe déjà !")
+                choix_nom_symbole_valide = True
             except ValueError as current_error:
                 # Affichage de l'erreur pour que l'utilisateur comprenne bien.
                 print(str(current_error))
 
                 choix_utilisateur_symbole_valide = False
 
-                while not choix_utilisateur_symbole :
-                    choix_utilisateur_symbole = input("Voulez vous choisir un symbole pour le navire ou changer le nom du navire ? (choisir/changer)")
+                while not choix_utilisateur_symbole_valide :
+                    choix_utilisateur_symbole = input("Voulez vous choisir un symbole pour le navire ou changer le nom du navire ? (choisir/changer)\n")
                     try :
                         assert choix_utilisateur_symbole == "choisir" or choix_utilisateur_symbole == "changer"
+                        choix_utilisateur_symbole_valide = True
                     except AssertionError:
                         print("Saisie invalide !")
                         print("Veuillez choisir l'un des choix proposé !\n")
 
                 if choix_utilisateur_symbole == "changer" :
-                    choix_nom_valide = False
+                    choix_nom_symbole_valide = False
                 elif choix_utilisateur_symbole == "choisir" :
                     choix_symbole_valide = False
                     while not choix_symbole_valide :
-                        choix_symbole = input(f"Choisissez le symbole associé au navire : {choix_nom}")
+                        choix_symbole = input(f"Choisissez le symbole associé au navire : {choix_nom}\n")
                         choix_symbole = choix_symbole.replace(' ', '')
                         try :
                             # instanciation d'un objet de la classe Navire pour passer les tests relatifs au symboles
                             test_navire = FactoryNavire(nom=choix_nom, taille=choix_taille, symbole=choix_symbole)
                             choix_symbole_valide = True
-
+                            choix_nom_symbole_valide = True
                         except :
                             print("Le symbole choisi est invalide !")
                             print("Le symbole doit être une unique lettre.\n")

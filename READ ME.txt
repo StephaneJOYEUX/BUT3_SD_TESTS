@@ -51,10 +51,25 @@ Pour creer un mode_jeu il faut :
  - Autre question pour l'enseignant : Comment tester des classes dont l'objet est de récupérer des inputs utilisateur afin d'appeler les autres classes ? 
 	=> Comment tester les classes d'encapsulation ?
 	
- - Est-ce que la classe Test, regroupant toutes les autres classes de tests est une bonne idée ? Si oui, dois-je annexer son execution à l'execution du main ?
+ - Est-ce que la classe Test, regroupant toutes les autres classes de tests est une bonne idée ? Si oui, dois-je annexer son execution à l'execution du main ? X
  
  - En ce qui concerne les tests des fonction de lecture et d'écriture dans les fichiers csv, est-ce vraiment utile ici ? 
 		dans le sens où la fonction fait appel à une méthode pandas unique permettant de réaliser la lecture/l'ecriture.
-		Cela reviendrait a tester la fonction pandas elle-même (qui doit avoir son propre module de test) et cela n'aurait pas de sens...
+		Cela reviendrait a tester la fonction pandas elle-même (qui doit avoir son propre module de test) et cela n'aurait pas de sens... X
 		
+		
+		
+		
+		
+20/01/2025
+
+Rendu demain !!!!
+
+a faire : 
+ - implementer les citeres de validité d'un mode de jeu !
+ - ne pas offrir la possibilité au joueur de choisir une strategie s'il n'y a pas de strategie existante pour le mode de jeu choisi ! (eviter de se retrouver dans une boucle infinie)
+ - implementation des tests (essayer de tester un max) => ratio : nb lignes testées/nb lignes totales
+
+
+
 	

@@ -2,3 +2,4 @@ nom,taille_grille_x,taille_grille_y,liste_navires,nombre_navires
 Normal,10,10,"{'torpilleur': 2, 'sous-marin': 3, 'frégate': 3, 'cuirassé': 4, 'porte-avion': 5}",5
 Blitz,5,5,"{'torpilleur': 2, 'sous-marin': 3, 'cuirassé': 4}",3
 test,3,3,{'nav_test': 2},1
+sflvjb,9,6,"{'ghghg': 2, 'nav_test': 2, 'nav_test_2': 5}",3
