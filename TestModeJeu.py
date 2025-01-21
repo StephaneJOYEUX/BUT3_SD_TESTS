@@ -1,15 +1,15 @@
 import unittest
 from ModeJeu import ModeJeu
-from Navire import Navire
+from Navire import FactoryNavire
 
 
 class TestModeJeu(unittest.TestCase):
     def setUp(self):
-        self.cuirasse = Navire(nom="cuirassé", taille=4)
-        self.fregate = Navire(nom="frégate", taille=3)
-        self.sous_marin = Navire(nom="sous-marin", taille=3)
-        self.torpilleur = Navire(nom="torpilleur", taille=2)
-        self.porte_avions = Navire(nom="porte-avions", taille=5)
+        self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
+        self.fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
+        self.sous_marin = FactoryNavire(nom="sous-marin", taille=3).get_navire()
+        self.torpilleur = FactoryNavire(nom="torpilleur", taille=2).get_navire()
+        self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
 
         self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
@@ -48,7 +48,7 @@ class TestModeJeu(unittest.TestCase):
         self.assertEqual(None, self.mode_jeu.get_nom())
 
     def test_set_nom_cas_trop_long(self):
-        self.mode_jeu = ModeJeu(nom='rfjvjbsdkhvbdkhvbhbhbcdhkcb', navires=self.navires, taille_grille=[10, 10])
+        self.mode_jeu = ModeJeu(nom='testtesttesttesttesttesttesttest', navires=self.navires, taille_grille=[10, 10])
         try:
             self.mode_jeu.set_nom()
         except ValueError as current_error:
@@ -58,20 +58,12 @@ class TestModeJeu(unittest.TestCase):
 
     # navires
     def test_set_navires_cas_nominal(self):
-        # pas de probleme de conformité
-        # verification que la var de classe _navires correspond à celle donnée en paramètre.
-        # verifier que le get_nb_navires() renvoie bien le len(self.navires).
-        pass
-
-    def test_set_navires_cas_non_conforme_1_navire_trop_grand(self):
-        # test du cas de non conformité :
-        # 1 navire à une taille > taille d'une ligne OU colonne de la grille.
-        pass
-
-    def test_set_navires_cas_non_conforme_taille_tot_navires_trop_grand(self):
-        # test du cas de non conformité :
-        # La taille de tous les navires ne permet pas de tous les placer dans la grille par manque de place.
-        pass
+        # initialisation
+        self.mode_jeu = ModeJeu(nom='test', navires=self.navires, taille_grille=[10, 10])
+        self.mode_jeu.set_navires()
+        # test
+        self.assertEqual(self.navires, self.mode_jeu.get_navires())
+        self.assertEqual(set, type(self.mode_jeu.get_navires()))
 
     # taille_grille
     def test_set_taille_grille_cas_nominal(self):
@@ -100,3 +92,64 @@ class TestModeJeu(unittest.TestCase):
             self.assertEqual("La taille de la grille est invalide !", str(current_error))
 
         self.assertEqual(None, self.mode_jeu.get_taille_grille())
+
+    # methode de classe :
+    def test_verifier_validiter_navires_cas_nominal(self):
+        # initialisation
+        self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[10, 10])
+        self.mode_jeu.set_taille_grille()
+        self.mode_jeu.set_navires()
+        self.mode_jeu.set_nom()
+        # test
+        self.assertEqual([True, 0], self.mode_jeu.verifier_validiter_navires())
+
+    def test_verifier_validiter_navires_cas_non_conforme_1_navire_trop_grand(self):
+        # test du cas de non conformité :
+        # 1 navire à une taille > taille d'une ligne OU colonne de la grille.
+        # initialisation
+        self.porte_avions = FactoryNavire(nom="porte-avions", taille=6).get_navire()
+        self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
+
+        self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[5, 5])
+        self.mode_jeu.set_taille_grille()
+        self.mode_jeu.set_navires()
+        self.mode_jeu.set_nom()
+        # test
+        self.assertEqual([False, 1], self.mode_jeu.verifier_validiter_navires())
+
+
+    def test_verifier_validiter_navires_cas_non_conforme_taille_tot_navires_trop_grand(self):
+        # test du cas de non conformité :
+        # La taille de tous les navires ne permet pas de tous les placer dans la grille par manque de place.
+        # initialisation
+        self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
+        self.chaloupe = FactoryNavire(nom="chaloupe", taille=3).get_navire()
+        self.uboat = FactoryNavire(nom="uboat", taille=4).get_navire()
+        self.falcon = FactoryNavire(nom="falcon", taille=5).get_navire()
+        self.eagle = FactoryNavire(nom="eagle", taille=5).get_navire()
+        self.zebra = FactoryNavire(nom="zebra", taille=5).get_navire()
+        self.bear = FactoryNavire(nom="bear", taille=5).get_navire()
+        self.monkey = FactoryNavire(nom="monkey", taille=5).get_navire()
+        self.horse = FactoryNavire(nom="horse", taille=5).get_navire()
+        self.daulphin = FactoryNavire(nom="daulphin", taille=5).get_navire()
+        self.navires = {self.cuirasse,
+                        self.fregate,
+                        self.sous_marin,
+                        self.torpilleur,
+                        self.porte_avions,
+                        self.chaloupe,
+                        self.uboat,
+                        self.falcon,
+                        self.eagle,
+                        self.zebra,
+                        self.bear,
+                        self.monkey,
+                        self.horse,
+                        self.daulphin}
+
+        self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[6, 6])
+        self.mode_jeu.set_taille_grille()
+        self.mode_jeu.set_navires()
+        self.mode_jeu.set_nom()
+        # test
+        self.assertEqual([False, 2], self.mode_jeu.verifier_validiter_navires())

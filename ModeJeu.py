@@ -28,12 +28,11 @@ class ModeJeu():
         else:
             self._nom = nom
 
-    def set_navires(self, navires=None):
+    def set_navires(self, navires : set = None):
         if navires == None:
             navires = self.navires
 
         # appel de la méthode de vérification de la conformité de l'ensemble de navires par rapport à la grille.
-        # self.verifier_validiter_navires()
         self._navires = navires
 
     def set_taille_grille(self, taille_grille=None):

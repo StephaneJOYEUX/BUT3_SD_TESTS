@@ -8,6 +8,7 @@ from ChoixStrategie import ChoixStrategie
 from TestGrille import TestGrille
 from TestNavire import TestNavire
 from TestStrategie import TestStrategie
+from TestModeJeu import TestModeJeu
 
 
 class Test(unittest.TestCase):
@@ -16,6 +17,7 @@ class Test(unittest.TestCase):
         TestGrille()
         TestNavire()
         TestStrategie()
+        TestModeJeu()
 
 
 if __name__ == '__main__':
