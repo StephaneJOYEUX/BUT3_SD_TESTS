@@ -82,7 +82,7 @@ class ChoixStrategie():
 
         self.instance_grille = grille
         self.pseudo_joueur = pseudo_joueur
-        self.strategie: Strategie
+        self.strategie: Strategie | None = None
 
     # Lecture du fichier et récupération des inputs_strategie enregistrées dans le référentiel.
     def lire_fichier_sauvegarde(self):
