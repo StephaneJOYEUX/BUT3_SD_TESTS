@@ -1,8 +1,5 @@
-import pandas as pd
 
-
-a = pd.DataFrame({"a" : ["N", "J", "N", "G"], "b" : [5,6,7,8]})
-b= a[a.a=="A"]
-
-print(len(b))
-
+for i in range(5) :
+    print(i)
+    if i == 3 :
+        break
