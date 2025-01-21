@@ -4,7 +4,7 @@ from sys import excepthook
 from Navire import Navire
 
 
-class TestNavire(unittest.TestCase) :
+class TestNavire(unittest.TestCase):
     def setUp(self):
         pass
 
@@ -24,16 +24,16 @@ class TestNavire(unittest.TestCase) :
 
     def test_setter_nom_cas_trop_court(self):
         self.navire = Navire("cu", 3)
-        try :
+        try:
             self.navire.set_nom()
-        except ValueError as current_error :
+        except ValueError as current_error:
             self.assertEqual("Le nom de ce navire est invalide - trop court.", str(current_error))
 
     def test_setter_nom_cas_trop_long(self):
         self.navire = Navire("sqbcqibcqucsuqcsub", 3)
-        try :
+        try:
             self.navire.set_nom()
-        except ValueError as current_error :
+        except ValueError as current_error:
             self.assertEqual("Le nom de ce navire est invalide - trop long.", str(current_error))
 
     # symbole
@@ -50,10 +50,9 @@ class TestNavire(unittest.TestCase) :
             self.assertEqual("Le symbole est invalide !", str(current_error))
         self.assertEqual(None, self.navire.get_symbole())
 
-
     def test_setter_symbole_cas_trop_long(self):
         self.navire = Navire("cuirassé", 3)
-        try :
+        try:
             self.navire.set_symbole('test')
         except ValueError as current_error:
             self.assertEqual("Le symbole est invalide !", str(current_error))
@@ -67,15 +66,14 @@ class TestNavire(unittest.TestCase) :
 
     def test_setter_taille_trop_court(self):
         self.navire = Navire("cuirassé", 1)
-        try :
+        try:
             self.navire.set_taille()
-        except ValueError as current_error :
+        except ValueError as current_error:
             self.assertEqual("Taille non valide ! Elle doit être supérieure ou égale à 2 !", str(current_error))
-
 
     def test_setter_taille_trop_long(self):
         self.navire = Navire("cuirassé", 15)
-        try :
+        try:
             self.navire.set_taille()
-        except ValueError as current_error :
+        except ValueError as current_error:
             self.assertEqual("Taille non valide ! Elle doit être inférieur à 10 !", str(current_error))

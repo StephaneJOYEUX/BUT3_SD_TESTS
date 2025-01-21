@@ -3,7 +3,8 @@ from Navire import Navire, FactoryNavire
 from CreationStrategie import CreationStrategie
 from Grille import Grille
 
-class TestCreationStrategie(TestCase) :
+
+class TestCreationStrategie(TestCase):
     def setUp(self):
         self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
         self.fregate = FactoryNavire(nom="frégate", taille=3).get_navire()
@@ -34,6 +35,5 @@ class TestCreationStrategie(TestCase) :
 
     ## Methodes de classe (dépend d'input utilisateurs => comment faire ?)
     # creer_strategie
-
 
     # input_donnees_placement_navire

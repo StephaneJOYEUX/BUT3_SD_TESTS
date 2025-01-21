@@ -54,7 +54,7 @@ def choix_nom_et_strategie_joueur(numero_joueur, navires : Navire, grille : Gril
             print("Ce pseudo est privatisé, vous ne pouvez pas l'utiliser. Choisissez en un autre :\n")
 
     print("")
-    strategie_joueur = FactoryChoixStrategie(pseudo_joueur, navires=navires, grille = grille, mode_jeu=mode_jeu).get_strategie()
+    strategie_joueur = FactoryChoixStrategie(pseudo_joueur, navires=navires, grille =grille, mode_jeu=mode_jeu).get_strategie()
 
     return [pseudo_joueur, strategie_joueur]
 

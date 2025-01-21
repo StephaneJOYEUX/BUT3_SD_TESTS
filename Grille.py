@@ -29,22 +29,21 @@ class Grille():
     def get_nb_colonnes(self):
         return self.__nb_colonnes
 
-    def get_plateau(self)-> list:
+    def get_plateau(self) -> list:
         return self.plateau
 
-
     # Setters
-    def set_nb_lignes(self, nb_lignes:int):
-        if nb_lignes < self.taille_min :
+    def set_nb_lignes(self, nb_lignes: int):
+        if nb_lignes < self.taille_min:
             self.__nb_lignes = None
             raise ValueError(f"Le nombre de lignes minimum est {self.taille_min} !")
-        elif nb_lignes > self.taille_max :
+        elif nb_lignes > self.taille_max:
             self.__nb_lignes = None
             raise ValueError(f"Le nombre de lignes maximum est {self.taille_max} !")
-        else :
+        else:
             self.__nb_lignes = nb_lignes
 
-    def set_nb_colonnes(self, nb_colonnes:int):
+    def set_nb_colonnes(self, nb_colonnes: int):
         if nb_colonnes < self.taille_min:
             self.__nb_colonnes = None
             raise ValueError(f"Le nombre de colonnes minimum est {self.taille_min} !")
@@ -54,40 +53,37 @@ class Grille():
         else:
             self.__nb_colonnes = nb_colonnes
 
-
     # Constructeur
     def __init__(self, nombre_lignes, nombre_colonnes):
-        self.taille_min : int = 2
-        self.taille_max : int = 20
+        self.taille_min: int = 2
+        self.taille_max: int = 20
         self.nombre_colonnes = nombre_colonnes
         self.nombre_lignes = nombre_lignes
 
         self.plateau = []
 
-
     def reinit_plateau(self):
         self.create()
         return self.plateau
-
 
     # Créer une grille de jeu:
     def create(self):
         # verifications de la validite du nb de lignes et de colonnes
         observateur = 0
         # Condition sur les lignes
-        try :
+        try:
             self.set_nb_lignes(nb_lignes=self.nombre_lignes)
-        except :
+        except:
             observateur = 1
             erreur = "lignes"
         # Condition sur les colonnes
-        try :
+        try:
             self.set_nb_colonnes(nb_colonnes=self.nombre_colonnes)
-        except :
+        except:
             observateur = 2
             erreur = "colonnes"
         # Return False si l'une des valeurs est non-conforme.
-        if observateur > 0 :
+        if observateur > 0:
             raise ValueError(f"Impossible de créer la grille !\n La valeur du nombre de {erreur} est incorrecte !")
 
         self.plateau = []
@@ -99,22 +95,22 @@ class Grille():
         return True
 
 
-
 # Fonction d'affichage
-def afficher_grille(grille) :
+def afficher_grille(grille):
     result = ""
     for ligne in grille:
-        result += " ".join(ligne)+"\n"
+        result += " ".join(ligne) + "\n"
         print(" ".join(ligne))
     return result
 
 
 def afficher_couple_grilles(plateau1, plateau2):
-    if len(plateau1) != len(plateau2) or len(plateau1[0]) != len(plateau2[0]) :
+    if len(plateau1) != len(plateau2) or len(plateau1[0]) != len(plateau2[0]):
         raise ValueError("Les deux grilles sont de tailles différentes !")
     result = ""
     result += "     Vos navires :                      Champ de tir :\n"
-    for index_ligne in range(len(plateau1))  :
-        result += "     "+" ".join(plateau1[index_ligne])+"                "+" ".join(plateau2[index_ligne])+"\n"
+    for index_ligne in range(len(plateau1)):
+        result += "     " + " ".join(plateau1[index_ligne]) + "                " + " ".join(
+            plateau2[index_ligne]) + "\n"
     print(result)
-    return(result)
+    return (result)

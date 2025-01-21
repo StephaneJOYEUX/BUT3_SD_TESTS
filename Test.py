@@ -5,10 +5,10 @@ from Grille import Grille
 from CreationStrategie import CreationStrategie
 from ChoixStrategie import ChoixStrategie
 
-
 from TestGrille import TestGrille
 from TestNavire import TestNavire
 from TestStrategie import TestStrategie
+
 
 class Test(unittest.TestCase):
 
