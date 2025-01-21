@@ -30,6 +30,7 @@ class Strategie():
     def __init__(self, inputs_strategie : dict, navires : dict,  Grille = Grille(10,10)):
         self.navires = navires
 
+        
         self.instance_grille = Grille
         self.instance_grille.creation_grille_de_jeu()
 

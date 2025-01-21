@@ -35,29 +35,24 @@ class TestGrille(unittest.TestCase):
 
         self.assertEqual(resultat_grille_affiche, resultat_grille_affichage_esperer)
         
-    def test_affichage_grille_double(self) -> None:
-        # Initialisation des grilles
-        grille_1 = Grille(10, 10)
-        grille_2 = Grille(10, 10)
-        
-        # Affichage des grilles via la fonction
-        resultat = afficher_couple_grilles(grille_1.grille, grille_2.grille)
-    
-        # Résultat attendu
-        resultat_attendu = """     Vos navires :                      Champ de tir :
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -
-         - - - - - - - - - -                - - - - - - - - - -"""
+    def test_afficher_couple_grilles(self):
+        grille1 = Grille(10,10)
+        grille2 = Grille(10,10)
+        self.assertTrue(grille1.creation_grille_de_jeu())
+        self.assertTrue(grille2.creation_grille_de_jeu())
+        self.assertEqual(afficher_couple_grilles(grille1.grille, grille2.grille),
+            "     Vos navires :                      Champ de tir :\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n"
+            "     - - - - - - - - - -                - - - - - - - - - -\n")   
 
-        # Comparaison des résultats
-        self.assertEqual(resultat, resultat_attendu)
 
         
                              

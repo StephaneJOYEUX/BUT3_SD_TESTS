@@ -29,6 +29,8 @@ class Grille():
         self.grille = []
         
         
+        
+        
     # Getters
     def get_nb_lignes(self):
         return self.__nb_lignes
@@ -77,9 +79,9 @@ def afficher_grille(grille) :
     return result
 
 def afficher_couple_grilles(grille1, grille2):
-    result = ""
-    result += "     Vos navires :                      Champ de tir :\n"
+    result = "     Vos navires :                      Champ de tir :\n"
+    print("     Vos navires :                      Champ de tir :")
     for index_ligne in range(len(grille1))  :
-        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne])+"\n"
-    print(result)
-    return(result)
+        result += "     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne]) + "\n"
+        print("     "+" ".join(grille1[index_ligne])+"                "+" ".join(grille2[index_ligne]))
+    return result

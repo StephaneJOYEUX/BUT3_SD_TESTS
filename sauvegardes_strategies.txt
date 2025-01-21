@@ -1,3 +1,4 @@
 {'Torpilleur': [2, 1, 1, 'S'], 'Sous-marin': [3, 5, 1, 'S'], 'Frégate': [3, 3, 5, 'E'], 'Cuirassé': [4, 5, 6, 'O'], 'Porte-avions': [5, 9, 9, 'N']}
 {'Torpilleur': [2, 4, 9, 'O'], 'Sous-marin': [3, 3, 6, 'S'], 'Frégate': [3, 6, 9, 'S'], 'Cuirassé': [4, 9, 1, 'E'], 'Porte-avions': [5, 10, 7, 'N']}
 {'Torpilleur': [2, 3, 9, 'E'], 'Sous-marin': [3, 2, 2, 'S'], 'Frégate': [3, 5, 3, 'S'], 'Cuirassé': [4, 5, 8, 'O'], 'Porte-avions': [5, 2, 4, 'E']}
+{'Torpilleur': [2, 5, 9, 'N'], 'Sous-marin': [3, 4, 3, 'O'], 'Frégate': [3, 9, 1, 'N'], 'Cuirassé': [4, 1, 2, 'E'], 'Porte-avions': [5, 10, 10, 'N']}

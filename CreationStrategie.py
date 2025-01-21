@@ -24,9 +24,9 @@ class CreationStrategie():
         self.navires = navires
 
         self.premiere_ligne_grille = 1
-        self.derniere_ligne_grille = Grille.nb_lignes
+        self.derniere_ligne_grille = Grille.get_nb_lignes()
         self.premiere_colonne_grille = 1
-        self.derniere_colonne_grille = Grille.nb_colonnes
+        self.derniere_colonne_grille = Grille.get_nb_colonne()
 
         self.inputs_strategie = {}
 
