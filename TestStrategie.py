@@ -1,76 +1,67 @@
 import unittest
-from Grille import *
-from Strategie import *
-
+from Strategie import Strategie
+from Grille import Grille
 
 class TestStrategie(unittest.TestCase):
 
     def setUp(self):
-        self.grille = Grille(10, 10)
-        self.grille.creation_grille_de_jeu()
-
+        self.grille_test = Grille(10, 10)
+        self.grille_test.creation_grille_de_jeu()
+        # stratégie
+        self.inputs_strategie = {
+            'Torpilleur': [2, 4, 9, 'O'],
+            'Sous-marin': [3, 3, 6, 'S'],
+            'Frégate': [3, 6, 9, 'S'],
+            'Porte-avions': [5, 10, 7, 'N']
+        }
+        # navires
         self.navires = {
-            'porte_avion': [5, 'P'],
-            'croiseur': [4, 'C'],
-            'contre_torpilleur': [3, 'T'],
-            'sous_marin': [3, 'S'],
-            'torpilleur': [2, 'D']
+            'Torpilleur': [2, 'T'],
+            'Sous-marin': [3, 'S'],
+            'Frégate': [3, 'F'],
+            'Cuirassé': [4, 'C'],
+            'Porte-avions': [5, 'P']
         }
+        # Création d'une stratégie
+        self.strategie = Strategie(self.inputs_strategie, self.navires, self.grille_test)
 
-    ''' à corriger
-    def test_verifier_valide(self):
-        strategie_valide = {
-            'porte_avion': [5, 1, 1, 'E'],
-            'croiseur': [4, 3, 1, 'S'],
-            'contre_torpilleur': [3, 5, 5, 'E'],
-            'sous_marin': [3, 7, 7, 'N'],
-            'torpilleur': [2, 9, 9, 'W']
-        }
-        strategie = Strategie(strategie_valide, self.navires, self.grille)
-        self.assertTrue(strategie.verifier_validite())'''
-
-    def test_verifier_chevauchement(self):
-        strategie_chevauchement = {
-            'porte_avion': [5, 1, 1, 'E'],
-            'croiseur': [4, 1, 3, 'S']
-        }
-        strategie = Strategie(strategie_chevauchement, self.navires, self.grille)
-        self.assertFalse(strategie.verifier_validite())
+    def test_initialisation(self):
+        self.assertEqual(self.strategie.informations, self.inputs_strategie)
+        self.assertEqual(self.strategie.navires, self.navires)
+        self.assertEqual(self.strategie.instance_grille, self.grille_test)
 
     def test_placement_joueur_valide(self):
-        strategie_valide = {
-            'porte_avion': [5, 1, 1, 'E'],
-            'croiseur': [4, 3, 1, 'S']
-        }
-        strategie = Strategie(strategie_valide, self.navires, self.grille)
-        self.assertTrue(strategie.placement_navires_joueur(self.grille.plateau, strategie_valide))
+        self.assertTrue(self.strategie.placement_navires_joueur(self.grille_test.plateau, self.inputs_strategie))
+
+    def test_placement_joueur_invalide(self):
+        self.grille_test.plateau[3][5] = 'F'
+        self.assertFalse(self.strategie.placement_navires_joueur(self.grille_test.plateau, self.inputs_strategie))
 
     def test_placement_navire_valide(self):
-        strategie = {'porte_avion': [5, 1, 1, 'E']}
-        strategie_instance = Strategie(strategie, self.navires, self.grille)
-        self.assertTrue(strategie_instance.placement_un_navire(self.grille.plateau, strategie, 'porte_avion'))
+        navire = 'Sous-marin'
+        self.assertTrue(self.strategie.placement_un_navire(self.grille_test.plateau, self.inputs_strategie, navire))
 
-    def test_placement_navire_hors_grille(self):
-        strategie = {'porte_avion': [5, 1, 8, 'E']}  # Position hors grille
-        strategie_instance = Strategie(strategie, self.navires, self.grille)
-        self.assertFalse(strategie_instance.placement_un_navire(self.grille.plateau, strategie, 'porte_avion'))
+    def test_placement_navire_invalide(self):
+        navire = 'Porte-avions'
+        inputs_invalides = {'Porte-avions': [5, 10, 10, 'E']}  # Placement hors limites
+        self.assertFalse(self.strategie.placement_un_navire(self.grille_test.plateau, inputs_invalides, navire))
 
-    def test_placement_navire_chevauchement(self):
-        strategie = {
-            'porte_avion': [5, 1, 1, 'E'],
-            'croiseur': [4, 1, 3, 'S']
-        }
-        strategie_instance = Strategie(strategie, self.navires, self.grille)
-        strategie_instance.placement_un_navire(self.grille.plateau, strategie, 'porte_avion')
-        self.assertFalse(strategie_instance.placement_un_navire(self.grille.plateau, strategie, 'croiseur'))
+    def test_verifier_valide(self):
+        self.assertTrue(self.strategie.verifier_validite())
 
-    def test_strategie_valide(self):
-        strategie_valide = {
-            'porte_avion': [5, 1, 1, 'E']
-        }
-        strategie_instance = Strategie(strategie_valide, self.navires, self.grille)
-        self.assertTrue(strategie_instance.verifier_validite())
-        strategie_instance.affichage_strategie()
+    def test_verifier_invalide(self):
+        self.grille_test.plateau[3][5] = 'F'
+        self.assertFalse(self.strategie.verifier_validite())
+
+    def test_affichage_valide(self):
+        result = self.strategie.affichage_strategie()
+        self.assertTrue(result)
+
+    def test_affichage_invalide(self):
+        inputs_invalides = {'Sous-marin': [3, 11, 11, 'N']}  # Placement hors limites
+        strategie_invalide = Strategie(inputs_invalides, self.navires, self.grille_test)
+        result = strategie_invalide.affichage_strategie()
+        self.assertFalse(result)
 
 
 if __name__ == '__main__':

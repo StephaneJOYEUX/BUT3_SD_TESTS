@@ -117,8 +117,10 @@ class Strategie:
     def affichage_strategie(self):
         if self.verifier_validite() :
             afficher_grille(self.instance_grille.plateau)
+            return True
         else:
             print('Stratégie non valide !')
+            return False
 
     def __eq__(self, other):
         try :
