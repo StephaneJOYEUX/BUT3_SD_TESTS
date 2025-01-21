@@ -58,6 +58,15 @@ from ModeJeu import ModeJeu
 
 
 class ChoixStrategie():
+
+    # Getters
+    def get_referentiel(self):
+        return self.referentiel
+
+    def get_strategie(self):
+        return self.strategie
+
+    # Constructeur
     def __init__(self, pseudo_joueur, navires, mode_jeu, grille=Grille(10, 10), test: bool = False):
         self.mode_jeu: ModeJeu = mode_jeu
         self.navires = navires
@@ -252,12 +261,6 @@ class ChoixStrategie():
 
         print("")
         return choix_utilisateur
-
-    def get_referentiel(self):
-        return self.referentiel
-
-    def get_strategie(self):
-        return self.strategie
 
 
 class FactoryChoixStrategie():

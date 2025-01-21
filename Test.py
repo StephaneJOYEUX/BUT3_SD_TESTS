@@ -1,15 +1,10 @@
 import unittest
-from BatailleNavale import BatailleNavale
-from Strategie import Strategie
-from Grille import Grille
-from CreationStrategie import CreationStrategie
-from ChoixStrategie import ChoixStrategie
 
 from TestGrille import TestGrille
 from TestNavire import TestNavire
 from TestStrategie import TestStrategie
 from TestModeJeu import TestModeJeu
-
+from TestCreationStrategie import TestCreationStrategie
 
 class Test(unittest.TestCase):
 
@@ -18,6 +13,7 @@ class Test(unittest.TestCase):
         TestNavire()
         TestStrategie()
         TestModeJeu()
+        TestCreationStrategie()
 
 
 if __name__ == '__main__':

@@ -14,11 +14,9 @@ Remarques :
 
     Les test se font surtout au niveau de la classe Strategie.
 '''
-from Grille import Grille, afficher_grille
-from copy import deepcopy
-from Strategie import Strategie, FactoryStrategie
+from Grille import Grille
 import pandas as pd
-from Strategie import FactoryStrategie
+from Strategie import FactoryStrategie, Strategie
 
 
 class CreationStrategie():
@@ -57,6 +55,7 @@ class CreationStrategie():
         # Variables publiques
         self.navires = navires
         self.grille = grille
+        self.instance_strategie : Strategie|None = None
 
         self.premiere_ligne_grille: int
         self.derniere_ligne_grille: int
@@ -100,10 +99,8 @@ class CreationStrategie():
             print("Voici votre strategie actuelle :\n")
             self.instance_strategie.affichage_strategie()
 
-        # A modifier
         return self.instance_strategie
 
-    # Fonction Absolument nécéssaire pour la création des placements des navires.
     # Il s'agit principalement d'une fonction d'input avec beaucoup de condition sur le placement des navires.
     # Le but est de poser un cadre au placement des navires afin que les navires puisse être représentés dans la grille ensuite.
     def input_donnees_placement_navire(self, navire):

@@ -113,7 +113,7 @@ class BatailleNavale:
                 return "Touché, Coulé"
             return "Touché"
 
-    # Fonctioon d'input pour la fonction de tir
+    # Fonction d'input pour la fonction de tir
     # Choix du numéro de ligne
     def ligne_tir(self):
         ligne = 0
@@ -124,7 +124,7 @@ class BatailleNavale:
                 print("Veuillez entrer un numéro valide.")
         return ligne
 
-    # Fonctioon d'input pour la fonction de tir
+    # Fonction d'input pour la fonction de tir
     # Choix du numéro de ligne
     def colonne_tir(self):
         colonne = 0
