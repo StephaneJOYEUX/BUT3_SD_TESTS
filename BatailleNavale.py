@@ -206,12 +206,14 @@ class BatailleNavale:
         if self.pseudo_j2 == "_Ordinateur":
             while partie_en_cours:
                 if self.play_joueur(1):
+                    os.system('cls')
                     print("Victoire, vous avez gagné !")
                     input("Tapez 'entrer' pour quitter le jeu\n")
                     partie_en_cours = False
                     break
 
                 if self.play_ordinateur():
+                    os.system('cls')
                     print("Défaite, vous avez perdu.")
                     input("Tapez 'entrer' pour quitter le jeu\n")
                     partie_en_cours = False
@@ -219,12 +221,14 @@ class BatailleNavale:
 
         while partie_en_cours:
             if self.play_joueur(1):
+                os.system('cls')
                 print(f"Victoire du joueur: {self.pseudo_j1}")
                 input("Tapez 'entrer' pour quitter le jeu\n")
                 partie_en_cours = False
                 break
 
             if self.play_joueur(2):
+                os.system('cls')
                 print(f"Victoire du joueur: {self.pseudo_j2}")
                 input("Tapez 'entrer' pour quitter le jeu\n")
                 partie_en_cours = False

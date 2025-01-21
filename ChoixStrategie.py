@@ -54,11 +54,12 @@ from unidecode import unidecode
 from Grille import Grille, afficher_grille
 from Strategie import Strategie, Strategie, FactoryStrategie
 from CreationStrategie import CreationStrategie, FactoryCreationStrategie
+from ModeJeu import ModeJeu
 
 
 class ChoixStrategie():
-    def __init__(self, pseudo_joueur, navires, mode_jeu="Normal", grille=Grille(10, 10), test: bool = False):
-        self.mode_jeu: str = mode_jeu
+    def __init__(self, pseudo_joueur, navires, mode_jeu, grille=Grille(10, 10), test: bool = False):
+        self.mode_jeu: ModeJeu = mode_jeu
         self.navires = navires
         self.referentiel: pd.DataFrame = pd.DataFrame({
             "mode_jeu": [],
@@ -87,7 +88,8 @@ class ChoixStrategie():
 
         os.system('cls')
         print(f"C'est à {self.pseudo_joueur} de choisir sa stratégie de bataille.\n")
-        df_mode_jeu = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu]
+        df_mode_jeu = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu.get_nom()]
+
         if len(df_mode_jeu) > 0:
             choix_choisir_creer = f"{self.pseudo_joueur}, voulez-vous choisir une stratégie enregistrée ou en créer une nouvelle ?"
             choix_choisir = 'choisir'
@@ -126,7 +128,7 @@ class ChoixStrategie():
                     index_strategie = 1
 
                 for line in new_inputs_strategie.values:
-                    new_data = [self.mode_jeu, index_strategie] + list(line)
+                    new_data = [self.mode_jeu.get_nom(), index_strategie] + list(line)
                     self.referentiel.loc[len(self.referentiel.index)] = new_data
 
                 print("La stratégie a bien été enregistrée.")
@@ -153,7 +155,7 @@ class ChoixStrategie():
                 print('Voici la liste des stratégies enregistrée :')
 
                 # correspondance avec le mode de jeu
-                df_strategie_to_choose = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu]
+                df_strategie_to_choose = self.referentiel[self.referentiel.mode_jeu == self.mode_jeu.get_nom()]
                 # extraction de l'ensemble des index_strategie correspondant au premier critère de filtrage (mode_jeu)
                 liste_index_strategie = set(df_strategie_to_choose.index_strategie)
                 # Boucle pour l'affichage
