@@ -1,5 +1,8 @@
+import pandas as pd
 
-for i in range(5) :
-    print(i)
-    if i == 3 :
-        break
+
+a = pd.DataFrame({"col":[1,23,3,6,6,66,5]})
+
+m = max(a.col)
+
+print(m)

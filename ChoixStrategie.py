@@ -267,7 +267,7 @@ class FactoryChoixStrategie():
     def get_strategie(self):
         return self.choix_strategie.get_strategie()
 
-    def __init__(self, pseudo_joueur, navires, mode_jeu="Normal", grille=Grille(10, 10), test: bool = False):
+    def __init__(self, pseudo_joueur, navires, mode_jeu : ModeJeu, grille=Grille(10, 10), test: bool = False):
         self.choix_strategie = ChoixStrategie(pseudo_joueur, navires, mode_jeu, grille, test)
         self.choix_strategie.lire_fichier_sauvegarde()
         if not test:
