@@ -32,12 +32,12 @@ class CreationStrategie():
 
     # Setters
     def set_navires(self, navires=None):
-        if navires == None:
+        if navires is None:
             navires = self.navires
         self._navires = navires
 
     def set_grille(self, grille=None):
-        if grille == None:
+        if grille is None:
             grille = self.grille
         self._grille = grille
         self._grille.create()

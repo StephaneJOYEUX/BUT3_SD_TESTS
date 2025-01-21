@@ -3,7 +3,10 @@ from ChoixModeJeu import ChoixModeJeu
 
 
 class TestChoixModeJeu(TestCase):
-    # setters & getters
+    def setUp(self):
+        pass
+
+    ## Setters & Getters
     def test_set_nom_cas_nominal(self):
         pass
 

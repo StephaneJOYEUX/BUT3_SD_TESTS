@@ -20,10 +20,10 @@ class Test(unittest.TestCase):
         TestCreationStrategie()
         TestCreationModeJeu()
 
-        # classe de choix
+        # classes de choix
         TestChoixStrategie()
 
-        # classe de jeu (BatailleNavale)
+        # classe de jeu : BatailleNavale
 
 
 if __name__ == '__main__':

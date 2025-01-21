@@ -170,9 +170,9 @@ class ChoixStrategie():
                 # Boucle pour l'affichage
                 for i in liste_index_strategie:
                     print(f"Strategie n°{i} :")
-                    print(self.referentiel[self.referentiel.index_strategie == i])
+                    # affichage des lignes & colonnes concernées
+                    print(self.referentiel[self.referentiel.index_strategie == i].iloc[:, 2:])
                     print("------------------")
-
                 print("")
 
                 valider_choix_numero_strategie = False

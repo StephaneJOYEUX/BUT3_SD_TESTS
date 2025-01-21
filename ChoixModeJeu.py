@@ -166,10 +166,15 @@ class ChoixModeJeu():
                     try:
                         choix_nom = input("\nChoisissez un nom pour ce mode de jeu :\n")
                         assert choix_nom not in (set(self.save["nom"]))
+                        if not choix_nom.isalnum() :
+                            raise ValueError
                         choix_nom_valide = True
-                    except:
+                    except AssertionError:
                         print("\nSaisie non-valide !")
-                        print("Le nom que vous avez choisi existe déjà.\n")
+                        print("Le nom que vous avez choisi existe déjà.")
+                    except ValueError :
+                        print("\nSaisie non-valide !")
+                        print("Le nom du mode de jeu doit être composé de lettres et/ou de chiffres.")
 
                 # Faire appel ensuite a la classe CreationModeJeu et au Setters.
                 creation_mode_jeu = FactoryCreationModeJeu(choix_nom).get_creation_mode_jeu()

@@ -12,7 +12,7 @@ class Navire():
     # Setter
     def set_nom(self, nom=None):
         # cas d'initialisation
-        if nom == None:
+        if nom is None:
             nom = self.nom
 
         # choix arbitraire de la longueur de la chaine de caractère (3).
@@ -25,7 +25,7 @@ class Navire():
 
     def set_symbole(self, symbole=None):
         # cas d'initialisation
-        if symbole == None:
+        if symbole is None:
             symbole = self.symbole
 
         # verification criteres symbole correct :
@@ -39,7 +39,7 @@ class Navire():
         self._symbole = symbole
 
     def set_taille(self, taille=None):
-        if taille == None:
+        if taille is None:
             taille = self.taille
 
         # choix arbitraire d'une taille minimale égale à 1.

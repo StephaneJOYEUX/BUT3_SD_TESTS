@@ -47,11 +47,14 @@ def choix_nom_et_strategie_joueur(numero_joueur, navires : Navire, grille : Gril
                 raise ZeroDivisionError
             choix_valide_joueur = True
         except AssertionError :
-            print("Le nom du joueur est trop long !\n")
+            print("\nLe nom du joueur est trop long !\n")
+            input("Tapez 'entrer' pour continuer\n")
         except ValueError :
-            print('Le nom doit être composé de lettres et/ou de chiffres.\n')
+            print('\nLe nom doit être composé de lettres et/ou de chiffres.\n')
+            input("Tapez 'entrer' pour continuer\n")
         except ZeroDivisionError :
-            print("Ce pseudo est privatisé, vous ne pouvez pas l'utiliser. Choisissez en un autre :\n")
+            print("\nCe pseudo est privatisé, vous ne pouvez pas l'utiliser. Choisissez en un autre :\n")
+            input("Tapez 'entrer' pour continuer\n")
 
     print("")
     strategie_joueur = FactoryChoixStrategie(pseudo_joueur, navires=navires, grille =grille, mode_jeu=mode_jeu).get_strategie()
@@ -89,7 +92,7 @@ if __name__ == "__main__":
             assert choix_adversaire == 'ordinateur' or choix_adversaire == 'joueur'
             choix_adversaire_valide = True
         except AssertionError :
-            print('Erreur !\nVeuillez saisir une valeur valide.')
+            print('Erreur !\nVeuillez saisir une valeur valide.\n')
 
     print("")
     choix_adversaire.lower()

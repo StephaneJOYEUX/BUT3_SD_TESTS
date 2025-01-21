@@ -43,7 +43,7 @@ class Strategie():
     # Setters
     def set_navires(self, navires=None):
         # Il ne peut pas y avoir de Navire identiques du à la propriété ensembliste des sets en Python
-        if navires == None:
+        if navires is None:
             navires = self.navires
         # le nombre de navires dans les informations de la strategie rentrés en paramètre peut ne pas être forcement
         # égal au nombre de navires dans le set : navires
@@ -58,7 +58,7 @@ class Strategie():
         self._informations = informations
 
     def set_grille(self, grille=None):
-        if grille == None:
+        if grille is None:
             grille = self.grille
         self._grille = grille
         self._grille.create()

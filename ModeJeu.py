@@ -19,7 +19,7 @@ class ModeJeu():
 
     # Setters
     def set_nom(self, nom=None):
-        if nom == None:
+        if nom is None:
             nom = self.nom
         if len(nom) > 20:
             raise ValueError("Nom du mode de jeu trop long !")
@@ -29,14 +29,14 @@ class ModeJeu():
             self._nom = nom
 
     def set_navires(self, navires : set = None):
-        if navires == None:
+        if navires is None:
             navires = self.navires
 
         # appel de la méthode de vérification de la conformité de l'ensemble de navires par rapport à la grille.
         self._navires = navires
 
     def set_taille_grille(self, taille_grille=None):
-        if taille_grille == None:
+        if taille_grille is None:
             taille_grille = self.taille_grille
 
         # on vérifie que le mode de jeu peut être créé => taille de la grille valide
