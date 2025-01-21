@@ -33,8 +33,11 @@ class CreationModeJeu():
         self._navires = navires
 
     def set_grille(self, taille_grille: list):
-        self._grille = Grille(taille_grille[0], taille_grille[1])
-        self._grille.create()
+        try :
+            self._grille = Grille(taille_grille[0], taille_grille[1])
+            self._grille.create()
+        except :
+            self._grille = None
 
     # Constructeur
     def __init__(self, nom: str):
@@ -241,6 +244,7 @@ class CreationModeJeu():
 
         df = pd.DataFrame({"noms": list_noms, "symboles": list_symboles, 'tailles': list_tailles})
         print(df)
+        return True
 
 
 class FactoryCreationModeJeu():

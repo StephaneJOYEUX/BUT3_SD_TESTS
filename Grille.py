@@ -94,6 +94,11 @@ class Grille():
 
         return True
 
+    def __eq__(self, other):
+        if self.plateau == other.plateau :
+            return True
+        return False
+
 
 # Fonction d'affichage
 def afficher_grille(grille):

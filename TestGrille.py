@@ -69,6 +69,21 @@ class TestGrille(unittest.TestCase):
         self.assertEqual(3, self.grille.get_nb_lignes())
         self.assertEqual(None, self.grille.get_nb_colonnes())
 
+    # Tests __eq__
+    def test__eq__cas_nominal(self):
+        self.grille = Grille(10, 10)
+        self.grille.create()
+        self.grille_2 = Grille(10, 10)
+        self.grille_2.create()
+        self.assertTrue(self.grille == self.grille_2)
+
+    def test__eq__cas_False(self):
+        self.grille = Grille(10, 10)
+        self.grille.create()
+        self.grille_2 = Grille(5, 5)
+        self.grille_2.create()
+        self.assertFalse(self.grille == self.grille_2)
+
     # Tests sur le setter (lignes)
     def test_setter_nb_lignes_cas_nominal(self) -> None:
         self.grille = Grille(10, 10)

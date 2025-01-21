@@ -1,8 +1,3 @@
-import pandas as pd
+a = "Impossible de créer la grille !"
 
-
-a = pd.DataFrame({"col":[1,23,3,6,6,66,5]})
-
-m = max(a.col)
-
-print(m)
+print(len(a))
