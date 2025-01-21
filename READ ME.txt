@@ -66,10 +66,13 @@ Pour creer un mode_jeu il faut :
 Rendu demain !!!!
 
 a faire : 
- - implementer les citeres de validité d'un mode de jeu !
+ - implementer les citeres de validité d'un mode de jeu ! : X
  - ne pas offrir la possibilité au joueur de choisir une strategie s'il n'y a pas de strategie existante pour le mode de jeu choisi ! (eviter de se retrouver dans une boucle infinie) : X
- - implementation des tests (essayer de tester un max) => ratio : nb lignes testées/nb lignes totales
+ - implementation des tests (essayer de tester un max) => ratio : nb lignes testées/nb lignes totales 
 
 
+21/01/25
 
-	
+a faire :
+ - tests (commencer par la classe ModeJeu)
+ - commentaires & nettoyage du code 
