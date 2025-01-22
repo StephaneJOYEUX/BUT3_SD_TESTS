@@ -61,7 +61,7 @@ class TestChoixStrategie(TestCase):
         # afin de tester la fonction d'ecriture :
         # recuperer le contenu du fichier de sauvegarde, le stocker dans une variable locale.
         # ajouter une nouvelle strategie, puis tester l'ecriture en verifiant avec la lecture que la ligne a bien ete ecrite.
-        # réécrire la sauvegarde en elevant la ligne artificielle ajoutee pour le test.
+        # réécrire la sauvegarde en enlevant la ligne artificielle ajoutee pour le test.
         self.choix_strategie.lire_fichier_sauvegarde()
         # recuperation de la sauvegarde :
         # passage par deepcopy essentiel pour que l'objet soit copié en profondeur et ne soit ainsi pas affecté
@@ -84,7 +84,7 @@ class TestChoixStrategie(TestCase):
         self.choix_strategie.ecrire_fichier_sauvegarde()
 
         # on instancie un autre objet de la classe ChoixStrategie afin d'avoir un referentiel vierge,
-        # dont le remplissage est significatif pour le test
+        # dont le remplissage est significatif pour le test (comparatif)
         self.choix_strategie_2 = ChoixStrategie("mon_pseudo_2", navires=self.navires, test=True, grille=self.grille,
                                                 mode_jeu=self.mode_jeu)
 

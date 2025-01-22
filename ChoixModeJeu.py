@@ -19,6 +19,9 @@ class ChoixModeJeu():
     def get_mode_jeu(self):
         return self._mode_jeu
 
+    def get_save(self):
+        return self.save
+
     # Setters
     def set_mode_jeu(self, mode_jeu: ModeJeu):
         self._mode_jeu = mode_jeu
@@ -166,13 +169,13 @@ class ChoixModeJeu():
                     try:
                         choix_nom = input("\nChoisissez un nom pour ce mode de jeu :\n")
                         assert choix_nom not in (set(self.save["nom"]))
-                        if not choix_nom.isalnum() :
+                        if not choix_nom.isalnum():
                             raise ValueError
                         choix_nom_valide = True
                     except AssertionError:
                         print("\nSaisie non-valide !")
                         print("Le nom que vous avez choisi existe déjà.")
-                    except ValueError :
+                    except ValueError:
                         print("\nSaisie non-valide !")
                         print("Le nom du mode de jeu doit être composé de lettres et/ou de chiffres.")
 
@@ -259,6 +262,7 @@ class ChoixModeJeu():
 
         df = pd.DataFrame({"noms": list_noms, "symboles": list_symboles, 'tailles': list_tailles})
         print(df)
+        return True
 
 
 class FactoryChoixModeJeu():

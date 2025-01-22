@@ -7,7 +7,7 @@ from TestModeJeu import TestModeJeu
 from TestCreationStrategie import TestCreationStrategie
 from TestCreationModeJeu import TestCreationModeJeu
 from TestChoixStrategie import TestChoixStrategie
-
+from TestChoixModeJeu import TestChoixModeJeu
 
 class Test(unittest.TestCase):
     def main(self):
@@ -22,6 +22,7 @@ class Test(unittest.TestCase):
 
         # classes de choix
         TestChoixStrategie()
+        TestChoixModeJeu()
 
         # classe de jeu : BatailleNavale
 
