@@ -81,6 +81,10 @@ class Strategie():
         coord_colonne = strategie[navire][2]-1
         sens = strategie[navire][3]
 
+        # Vérification initiale si la première position est hors des limites
+        if not (0 <= coord_ligne < len(grille)) or not (0 <= coord_colonne < len(grille[0])):
+            return False
+
         if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1] :
             grille[coord_ligne][coord_colonne] = self.navires[navire][1]
             taille_navire -= 1
@@ -97,6 +101,10 @@ class Strategie():
                 coord_colonne += 1
             else :
                 coord_colonne -= 1
+
+            # Vérification des limites de la grille
+            if not (0 <= coord_ligne < len(grille)) or not (0 <= coord_colonne < len(grille[0])):
+                return False
 
             if grille[coord_ligne][coord_colonne] == '-' or grille[coord_ligne][coord_colonne] == self.navires[navire][1]:
                 grille[coord_ligne][coord_colonne] = self.navires[navire][1]

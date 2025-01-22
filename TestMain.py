@@ -280,10 +280,5 @@ class MyTestBatailleNavaleCase(unittest.TestCase):
         # Derniere assertion sur la fonction de fin  de partie
         self.assertTrue(self.BatailleNavale.tous_les_navires_ont_coule(self.BatailleNavale.grille_def_j1))
 
-    
-
-
-
-
 if __name__ == '__main__':
     unittest.main()

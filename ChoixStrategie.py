@@ -63,7 +63,7 @@ class ChoixStrategie() :
         self.instance_grille=Grille
         self.pseudo_joueur = pseudo_joueur
 
-        self.strategie : Strategie
+        self.strategie : Strategie | None = None
 
         if not test :
             # lancement de la méthode principale.
@@ -265,4 +265,3 @@ class ChoixStrategie() :
 
     def get_strategie(self):
         return self.strategie
-
