@@ -97,7 +97,10 @@ class Strategie():
 
         for i in list(self._informations.index):
             for navire_set in self._navires:
-                if self._informations.loc[i, "nom"] == navire_set.get_nom():
+                a = self._informations.loc[i, "nom"]
+                b = navire_set.get_nom()
+
+                if a == b:
                     copy_set_navire.remove(navire_set)
         if len(copy_set_navire) != 0:
             return False

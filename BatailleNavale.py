@@ -104,7 +104,6 @@ class BatailleNavale:
             return "Raté"
 
         else:
-
             initiale = grille_subit_Attaque[ligne - 1][colonne - 1]
             grille_subit_Attaque[ligne - 1][colonne - 1] = "X"
             grille_d_Attaque[ligne - 1][colonne - 1] = "X"
