@@ -24,9 +24,10 @@ class CreationStrategie():
         self.navires = navires
 
         self.premiere_ligne_grille = 1
-        self.derniere_ligne_grille = Grille.nb_lignes
+        self.derniere_ligne_grille = Grille.getNbLignes()
+        print(self.derniere_ligne_grille)
         self.premiere_colonne_grille = 1
-        self.derniere_colonne_grille = Grille.nb_colonnes
+        self.derniere_colonne_grille = Grille.getNbColonnes()
 
         self.inputs_strategie = {}
 
@@ -87,8 +88,8 @@ class CreationStrategie():
         coord_valides = False
 
         while not coord_valides:
-            coord_ligne = input('Numéro de ligne : ')
-            coord_colonne = input('Numéro de colonne : ')
+            coord_ligne = input('Numero de ligne : ')
+            coord_colonne = input('Numero de colonne : ')
 
             try:
                 coord_ligne = int(coord_ligne)
@@ -96,6 +97,7 @@ class CreationStrategie():
                 if coord_ligne <= self.derniere_ligne_grille and coord_ligne >= self.premiere_ligne_grille:
                     if coord_colonne <= self.derniere_colonne_grille and coord_colonne >= self.premiere_colonne_grille:
                         coord_valides = True
+                        print("Coordonnees validees")
                     else:
                         print("Les coordonnées doivent être des nombres compris entre 1 et 10")
                 else:

@@ -159,7 +159,7 @@ class ChoixStrategie() :
             print(f"{self.pseudo_joueur}, votre stratégie a bien été définie.")
             print("")
 
-            self.instance_grille.creation_grille_de_jeu()
+            self.instance_grille.creation_grille()
             self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
             afficher_grille(self.instance_grille.grille)
             return True
@@ -168,7 +168,7 @@ class ChoixStrategie() :
 
             strategie_correctement_choisie = False
             while not strategie_correctement_choisie :
-                self.instance_grille.creation_grille_de_jeu()
+                self.instance_grille.creation_grille()
                 print('Voici la liste des stratégies enregistrée :')
 
                 for index_strat in range(len(self.referentiel)) :
@@ -223,7 +223,7 @@ class ChoixStrategie() :
             print(f"{self.pseudo_joueur}, votre stratégie a bien été définie.")
             print("")
 
-            self.instance_grille.creation_grille_de_jeu()
+            self.instance_grille.creation_grille()
             self.strategie.placement_navires_joueur(self.instance_grille.grille, self.strategie.informations)
             afficher_grille(self.instance_grille.grille)
             return True

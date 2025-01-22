@@ -31,7 +31,7 @@ class Strategie():
         self.navires = navires
 
         self.instance_grille = Grille
-        self.instance_grille.creation_grille_de_jeu()
+        self.instance_grille.creation_grille()
 
         self.informations = inputs_strategie
         self.verifier_validite()

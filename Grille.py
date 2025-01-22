@@ -46,7 +46,7 @@ class Grille():
         self.__nb_lignes = nombre_lignes
         self.__nb_colonnes = nombre_colonnes
 
-        self.plateau = []
+        self.grille = []
 
 
     # Créer une grille de jeu:
@@ -58,12 +58,12 @@ class Grille():
             #raise ValueError('Votre grille ne respecte pas les normes')
             return False
 
-        self.plateau = []
+        self.grille = []
         #if self.getNbColonnes() >= 10 and self.getNbLignes() >= 10:
         for i in range(self.getNbLignes()):
-            self.plateau.append([])
+            self.grille.append([])
             for j in range(self.getNbColonnes()):
-                self.plateau[i].append("-")
+                self.grille[i].append("-")
         return True
         #else:
             #raise ValueError('Votre grille doit avoir au moins 10 lignes et 10 colonnes')
@@ -72,9 +72,9 @@ class Grille():
 
 
 # Fonction d'affichage
-def afficher_grille(plateau) :
+def afficher_grille(grille) :
     result = ""
-    for ligne in plateau:
+    for ligne in grille:
         result += " ".join(ligne) + "\n"
         print(" ".join(ligne))
     return result

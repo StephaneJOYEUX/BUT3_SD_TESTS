@@ -11,7 +11,7 @@ class TestGrille(unittest.TestCase):
     def test_creation_grille_nominal(self):
         grille = Grille(10,10)
         self.assertTrue(grille.creation_grille())
-        self.assertEqual(grille.plateau,
+        self.assertEqual(grille.grille,
                 [['-','-','-','-','-','-','-','-','-','-'],
                 ['-','-','-','-','-','-','-','-','-','-'],
                 ['-','-','-','-','-','-','-','-','-','-'],
@@ -27,7 +27,7 @@ class TestGrille(unittest.TestCase):
         
         grille = Grille(-1, -1)
         self.assertFalse(grille.creation_grille())
-        #self.assertEqual(self.grille1.plateau,
+        #self.assertEqual(self.grille1.grille,
             #[['-','-'],
              #['-','-']])
              
@@ -53,7 +53,7 @@ class TestGrille(unittest.TestCase):
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"
-                          "- - - - - - - - - -\n"), afficher_grille(grille.plateau))
+                          "- - - - - - - - - -\n"), afficher_grille(grille.grille))
 
 
     def test_afficher_couple_grilles(self):
@@ -61,7 +61,7 @@ class TestGrille(unittest.TestCase):
         grille2 = Grille(10,10)
         self.assertTrue(grille1.creation_grille())
         self.assertTrue(grille2.creation_grille())
-        self.assertEqual(afficher_couple_grilles(grille1.plateau, grille2.plateau),
+        self.assertEqual(afficher_couple_grilles(grille1.grille, grille2.grille),
             "     Vos navires :                      Champ de tir :\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
@@ -73,5 +73,6 @@ class TestGrille(unittest.TestCase):
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n"
             "     - - - - - - - - - -                - - - - - - - - - -\n")    
+
 if __name__ == '__main__': 
     unittest.main()
