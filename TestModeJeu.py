@@ -13,6 +13,7 @@ class TestModeJeu(unittest.TestCase):
 
         self.navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
+    # Initialisation
     def test_initialisation_cas_nominal(self):
         self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[10, 10])
         self.assertEqual([10, 10], self.mode_jeu.taille_grille)
@@ -31,7 +32,35 @@ class TestModeJeu(unittest.TestCase):
         except ValueError as current_error:
             self.assertEqual("La taille de la grille est invalide !", str(current_error))
 
-    ## setters & getters
+    # __eq__
+    def test__eq__cas_nominal(self):
+        self.mode_jeu_blitz1 = ModeJeu(nom='Blitz', navires=self.navires, taille_grille=[5, 5])
+        self.mode_jeu_blitz1.set_nom()
+        self.mode_jeu_blitz1.set_navires()
+        self.mode_jeu_blitz1.set_taille_grille()
+        self.mode_jeu_blitz2 = ModeJeu(nom='Blitz', navires=self.navires, taille_grille=[5, 5])
+        self.mode_jeu_blitz2.set_nom()
+        self.mode_jeu_blitz2.set_navires()
+        self.mode_jeu_blitz2.set_taille_grille()
+
+        # test
+        self.assertTrue(self.mode_jeu_blitz1 == self.mode_jeu_blitz2)
+
+
+    def test__eq__cas_incorrect(self):
+        self.mode_jeu_blitz = ModeJeu(nom='Blitz', navires=self.navires, taille_grille=[5, 5])
+        self.mode_jeu_blitz.set_nom()
+        self.mode_jeu_blitz.set_navires()
+        self.mode_jeu_blitz.set_taille_grille()
+        self.mode_jeu_normal = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[10, 10])
+        self.mode_jeu_normal.set_nom()
+        self.mode_jeu_normal.set_navires()
+        self.mode_jeu_normal.set_taille_grille()
+
+        # test
+        self.assertFalse(self.mode_jeu_blitz == self.mode_jeu_normal)
+
+    ## Setters & Getters
     # nom
     def test_set_nom_cas_nominal(self):
         self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[10, 10])

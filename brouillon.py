@@ -1,3 +1,3 @@
 a = "Impossible de créer la grille !"
 
-print(len(a))
+print(len(a))   # 31

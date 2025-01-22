@@ -102,6 +102,13 @@ class ModeJeu():
 
         return [True, numero_critere]
 
+    def __eq__(self, other):
+        if (self.get_nom() == other.get_nom()
+                and self.get_navires() == other.get_navires()
+                and self.get_taille_grille() == other.get_taille_grille()):
+            return True
+        return False
+
 
 class FactoryModeJeu():
     def get_mode_jeu(self):
