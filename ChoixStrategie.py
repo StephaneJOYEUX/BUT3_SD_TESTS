@@ -59,10 +59,9 @@ class ChoixStrategie() :
         self.navires = navires
         self.referentiel = []
         self.lire_fichier_sauvegarde()
-
         self.instance_grille = Grille
         self.pseudo_joueur = pseudo_joueur
-
+        self.strategie = None
         self.strategie : Strategie
 
         if not test :
