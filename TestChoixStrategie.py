@@ -4,6 +4,7 @@ from ChoixStrategie import ChoixStrategie
 from Strategie import Strategie
 from Grille import Grille
 
+
 class TestChoixStrategie(unittest.TestCase):
 
     def setUp(self):
