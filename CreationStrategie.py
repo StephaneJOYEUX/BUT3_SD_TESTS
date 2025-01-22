@@ -20,7 +20,7 @@ from Strategie import Strategie
 
 
 class CreationStrategie():
-    def __init__(self, navires : dict,Grille = Grille(10,10), test : bool = False):
+    def __init__(self, navires : dict, Grille = Grille(10,10), test : bool = False):
         self.navires = navires
 
         self.premiere_ligne_grille = 1
@@ -33,9 +33,20 @@ class CreationStrategie():
         if not test :
             self.creer_strategie()
         else :
-            self.instance_strategie = Strategie({'Torpilleur': [2, 4, 9, 'O'], 'Sous-marin': [3, 3, 6, 'S'], 'Frégate': [3, 6, 9, 'S'],
-                              'Cuirassé': [4, 9, 1, 'E'], 'Porte-avions': [5, 10, 7, 'N']}, self.navires,
-                                 Grille)
+            self.inputs_strategie = {
+                'Torpilleur': [2, 4, 9, 'O'],
+                'Sous-marin': [3, 3, 6, 'S'],
+                'Frégate': [3, 6, 9, 'S'],
+                'Porte-avions': [5, 10, 7, 'N']
+            }
+            self.navires = {
+                'Torpilleur': [2, 'T'],
+                'Sous-marin': [3, 'S'],
+                'Frégate': [3, 'F'],
+                'Cuirassé': [4, 'C'],
+                'Porte-avions': [5, 'P']
+            }
+            self.instance_strategie = Strategie(self.inputs_strategie, self.navires, Grille)
 
 
     # Fonction principale : elle permet la création de l'objet strategie : {nom : [taille, coord_x, coord_y, sens]}
