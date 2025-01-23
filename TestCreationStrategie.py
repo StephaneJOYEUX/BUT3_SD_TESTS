@@ -53,8 +53,8 @@ class TestCreationStrategie(unittest.TestCase):
                 return 'E'
 
         creation.input = mock_input  # Mock la méthode input
+        print("Pour les tests : ligne : 5, colonne : 6 et direction : E")
         result = creation.input_donnees_placement_navire(navire)
-
         self.assertEqual(result, [taille, 5, 6, 'E'])
 
     def test_creation_strategie_valide(self):

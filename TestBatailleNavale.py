@@ -55,15 +55,15 @@ class TestBatailleNavale(unittest.TestCase):
     def test_tir_touche(self):
         # Teste un tir qui touche
         partie = BatailleNavale(self.navires, self.strategie_j1, self.strategie_j2, self.grille, test=True)
-        resultat = partie.tir(1, 3, 3)  # La case (3, 3) contient un navire
+        resultat = partie.tir(1, 4, 4)  # La case (3, 3) contient un navire
         self.assertEqual(resultat, "Touché")
 
     def test_tir_touche_coule(self):
         # Teste un tir qui coule un navire
         partie = BatailleNavale(self.navires, self.strategie_j1, self.strategie_j2, self.grille, test=True)
-        partie.tir(1, 3, 3)  # Touche le sous-marin
-        partie.tir(1, 4, 3)  # Touche le sous-marin
-        resultat = partie.tir(1, 5, 3)  # Coule le sous-marin
+        partie.tir(1, 4, 4)  # Touche le sous-marin
+        partie.tir(1, 5, 4)  # Touche le sous-marin
+        resultat = partie.tir(1, 6, 4)  # Coule le sous-marin
         self.assertEqual(resultat, "Touché, Coulé")
 
     def test_victoire(self):
