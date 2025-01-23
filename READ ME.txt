@@ -1,2 +1,0 @@
-Reste a faire (22/01/2025) :
-	- Finir de commenter le code (reprendre toutes les classes et être méthodique pour commenter efficacement et méthodologiquement tout le code)

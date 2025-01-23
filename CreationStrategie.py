@@ -1,18 +1,25 @@
 '''
-La classe de CreationStrategie() est appelée par la classe ChoixStrategie() et appelle la classe Strategie().
+La classe de CreationStrategie() est appelée par la classe ChoixStrategie() et appelle la classe FactoryStrategie().
 Elle permet de créer une nouvelle stratégie valide en demandant les inputs nécessaires à l'utilisateur.
 ATTENTION : beaucoup d'inputs !
 
+Input :
+    - navires : Il s'agit d'un set d'instance de la classe Navire.
+            Ces instances contiennent toute les informations nécessaire pour la classe Strategie.
 
-Remarques :
-    (Optionel ?)
-    Créer une getter pour récupérer la stratégie crée hors de la classe (utile notamment pour la classe ChoixStrategie()).
+    - grille : Instance de la classe Grille.
 
-    Peut-être testable ? (difficile car beaucoup d'input)
-    Pour tester cette classe, regarder les modules py comme PyAutoGUI ou keyboard
-    -> pas très utiles... ou trop dur à apprendre à utiliser en 1 sem.
 
-    Les test se font surtout au niveau de la classe Strategie.
+Méthode de classe :
+    - input_donnees_placement_navire : Methode permettant de définir les inputs nécessaires au placement d'un navire :
+                                                - coordonnée sur les lignes
+                                                - coordonnée sur les colonnes
+                                                - orientation
+
+
+    - creer_strategie : Permet de créer une stratégie.
+                        => demande de toutes les informations nécessaires à l'utilisateur à l'aide d'inputs.
+                        => pour chaque navire : appel de la methode 'input_donnees_placement_navire'
 '''
 from Grille import Grille
 import pandas as pd
@@ -47,7 +54,7 @@ class CreationStrategie():
         self.premiere_colonne_grille = 1
         self.derniere_colonne_grille = self.grille.get_nb_colonnes()
 
-    def __init__(self, navires: set, grille, test: bool = False):
+    def __init__(self, navires: set, grille : Grille):
         # Variables privées
         self._navires: set
         self._grille: Grille

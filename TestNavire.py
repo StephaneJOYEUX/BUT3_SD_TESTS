@@ -8,13 +8,14 @@ class TestNavire(unittest.TestCase):
     def setUp(self):
         pass
 
+    # Initialisation
     def test_initialisation(self):
         self.navire = Navire("cuirassé", 3)
         self.assertEqual("cuirassé", self.navire.nom)
         self.assertEqual("C", self.navire.symbole)
         self.assertEqual(3, self.navire.taille)
 
-    ## setters & getters
+    ## Setters & Getters
     # nom
     def test_setter_nom_cas_nominal(self):
         self.navire = Navire("cuirassé", 3)

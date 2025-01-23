@@ -2,17 +2,13 @@ import pandas as pd
 
 from unittest import TestCase
 from Navire import FactoryNavire
-from Grille import Grille, afficher_grille
+from Grille import Grille
 from Strategie import FactoryStrategie
 from BatailleNavale import BatailleNavale
 
 
 class TestBatailleNavale(TestCase):
     def setUp(self):
-        """__init__(self, navires: set, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
-        instance_grille: Grille = Grille(10, 10), pseudo_j1: str = 'Ordinateur 1',
-        pseudo_j2: str = 'Ordinateur 2',
-        test: bool = False):"""
         ## Initialisation
         # navires
         self.cuirasse = FactoryNavire(nom="cuirassé", taille=4).get_navire()
@@ -42,6 +38,7 @@ class TestBatailleNavale(TestCase):
         self.pseudo_j1 = 'pseudo_j1'
         self.pseudo_j2 = 'Ordinateur 2'
 
+    ## Methodes de classe
     # navire_coule
     def test_navire_coule_true(self):
         self.bataille_navale = BatailleNavale(navires=self.navires, test=True, pseudo_j1=self.pseudo_j1,
@@ -115,3 +112,5 @@ class TestBatailleNavale(TestCase):
                                               strategie_joueur1=self.strategie_j1, strategie_joueur2=self.strategie_j2)
 
         self.assertEqual("Raté", self.bataille_navale.tir(numJoueur=1, colonne=8, ligne=8))
+
+    # Le reste des méthodes ne sont pas testées car elles dépendent d'inputs utilisateur.

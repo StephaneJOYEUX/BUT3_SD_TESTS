@@ -1,4 +1,24 @@
-from ModeJeu import FactoryModeJeu
+"""
+La classe de CreationModeJeu() est appelée par la classe ChoixModeJeu() et appelle la classe FactoryModeJeu().
+Elle permet de créer un nouveau mode de jeu valide en demandant les inputs nécessaires à l'utilisateur.
+ATTENTION : beaucoup d'inputs !
+
+Input :
+    - nom : le nom du mode de jeu.
+
+Methodes de classe :
+    - inputs_navire : demande des informations relative à chaque navire à l'aide d'inputs :
+                            - taille
+                            - nom du navire
+                            - symbole du navire (si le symbole déduit du nom existe déjà)
+
+    - main : Methode principale, qui permet de créer le mode de jeu à partir des informations données par l'utilisateur dans les inputs.
+                Les informations demandées sont :
+                    - taille de la grille [nb_lignes, nb_colonnes]
+                    - nombre de navires
+                    - inforamations de chacun des navires : passage par la methode de classe 'inputs_navire'.
+"""
+
 from ModeJeu import ModeJeu, FactoryModeJeu
 from Grille import Grille, afficher_grille
 from Navire import FactoryNavire
@@ -33,10 +53,10 @@ class CreationModeJeu():
         self._navires = navires
 
     def set_grille(self, taille_grille: list):
-        try :
+        try:
             self._grille = Grille(taille_grille[0], taille_grille[1])
             self._grille.create()
-        except :
+        except:
             self._grille = None
 
     # Constructeur
@@ -72,7 +92,6 @@ class CreationModeJeu():
             try:
                 nb_navires = int(input("\nCombien de navires souhaitez-vous dans ce mode de jeu ?\n"))
 
-                # revoir le critère de validite : depend aussi (et surtout de la taille des navires)
                 critere_validite = nb_navires * taille_min_navire / (nb_lignes * nb_colonnes)
                 if critere_validite < 0.6:
                     choix_nb_navires_valide = True
@@ -87,7 +106,7 @@ class CreationModeJeu():
         # de validite de la classe : ModeJeu.
         print("\nVous devez maintenant définir les caractéristiques de chacun de vos navires.")
         input("Tapez 'entrer' pour continuer.\n")
-        
+
         caracteristique_valide = False
         while not caracteristique_valide:
             for i in range(nb_navires):
@@ -107,6 +126,7 @@ class CreationModeJeu():
                         print("")
 
                     print(f"\nDéfinissez les caractéristiques du navire n°{i + 1}")
+                    # appel de la méthode permettant de définir les caractéristiques d'un navire
                     navire = self.inputs_navire(taille_grille)
 
                     self.navires.add(navire)
@@ -140,7 +160,8 @@ class CreationModeJeu():
     # Demande du nom du navire -> attention pour les symbole les noms doivent avoir des initiales différentes.
     # Demande de la taille -> appliquer une fonction de vérification des critères de validité.
     def inputs_navire(self, taille_grille: list):
-        # 1. Demande de la longueur du navire : assertion sur les critère de validité du mode de jeu (classe ModeJeu).
+        # 1. Demande de la longueur du navire :
+        #           assertion sur les critère de validité du mode de jeu (classe ModeJeu).
         choix_taille_valide = False
 
         while not choix_taille_valide:
@@ -159,8 +180,8 @@ class CreationModeJeu():
                 else:
                     print(str(current_error) + "\n")
 
-        # 2. Demande du nom
-        #       passage du nom en minuscule, sans espace (' ' => '-')
+        # 2. Demande du nom.
+        #       => passage du nom en minuscule, sans espace (' ' => '-')
         choix_nom_symbole_valide = False
 
         while not choix_nom_symbole_valide:
@@ -190,6 +211,10 @@ class CreationModeJeu():
             try:
                 choix_symbole = choix_nom[0]
                 choix_symbole = choix_symbole.upper()
+                # vérifions que le symbole est une lettre.
+                if not choix_symbole.isalpha():
+                    raise ValueError(
+                        "Le symbole n'est pas valide : un chiffre ne peut pas être utilisé comme symbole !\nVous pouvez cependant choisir un symbole mannuellement pour le navire.")
                 # vérifier que le symbole n'est pas déjà utilisé par les navires déjà créé dans ce mode de jeu.
                 for navire in self.navires:
                     if navire.get_symbole() == choix_symbole:

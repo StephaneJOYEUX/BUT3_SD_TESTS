@@ -14,10 +14,10 @@ import os
 import pandas as pd
 
 from ChoixStrategie import FactoryChoixStrategie
-from Strategie import Strategie, FactoryStrategie
+from Strategie import FactoryStrategie
 from BatailleNavale import BatailleNavale
 from Grille import Grille
-from Navire import FactoryNavire, Navire
+from Navire import Navire
 from ChoixModeJeu import FactoryChoixModeJeu
 
 

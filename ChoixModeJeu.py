@@ -1,11 +1,45 @@
+"""
+Classe ChoixModeJeu()
+Il s'agit de la classe qui permet l'interaction avec l'utilisateur pour le choix du mode de jeu
+(=taille de la grille, nb de navires, etc...).
+ATTENTION : beaucoup d'inputs !
+
+Inputs : Pas d'input pour cette classe
+
+Methodes de classe :
+    - set_attributes : Il s'agit d'un setter qui appelle tous les autres setters et
+                        qui permet de creer le mode de jeu à partir de la classe FactoryModeJeu.
+
+    - choisir_mode_jeu_personnalise : Dans le cas où le joueur choisi de 'choisir' un mode de jeu parmis les mode de jeu dit 'Personnalisés",
+                                        cette fonction est appelée afin de lister les mode de jeu personnalisés (enregistrés dans la sauvegarde)
+                                        et de proposer un choix à l'utilisateur.
+
+    - main : Méthode principale, elle propose une suite de choix à l'utilisateur afin qu'il puisse définir son mode de jeu.
+                L'utilisateur peut d'abord choisir de choisir un mode de jeu prééxistant ou d'en créer un.
+                Selon son choix, il sera orienté différement :
+                    - choisir :
+                        Entre 'Normal', 'Blitz' et 'Personnalisé' (les deux premiers sont des choix 'classiques').
+                        Si son choix se porte sur 'Personnalisé", il voit ensuite s'afficher une liste de mode de jeu enregistré parmis
+                        lesquels il doit effectuer un choix.
+                        Après avoir choisi son mode de jeu, il doit confirmer son choix, sinon il retourne au premier choix (choisir/creer).
+
+                    - creer :
+                        L'utlisateur est rediriger vers la classe CreationModeJeu, où une série d'input lui seront demandé afin de creer un nouveau mode de jeu.
+                        Après cela, il devra choisir d'enregistrer ou non ce mode de jeu créé.
+                        Enfin, il devra confirmer le choix du mode de jeu.
+
+
+    - afficher_navires : permet d'afficher les caractéristiques des navires du mode de jeu défini/choisi sous la forme d'un Dataframe pandas.
+"""
+
 import pandas as pd
+import os
+
 from Grille import Grille, afficher_grille
 from Navire import Navire, FactoryNavire
 from ast import literal_eval
 from CreationModeJeu import FactoryCreationModeJeu
 from ModeJeu import ModeJeu, FactoryModeJeu
-import os
-import pandas as pd
 
 
 class ChoixModeJeu():
@@ -80,11 +114,12 @@ class ChoixModeJeu():
         self.save.to_csv('sauvegardes_mode_jeux.csv', index=False, encoding="UTF-8")
 
     def main(self):
-
+        # boucle nécessaire, car si l'utilisateur ne confirme pas son choix, il faut bien qu'il choisisse un mode de jeu.
         choix_confirmation_valide = False
         while not choix_confirmation_valide:
             choix_creation_valide = False
 
+            # premier choix
             while not choix_creation_valide:
                 try:
                     choix_creation = input(
@@ -98,6 +133,7 @@ class ChoixModeJeu():
             if choix_creation == "choisir":
                 choix_mode_jeu_valide = False
 
+                # Second choix - choisir
                 while not choix_mode_jeu_valide:
                     print("\nChoississez le mode de jeu : 1.Normal / 2.Blitz / 3.Personnalisé")
                     try:
@@ -111,6 +147,7 @@ class ChoixModeJeu():
                 # lisibilité pour le joueur.
                 print("")
                 match choix_mode_jeu:
+                    # Normal
                     case 1:
                         # grille
                         nb_lignes = 10
@@ -125,6 +162,7 @@ class ChoixModeJeu():
                         self.set_attributes(nb_lignes=nb_lignes, nb_colonnes=nb_colonnes, navires=navires,
                                             nom_mode_jeu=nom_mode_jeu)
 
+                    # Blitz
                     case 2:
                         # grille
                         nb_lignes = 5
@@ -139,9 +177,11 @@ class ChoixModeJeu():
                         self.set_attributes(nb_lignes=nb_lignes, nb_colonnes=nb_colonnes, navires=navires,
                                             nom_mode_jeu=nom_mode_jeu)
 
+                    # Personnalisé
                     case 3:
                         print("Vous avez choisi : Personnalisé.")
 
+                        # redirection vers la methode de classe associée
                         liste_choix = self.choisir_mode_jeu_personnalise()
                         choix_mode_jeu_personnalise = liste_choix[0]
                         nom_mode_jeu = liste_choix[1]
@@ -163,7 +203,7 @@ class ChoixModeJeu():
 
             elif choix_creation == "creer":
                 # input sur le nom du mode de jeu
-                # assertion sur les noms des modes de jeu existant.
+                # assertion sur les noms des modes de jeu existant => il ne peut pas y avoir 2 modes de jeu avec le même nom !
                 choix_nom_valide = False
                 while not choix_nom_valide:
                     try:
@@ -177,14 +217,15 @@ class ChoixModeJeu():
                         print("Le nom que vous avez choisi existe déjà.")
                     except ValueError:
                         print("\nSaisie non-valide !")
-                        print("Le nom du mode de jeu doit être composé de lettres et/ou de chiffres.")
+                        print("Le nom du mode de jeu doit être composé de lettres et/ou de chiffres, sans espace.")
 
-                # Faire appel ensuite a la classe CreationModeJeu et au Setters.
+                # Faire appel ensuite a la classe CreationModeJeu et aux Setters.
                 creation_mode_jeu = FactoryCreationModeJeu(choix_nom).get_creation_mode_jeu()
                 self.set_mode_jeu(creation_mode_jeu.get_mode_jeu())
                 self.set_navires(creation_mode_jeu.get_navires())
                 self.set_grille(creation_mode_jeu.get_grille())
 
+                # choix lié à l'enregistrement du mode de jeu créé.
                 choix_enregistrement_valide = False
 
                 while not choix_enregistrement_valide:
@@ -206,7 +247,7 @@ class ChoixModeJeu():
                                 self.get_mode_jeu().get_nb_navires()]
                     self.save.loc[len(self.save)] = new_data
 
-            # présentation du mode de jeu créé :
+            # présentation du mode de jeu créé : lisibilité pour l'utilisateur
             os.system('cls')
             print(f"Vous avez choisi le mode de jeu : {self.get_mode_jeu().get_nom()}")
             print(f"La grille fait : {self.get_grille().get_nb_lignes()}x{self.get_grille().get_nb_colonnes()}")
@@ -215,7 +256,7 @@ class ChoixModeJeu():
             # Afficher un df pandas présentant les différents navires.
             self.afficher_navires(self.get_navires())
 
-            # confirmation du choix du mode de jeu
+            # confirmation du choix du mode de jeu => si 'n' : retour à la case départ
             try:
                 choix_confirmation = input("\nConfirmez-vous le choix de ce mode de jeu ? (o/n)\n")
                 print("")
@@ -229,7 +270,9 @@ class ChoixModeJeu():
 
     # Methode de classe utilisé dans le main si le choix est 'choisir'
     def choisir_mode_jeu_personnalise(self):
-        print("Pour obtenir plus d'information sur une stratégie, choississez la.")
+        # affichage de la liste des modes de jeu enregistrés
+        print(
+            "Pour obtenir plus d'information sur une stratégie, choississez la. (Indiquez le n° de la strategie souhaitée.)")
         print(self.save[["nom", "taille_grille_x", "taille_grille_y", "nombre_navires"]])
         print("")
 

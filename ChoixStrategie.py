@@ -1,64 +1,64 @@
 """
 Classe ChoixStrategie()
-Il s'agit de la classe qui permet l'interaction avec l'utilisateur. (!!ATTENTION!! : beaucoup d'input)
+Il s'agit de la classe qui permet l'interaction avec l'utilisateur pour son choix de strategie
+(=placement de ses navires dans la grille de jeu).
+ATTENTION : beaucoup d'inputs !
 
-Fonctionnement : Guider l'utilisateur dans ses choix et actions jusqu'à qu'il se voit attribué un stratégie.
+Fonctionnement :
+    Guider l'utilisateur dans ses choix et actions jusqu'à qu'il se voit attribué un stratégie.
+    Il peut choisir entre :
 
-1er choix :
-    - créer une strategie
-    - choisir une strategie existante
+        - Créer une strategie :
+            Appel de la classe CreationStrategie().
+            Appel de la methode get() de cette même classe après la création.
 
-- Créer une strategie :
-    Appel de la classe CreationStrategie().
-    Appel de la methode get() de cette même classe après la création.
+        - Choisir une strategie existante :
+            Afficher la liste des strategie présentent dans le referentiel.
+            Proposer à l'utilisateur de choisir l'une des strategie affichée
 
-- Choisir une strategie existante :
-    Afficher la liste des strategie présentent dans le referentiel. (nous reviendront apres à ce référentiel)
-    2ème Choix : choisir l'une des proposition + choix de retour
-    Afficher la strategie dans la grille avec la methode affichage_strategie() de la Classe Strategie().
-    3ème choix : confirmer la selection ou retour au choix precedent
-    Si confirmation : attribution de la strategie.
-
-Programmer une methode get() pour sortir la strategie choisie de la classe
-afin de l'utiliser ensuite dans la classe BatailleNavale().
+    Il doit ensuite confirmer son choix.
 
 
-Méthode main() :
-    méthode principale du programme qui agit comme une interface utilisateur.
-    Dans cette méthode nous guidons l'utilisateur dans ses choix afin de lui proposer une expérience de jeu optimale.
+Input :
+    - pseudo_joueur : le pseudo du joueur, ex : 'mon_pseudo'
+
+    - navires : Il s'agit d'un set d'instance de la classe Navire.
+                    Ces instances contiennent toute les informations nécessaire pour la classe Strategie.
+
+    - mode_jeu : Une instance de la classe ModeJeu qui contient les caractéristiques du mode de jeu.
+                    Cela aura une influence sur les inputs demandées à l'utilisateur.
+
+    - grille : Instance de la classe Grille. Elle permet l'affichage des strategies. Définie par défault à 10x10.
 
 
-Méthode valider_input_utilisateur():
-    Prend en input une requette faite à l'utilisateur, ainsi que 2 choix possible pour l'utilisateur. (str)
-    Cette méthode permet de vérifier si l'utilisateur à bien rentrer un choix cohérent.
-    Elle permet d'éviter des erreurs liées aux input.
 
-    Remarque : Le code de vérification des inputs n'est pas exclusif à cette méthode, pour les cas plus spécifiques,
-    il est difficile de centraliser la vérification des données d'input.
+Méthode de classe :
+    - lire_fichier_sauvegarde : permet de récupérer les données auvegardée dans le fichier csv : "sauvegardes_strategie.csv"
+                                Les données sont sauvegardées dans la variable de classe 'self.referentiel', c'est un Dataframe pandas.
 
-Le référentiel :
-    C'est une liste qui contient des dictionnaires/ des instances de la classe Strategie (à déterminer lors de la prog)
-    Ce référentiel est vide à l'initialisation.
-    Il faut le remplir en récupérant les information d'un fichier txt annexe.
-    A la fin de l'execution de la classe, on efface les informations du fichier txt et on écrit les informations contenues
-    dans le référentiel.
-    Cela permet de 'sauvegarder' des stratégies.
+    - ecrire_fichier_sauvegarde : permet d'écrire dans le fichier : "sauvegardes_strategie.csv"
+                                    Cette écriture se fait à partir d'un Dataframe pandas, la variable 'self.referentiel'
 
-La classe contient aussi des méthodes de lecture et d'écriture dans un fichier de sauvegarde annexe (.txt).
+
+    - main() : méthode principale du programme qui agit comme une interface utilisateur.
+                Dans cette méthode nous guidons l'utilisateur dans ses choix afin de lui proposer une expérience de jeu optimale.
+                cf. 'Fonctionnement'
+
+    - valider_input_utilisateur(): Prend en input une requette faite à l'utilisateur, ainsi que 2 choix possible pour l'utilisateur. (str)
+                                    Cette méthode permet de vérifier si l'utilisateur à bien saisi un choix cohérent.
+                                    Elle permet d'éviter des erreurs liées aux input.
 """
 import os
-from ast import literal_eval
-
 import pandas as pd
+
 from unidecode import unidecode
 from Grille import Grille, afficher_grille
-from Strategie import Strategie, Strategie, FactoryStrategie
-from CreationStrategie import CreationStrategie, FactoryCreationStrategie
+from Strategie import Strategie, FactoryStrategie
+from CreationStrategie import FactoryCreationStrategie
 from ModeJeu import ModeJeu
 
 
 class ChoixStrategie():
-
     # Getters
     def get_referentiel(self):
         return self.referentiel
@@ -67,7 +67,7 @@ class ChoixStrategie():
         return self.strategie
 
     # Constructeur
-    def __init__(self, pseudo_joueur, navires, mode_jeu, grille=Grille(10, 10), test: bool = False):
+    def __init__(self, pseudo_joueur: str, navires: set, mode_jeu: ModeJeu, grille=Grille(10, 10)):
         self.mode_jeu: ModeJeu = mode_jeu
         self.navires = navires
         self.referentiel: pd.DataFrame = pd.DataFrame({
@@ -267,8 +267,8 @@ class FactoryChoixStrategie():
     def get_strategie(self):
         return self.choix_strategie.get_strategie()
 
-    def __init__(self, pseudo_joueur, navires, mode_jeu : ModeJeu, grille=Grille(10, 10), test: bool = False):
-        self.choix_strategie = ChoixStrategie(pseudo_joueur, navires, mode_jeu, grille, test)
+    def __init__(self, pseudo_joueur, navires, mode_jeu: ModeJeu, grille=Grille(10, 10), test: bool = False):
+        self.choix_strategie = ChoixStrategie(pseudo_joueur, navires, mode_jeu, grille)
         self.choix_strategie.lire_fichier_sauvegarde()
         if not test:
             self.choix_strategie.main()

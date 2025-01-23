@@ -1,16 +1,19 @@
 """
-La classe Grille est appelée par à peu près toutes les classes du jeu,
-autant pour l'initialisation de la partie que pour la partie elle-même.
+La classe grille permet de support pour le jeu.
 
-Cette classe définie les attributs d'une grille de jeu et des méthode qui lui sont propres.
+Elle est appellée par (presque) toutes les autres classes.
 
-Elle prend en input :
+Inputs :
     - nombre_lignes : le nombre de ligne de la grille
     - nombre_colonnes : le nombre de colonne de la grille
 
 Il faut retenir qu'une grille de jeu est une matrice (= liste de liste).
 Le nombre_lignes défini la longueur de la liste principale.
 Le nombre_colonnes défini la longueur des listes secondaires.
+
+La methode de classe self.create() permet de créer le plateau de jeu en fonction des critères d'initialisation.
+
+la methode self.reinit_plateau permet de réinitialiser  le plateau de jeu (matrice), à partir des données d'initialisation.
 
 Cette classe contient aussi deux méthodes d'affichage très utile notamment
 pour la classe BatailleNavale() et pour la classe ChoixStrategie().
@@ -34,6 +37,7 @@ class Grille():
 
     # Setters
     def set_nb_lignes(self, nb_lignes: int):
+        # test sur le nombre de ligne minimum et maximum défini par le programmeur
         if nb_lignes < self.taille_min:
             self.__nb_lignes = None
             raise ValueError(f"Le nombre de lignes minimum est {self.taille_min} !")
@@ -44,6 +48,7 @@ class Grille():
             self.__nb_lignes = nb_lignes
 
     def set_nb_colonnes(self, nb_colonnes: int):
+        # test sur le nombre de colonen minimum et maximum défini par le programmeur
         if nb_colonnes < self.taille_min:
             self.__nb_colonnes = None
             raise ValueError(f"Le nombre de colonnes minimum est {self.taille_min} !")
@@ -63,6 +68,7 @@ class Grille():
         self.plateau = []
 
     def reinit_plateau(self):
+        # permet de recréer un plateau vierge à partir des données d'initialisation - réinitialisation du plateau.
         self.create()
         return self.plateau
 
@@ -86,6 +92,7 @@ class Grille():
         if observateur > 0:
             raise ValueError(f"Impossible de créer la grille !\n La valeur du nombre de {erreur} est incorrecte !")
 
+        # creation de la matrice (liste de listes) contenant des '-'
         self.plateau = []
         for i in range(self.__nb_lignes):
             self.plateau.append([])
@@ -95,12 +102,12 @@ class Grille():
         return True
 
     def __eq__(self, other):
-        if self.plateau == other.plateau :
+        if self.plateau == other.plateau:
             return True
         return False
 
 
-# Fonction d'affichage
+# Fonctions d'affichage
 def afficher_grille(grille):
     result = ""
     for ligne in grille:

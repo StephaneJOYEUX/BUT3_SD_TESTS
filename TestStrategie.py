@@ -1,5 +1,4 @@
 import unittest
-
 import pandas as pd
 
 from Strategie import Strategie
@@ -16,8 +15,8 @@ class TestStrategie(unittest.TestCase):
         self.porte_avions = FactoryNavire(nom="porte-avions", taille=5).get_navire()
         self.chaloupe = FactoryNavire(nom="chaloupe", taille=2).get_navire()
 
-    ## getters & setters
-    # set_navires
+    ## Setters & Getters
+    # navires
     def test_set_navires_cas_nominal(self) -> None:
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
@@ -66,8 +65,7 @@ class TestStrategie(unittest.TestCase):
                 "Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.",
                 str(current_error))
 
-    # set_informations
-    # Nt : il n'existe pas de cas d'echec pour cette fonction (en chercher 1)
+    # informations
     def test_set_informations_cas_nominal(self):
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
@@ -81,7 +79,7 @@ class TestStrategie(unittest.TestCase):
         # test de l'assertion d'égalité de Dataframe avec le module pandas.
         pd.testing.assert_frame_equal(inputs_strategie, self.strategie.get_informations())
 
-    # set_grille
+    # grille
     def test_set_grille_cas_nominal(self):
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
 
@@ -97,7 +95,7 @@ class TestStrategie(unittest.TestCase):
         self.assertEqual(grille_test.get_plateau(), self.strategie.get_grille().get_plateau())
 
     ## Méthodes de classe.
-    # Fonction : placement_un_navire
+    # placement_un_navire
     def test_placement_un_navire_cas_nominal(self):
         # Initialisation
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
@@ -186,7 +184,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
                          self.strategie.get_grille().get_plateau())
 
-    # Fonction : placement_navires
+    # placement_navires
     def test_placement_navires_cas_nominal(self):
         # Initialisation
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
@@ -273,7 +271,7 @@ class TestStrategie(unittest.TestCase):
                           ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']],
                          self.strategie.get_grille().get_plateau())
 
-    # Fonction : verifier_validite
+    # verifier_validite
     def test_verifier_validite_cas_nominal(self):
         # Initialisation
         navires = {self.cuirasse, self.fregate, self.sous_marin, self.torpilleur, self.porte_avions}
@@ -319,7 +317,7 @@ class TestStrategie(unittest.TestCase):
         self.strategie.set_grille()
         self.assertEqual(False, self.strategie.verifier_validite())
 
-    # Fonction : affichage_strategie
+    # affichage_strategie
     def test_affichage_strategie_cas_nominal(self):
         # avec une strategie valide
         # Initialisation

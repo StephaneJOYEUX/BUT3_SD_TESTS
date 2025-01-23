@@ -16,7 +16,7 @@ class TestCreationStrategie(TestCase):
 
         self.grille = Grille(10, 10)
 
-    ## Setters & Getters (pour cette classes, il ne me semble pas qu'il existe des cas non-nominaux)
+    ## Setters & Getters
     # navires
     def test_set_navires_cas_nominal(self):
         self.creation_strategie = CreationStrategie(navires=self.navires, grille=self.grille)

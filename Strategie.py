@@ -5,21 +5,33 @@ Pour être plus précis, elle donne les informations nécéssaires au placement 
 dans les grilles de la partie.
 
 Les inputs de cette classe sont :
-  - inputs_strategie :  Dictionnaire contenant les information nécéssaire à la Strategie.
-                        C'est la strategie du joueur à proprement parler.
+    - inputs_strategie : Dataframe pandas contenant les information nécéssaire à la Strategie.
 
-  - navires :   Dictionnaire contenant les informations des navires relatifs à la partie.
-                Utile notamment pour l'affichage des stratégies dans la grille.
-                Nous avons besion du symbole du navire dans la grille qui est contenu dans ce dictionnaire.
+    - navires : Il s'agit d'un set d'instance de la classe Navire.
+                Ces instances contiennent toute les informations nécessaire pour la classe Strategie.
 
-  - Grille :    Instance de la classe Grille. Elle permet l'affichage des strategies. Définie par défault à 10x10.
+    - grille : Instance de la classe Grille. Elle permet l'affichage des strategies. Définie par défault à 10x10.
 
+    - complete (booleen) : Permet de savoir si une strategie est complete ou pas.
+                            => utile pour tester la validité d'une strategie OU tester la plaçabilité des navires.*
+                            => il est possible de tester la plaçabilité des navires d'une strategie non-complete (CreationStrategie).
 
-Tests : (à programmer et automatiser)
-    La fonction la plus importante à tester ici est la fonction verifier_validite(). -> testable facilement
-    Une autre fonction intérressante à tester est le getter de la grille de la stratégie. (pas encore programmée)
+Methodes de classes :
+    - verifier_placabilite : permet de verifier que les navires sont plaçable dans la grille
+                            (pas de collision, chevauchement, nombre de cases suffisant, ...)
 
-    Il est aussi tout à fait possible de tester les autres fonctions de la classe.
+    - verifier_correspondance_parametres_navires : permet de verifier que les navires du parametre : 'navires',
+                                                    correspondent aux navires du parametre : 'inputs_strategie'
+
+    - verifier_validite : permet de verifier qu'une strategie est valide selon différents critères
+                            (en se servant notamment des 2 methodes précédentes).
+
+    - placement_navires : permet de placer un les navires (symbole) dans la grille, à partir du df pandas : inputs_strategie
+
+    - placement_navires : permet de placer tous les navires (symbole) dans la grille, à partir du df pandas : inputs_strategie
+                            => utilise la méthode placement_un_navire
+
+    - affichage_strategie : permet d'afficher la strategie en utlisant la fonction afficher_grille() du module Grille.py
 """
 import pandas as pd
 
@@ -65,7 +77,7 @@ class Strategie():
         self._plateau = self._grille.plateau
 
     # Constructeur
-    def __init__(self, inputs_strategie: pd.DataFrame, navires: set, Grille=Grille(10, 10), complete=True):
+    def __init__(self, inputs_strategie: pd.DataFrame, navires: set, grille=Grille(10, 10), complete=True):
         # Variables privées
         self._grille: Grille
         self._navires: set
@@ -74,22 +86,20 @@ class Strategie():
         # Variables publiques
         self.navires = navires
         self.informations = inputs_strategie
-        self.grille = Grille
+        self.grille = grille
         self.complete = complete
 
     # verification de la validité de la stratégie créée.
     # Il y a plusieurs règles à respecter pour qu'une stratégie soit valide :
     #   1. Aucun navire ne doit sortir de la grille : déjà réglé avec la fonction de création de stratégie
-    #   2. Aucun navire ne doit en chevaucher un autre : à vérifier ici
+    #   2. Aucun navire ne doit en chevaucher un autre : à vérifier dans cette classe
     # La fonction doit renvoyer un booléen :
     #   True : pas de problème, le programme continue
     #   False : suppression du dernier placement et ressaisie des caractéristique à partir du navire qui pose problème.
 
-    # Cette fonction est directement intégrée dans le code de création de la stratégie.
+    # Cette methode est directement appelée dans le code de création de la stratégie.
     # Elle nous permet, à chaque ajout de données dans l'objet strategie, de vérifier que ces données sont valides.
-    # Du point de vue des tests, il pourrait être intérressant de tester plusieurs scénarios de validité.
     def verifier_validite(self):
-
         self.verifier_correspondance_parametres_navires()
 
         # vérifions la correspondance entre les navires des informations de placement et les navires du set de paramètre.
@@ -97,17 +107,14 @@ class Strategie():
 
         for i in list(self._informations.index):
             for navire_set in self._navires:
-                a = self._informations.loc[i, "nom"]
-                b = navire_set.get_nom()
-
-                if a == b:
+                if self._informations.loc[i, "nom"] == navire_set.get_nom():
                     copy_set_navire.remove(navire_set)
         if len(copy_set_navire) != 0:
             return False
 
         return self.verifier_placabilite()
 
-    # permet de vérifier si un navire est plçable dans le plateau ou non
+    # Permet de vérifier si un navire est plaçable dans le plateau ou non
     # methode utilisée lors de la création de strategie.
     def verifier_placabilite(self):
         # vérification que le navire est bien plaçable sur la grille
@@ -122,7 +129,7 @@ class Strategie():
             raise ValueError(
                 "Strategie non valide !\nLe nombre de navires de la stratégie diffère du nombre de navires attendus dans le mode de jeu associé.")
 
-    # boucle sur tous les navire de la strategie et essaie de les placer dans la grille
+    # Boucle sur tous les navire de la strategie et essaie de les placer dans la grille
     # retourne un booléen pour indiquer si les navires ont correctement été placés ou non
     def placement_navires(self, plateau, informations: pd.DataFrame):
         try:
@@ -137,7 +144,7 @@ class Strategie():
         except:
             return False
 
-    # fonction permettant de placer un navire sur la grille
+    # Fonction permettant de placer un navire sur la grille
     # retourne un booléen pour indiquer si le navire a correctement été placé ou non
     def placement_un_navire(self, plateau, informations_navire):
         # définition des variables propres au placement d'un navire

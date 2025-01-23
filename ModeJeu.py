@@ -1,3 +1,21 @@
+"""
+La classe ModeJeu défini les caractéristiques des différents mode de jeux jouables par le joueur.
+Il s'agit de renseigner le nombre de navires, quels sont ces navires, la taille de la grille et le nom du mode de jeu.
+
+Inputs :
+    - nom : nom du mode de jeu, visible par l'utilisateur
+
+    - navires : un set d'instances de la classe Navire => ce sont les navires associés au mode de jeu.
+
+    - taille_grille : une liste de la forme : [nombre_lignes, nombre_colonnes]
+
+
+Méthodes de classe :
+    - verifier_validiter_navires : permet de vérifier que le mode de jeu est valide
+                                    dans le sens où le nombre de navires et leur taille sont cohérents par rapport
+                                    à la taille de la grille choisie.
+"""
+
 import os
 
 from Grille import Grille
@@ -28,7 +46,7 @@ class ModeJeu():
         else:
             self._nom = nom
 
-    def set_navires(self, navires : set = None):
+    def set_navires(self, navires: set = None):
         if navires is None:
             navires = self.navires
 
@@ -58,7 +76,7 @@ class ModeJeu():
         self.navires = navires
         self.taille_grille = taille_grille
 
-    # Cette méthode de classe permet de vérifier que l'ensemble de navire fourni en paramètre respecte bien
+    # Cette méthode de classe permet de vérifier que l'ensemble de navires fourni en paramètre respecte bien
     # les contraintes liées à la taille de la grille.
     # Elle est appelée par le self.set_navires()
     def verifier_validiter_navires(self, navires: set = None, taille_grille: list = None):

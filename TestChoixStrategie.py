@@ -1,14 +1,9 @@
 from unittest import TestCase
-
-import numpy as np
-
-from Strategie import Strategie, FactoryStrategie
 from Navire import Navire, FactoryNavire
 from Grille import Grille
 from ChoixStrategie import ChoixStrategie
 from ModeJeu import FactoryModeJeu
 import pandas as pd
-from pandas.testing import assert_frame_equal
 from copy import deepcopy
 import numpy as np
 
@@ -27,6 +22,7 @@ class TestChoixStrategie(TestCase):
         self.mode_jeu = FactoryModeJeu(navires=self.navires, taille_grille=[10, 10], nom="Normal")
 
     ## Getters
+    # referentiel
     def test_get_referentiel(self):
         # Initialisation
         self.choix_strategie = ChoixStrategie("mon_pseudo", navires=self.navires, test=True, grille=self.grille,
@@ -36,6 +32,7 @@ class TestChoixStrategie(TestCase):
         df_values_empty_test = np.empty((0, 7))
         self.assertTrue(np.array_equal(df_values_empty_test, self.choix_strategie.get_referentiel().values))
 
+    # strategie
     def test_get_strategie(self):
         # Initialisation
         self.choix_strategie = ChoixStrategie("mon_pseudo", navires=self.navires, test=True, grille=self.grille,
@@ -44,6 +41,7 @@ class TestChoixStrategie(TestCase):
         self.assertIs(None, self.choix_strategie.get_strategie())
 
     ## Methodes de classe
+    # lecture_fichier_sauvegarde
     def test_lecture_fichier_sauvegarde(self):
         # Initialisation
         self.choix_strategie = ChoixStrategie("mon_pseudo", navires=self.navires, test=True, grille=self.grille,
@@ -54,6 +52,7 @@ class TestChoixStrategie(TestCase):
         self.assertEqual(['mode_jeu', 'index_strategie', 'nom', 'taille', 'coord_x', 'coord_y', 'orientation'],
                          list(self.choix_strategie.get_referentiel().columns))
 
+    # ecriture_fichier_sauvegarde
     def test_ecriture_fichier_sauvegarde(self):
         # Initialisation
         self.choix_strategie = ChoixStrategie("mon_pseudo", navires=self.navires, test=True, grille=self.grille,

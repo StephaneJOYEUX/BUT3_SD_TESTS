@@ -1,4 +1,3 @@
-from CreationModeJeu import FactoryCreationModeJeu
 from unittest import TestCase
 from CreationModeJeu import CreationModeJeu
 from Grille import Grille
@@ -58,13 +57,11 @@ class TestCreationModeJeu(TestCase):
 
         self.assertIs(None, self.creation_mode_jeu.get_grille())
 
-
     ## Methode de classe
     # afficher navires
     def test_afficher_navires_cas_nominal(self):
         self.creation_mode_jeu = CreationModeJeu(nom="Normal")
         self.assertEqual(True, self.creation_mode_jeu.afficher_navires(self.navires))
-
 
     ## Pas de tests sur les autres methodes de classe :
     # main & inputs_navire

@@ -5,7 +5,7 @@ from Grille import Grille, afficher_grille, afficher_couple_grilles
 class TestGrille(unittest.TestCase):
     grille: Grille
 
-    # Tests sur la creation
+    # Creation - initialisation + self.create
     def test_creation_grille_cas_nominal(self) -> None:
         self.grille: Grille = Grille(10, 10)
         self.assertEqual(True, self.grille.create())
@@ -69,7 +69,7 @@ class TestGrille(unittest.TestCase):
         self.assertEqual(3, self.grille.get_nb_lignes())
         self.assertEqual(None, self.grille.get_nb_colonnes())
 
-    # Tests __eq__
+    # __eq__
     def test__eq__cas_nominal(self):
         self.grille = Grille(10, 10)
         self.grille.create()
@@ -84,7 +84,8 @@ class TestGrille(unittest.TestCase):
         self.grille_2.create()
         self.assertFalse(self.grille == self.grille_2)
 
-    # Tests sur le setter (lignes)
+    ## Setters & Getters
+    # lignes
     def test_setter_nb_lignes_cas_nominal(self) -> None:
         self.grille = Grille(10, 10)
         try:
@@ -109,7 +110,7 @@ class TestGrille(unittest.TestCase):
             self.assertEqual(f"Le nombre de lignes minimum est {self.grille.taille_min} !", str(current_error))
         self.assertEqual(None, self.grille.get_nb_lignes())
 
-    # Tests setter (colonnes)
+    # colonnes
     def test_setter_nb_colonnes_cas_nominal(self) -> None:
         self.grille = Grille(10, 10)
         try:
@@ -134,7 +135,8 @@ class TestGrille(unittest.TestCase):
             self.assertEqual(f"Le nombre de colonnes minimum est {self.grille.taille_min} !", str(current_error))
         self.assertEqual(None, self.grille.get_nb_colonnes())
 
-    # Tests d'affichage
+    ## Méthodes de classe
+    # afficher_grille
     def test_afficher_grille_10_10(self) -> None:
         self.grille = Grille(10, 10)
         self.grille.create()
@@ -172,6 +174,7 @@ class TestGrille(unittest.TestCase):
                           "- - - - - - - - - -\n"
                           "- - - - - - - - - -\n"), afficher_grille(self.grille.plateau))
 
+    # afficher_couple_grille
     def test_afficher_couple_grilles_2_10_10(self):
         # intialisation des grilles
         self.grille1 = Grille(10, 10)
@@ -261,7 +264,7 @@ class TestGrille(unittest.TestCase):
         except ValueError as current_error:
             self.assertEqual("Les deux grilles sont de tailles différentes !", str(current_error))
 
-    # Tests fonction : reinit_plateau
+    # reinit_plateau
     def test_reinit_plateau_cas_nominal(self):
         # initialisation d'une grille
         self.grille = Grille(10, 10)

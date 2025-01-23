@@ -1,11 +1,12 @@
+import numpy as np
+import pandas as pd
+
 from copy import deepcopy
 from unittest import TestCase
 from ChoixModeJeu import ChoixModeJeu
 from Navire import FactoryNavire
 from ModeJeu import FactoryModeJeu
 from Grille import Grille
-import numpy as np
-import pandas as pd
 
 
 class TestChoixModeJeu(TestCase):

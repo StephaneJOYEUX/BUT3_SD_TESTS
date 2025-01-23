@@ -46,7 +46,6 @@ class TestModeJeu(unittest.TestCase):
         # test
         self.assertTrue(self.mode_jeu_blitz1 == self.mode_jeu_blitz2)
 
-
     def test__eq__cas_incorrect(self):
         self.mode_jeu_blitz = ModeJeu(nom='Blitz', navires=self.navires, taille_grille=[5, 5])
         self.mode_jeu_blitz.set_nom()
@@ -122,7 +121,8 @@ class TestModeJeu(unittest.TestCase):
 
         self.assertEqual(None, self.mode_jeu.get_taille_grille())
 
-    # methode de classe :
+    ## Méthode de classe :
+    # verifier_validiter_navires
     def test_verifier_validiter_navires_cas_nominal(self):
         # initialisation
         self.mode_jeu = ModeJeu(nom='Normal', navires=self.navires, taille_grille=[10, 10])
@@ -145,7 +145,6 @@ class TestModeJeu(unittest.TestCase):
         self.mode_jeu.set_nom()
         # test
         self.assertEqual([False, 1], self.mode_jeu.verifier_validiter_navires())
-
 
     def test_verifier_validiter_navires_cas_non_conforme_taille_tot_navires_trop_grand(self):
         # test du cas de non conformité :

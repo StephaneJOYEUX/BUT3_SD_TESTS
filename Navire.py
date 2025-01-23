@@ -1,3 +1,18 @@
+"""
+La classe Navire permet d'instancier des objet 'navires' utilisé dans la partie.
+Ils servent de cible aux différents joueurs, et sont placé sur le plateau à chaque partie.
+
+Inputs :
+    - nom : Le nom du navire.
+    - taille : La taille du navire.
+    - symbole : Le symbole d'un navire est une Lettre, qui sera affichée dans la grille lors de l'affichage.
+                C'est un parametre optionnel, car le symbole est généralement défini à partir du nom.
+                Il existe des cas particulier ou l'utilisateur peut choisir de definir le symbole d'un navire manuellement.
+
+Cette classe n'a pas de méthode de classe particulière en plus des setters et getters.
+"""
+
+
 class Navire():
     # Getter
     def get_nom(self):
@@ -42,7 +57,7 @@ class Navire():
         if taille is None:
             taille = self.taille
 
-        # choix arbitraire d'une taille minimale égale à 1.
+        # choix arbitraire d'une taille minimale égale à 1 et maximale égale à 9.
         if taille < 2:
             raise ValueError("Taille non valide ! Elle doit être supérieure ou égale à 2 !")
         elif taille > 9:
@@ -57,8 +72,9 @@ class Navire():
             self.symbole = self.nom[0].upper()
         else:
             self.symbole = symbole
-        # Affichage utile pour tester simplement (a supprimer quand le module de tests sera prêt).
 
+    # Les méthode __eq__ et __hash__ se doivent d'être définie car
+    # les instances de Navires sont utlisées dans des sets et sont utilisées dans des tests d'égalité.
     def __eq__(self, other):
         try:
             if self.nom == other.nom and self.taille == other.taille:

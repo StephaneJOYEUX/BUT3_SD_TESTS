@@ -2,20 +2,44 @@
 La classe BatailleNavale() contient le code de la partie à proprement parler.
 
 Elle prend en input tous les paramètre d'initialisation de la partie configurés
-dans le main.py avec l'appel des différentes précédentes classes.
+dans le main.py avec l'appel des différentes précédentes classes, à savoir :
+    - navires : Il s'agit d'un set d'instance de la classe Navire.
+                Ces instances contiennent toute les informations nécessaire pour la classe Strategie.
 
-Les tests sont ici d'une importance majeure.
+    - instance_grille : Instance de la classe Grille. Elle permet l'affichage des strategies. Définie par défault à 10x10.
 
-Remarque :
-    Afin de pouvoir automatiser la partie dans l'idée d'un scénario de test,
-    il faudrait créer de fonction lorsqu'un joueur joue.
-    La première contiendrait les inputs et serait utilisée comme 'masque' de la 2nd.
-    La seconde contiendrait le code permettant de tirer aux coordonnées choisies.
+    - strategie_joueur1 : Une instance de la classe Strategie contenant les informations strategique du joueur 1.
 
-    Ainsi, en automatisant, on utilise pas la fonction d'input, mais on choisit pour chaque joueur,
-    à chaque tour, les coordonnées de tir.
+    - strategie_joueur2 : Une instance de la classe Strategie contenant les informations strategique du joueur 2.
 
-    A voir.
+    - pseudo_j1 : Le pseudo du joueur 1.
+
+    - pseudo_j2 : Le pseudo du joueur 2.
+
+    - test : un booléen utile pour différencier une excution standard d'une execution dans un contxte de tests.
+
+
+Methodes de classe :
+    - navire_coule : Retourne un booléen - True, si le navire a coulé, False sinon.
+                        On observe dans la grille s'il reste une trace du symbole du navire ou non
+                        (d'où l'unicité des symbole pour chacun des navires en plus de l'argument de lisibilité).
+
+    - tous_les_navires_ont_coule : Même chose avec l'ensemble des navires.
+
+    - tir : Permet de tirer, en changeant le symbole dans la grille en fonction de la réussite ou non du tir :
+                - 'X' : si touché.
+                - '0' si raté.
+
+    - ligne_tir : Méthode d'inputs pour la coordonnées en ligne du tir.
+
+    - colonne_tir : Même chose en colonne.
+
+    - play_joueur : Méthode qui définit le déroulement du tour d'un joueur. Appelée à chaque tour de chacun des joueurs.
+
+    - play_ordinateur : Même chose lorsque le second joueur est un ordinateur. Cette méthode lui est alors réservée.
+
+    - jeu : Methode principale : Elle appelle les autres méthodes en fonction du déroulement de la partie.
+                                    Elle s'arrête lorsque'un joueur a gagné la partie.
 """
 
 import os
@@ -25,7 +49,6 @@ from Grille import Grille, afficher_couple_grilles
 from Strategie import Strategie
 
 
-# Declariation et initialisation des variables utilisées dans la classe :
 class BatailleNavale:
     def __init__(self, navires: set, strategie_joueur1: Strategie, strategie_joueur2: Strategie,
                  instance_grille: Grille = Grille(10, 10), pseudo_j1: str = 'Ordinateur 1',
@@ -45,8 +68,6 @@ class BatailleNavale:
         self.pseudo_j1 = pseudo_j1
         self.pseudo_j2 = pseudo_j2
 
-        # La methode instanciation strategie n'est peut etre pas utile ici
-        # A voir avec des test : l'important est que les self.strategie soit des instance de la classe Strategie().
         self.strategie_j1 = strategie_joueur1
         self.strategie_j2 = strategie_joueur2
 
@@ -65,9 +86,9 @@ class BatailleNavale:
         self.strategie_j1.placement_navires(self.grille_def_j1, self.strategie_j1.informations)
         self.strategie_j2.placement_navires(self.grille_def_j2, self.strategie_j2.informations)
 
-        # Permet de gérer le cas où l'on se trouve dans le code de test ou non -> viter les inputs
+        # Permet de gérer le cas où l'on se trouve dans le code de test ou non -> éviter les inputs
         if not test:
-            # Activation de la boucle principale permettant de gerer le tour par tour.
+            # Activation de la boucle principale permettant de gérer le tour par tour.
             self.jeu()
 
     # Permet de vérifier si un bateau est coulé
@@ -78,6 +99,7 @@ class BatailleNavale:
         return True
 
     # Fonction de vérification de la victoire
+    # => tous les navires ont coulé.
     def tous_les_navires_ont_coule(self, grille):
         for navire in self.navires:
             if not self.navire_coule(navire.get_symbole(), grille):
@@ -94,6 +116,7 @@ class BatailleNavale:
             grille_subit_Attaque = self.grille_def_j1
             grille_d_Attaque = self.grille_att_j2
 
+        # modification du symbole si tir = raté
         if grille_subit_Attaque[ligne - 1][colonne - 1] == "-":
             grille_subit_Attaque[ligne - 1][colonne - 1] = "0"
             grille_d_Attaque[ligne - 1][colonne - 1] = "0"
@@ -103,6 +126,7 @@ class BatailleNavale:
             print("Coordonnées déjà visées, tour au joueur adverse")
             return "Raté"
 
+        # mdofocation du symbole si tir = touché
         else:
             initiale = grille_subit_Attaque[ligne - 1][colonne - 1]
             grille_subit_Attaque[ligne - 1][colonne - 1] = "X"
@@ -119,6 +143,8 @@ class BatailleNavale:
         while not (1 <= ligne <= len(self.modele_plateau)):
             try:
                 ligne = int(input("Entrez le numéro de ligne: "))
+                if not (1 <= ligne <= len(self.modele_plateau)):
+                    raise ValueError
             except ValueError:
                 print("Veuillez entrer un numéro valide.")
         return ligne
@@ -130,17 +156,17 @@ class BatailleNavale:
         while not (1 <= colonne <= len(self.modele_plateau[1])):
             try:
                 colonne = int(input("Entrez le numéro de colonne: "))
+                if not (1 <= colonne <= len(self.modele_plateau[1])):
+                    raise ValueError
             except ValueError:
                 print("Veuillez entrer un numéro valide.")
         return colonne
-
-        # Le joueur doit choisir un numéro de ligne et un numéro de colonne pour essayer de toucher un navire:
 
     # On sort de la boucle dès que le joueur a raté son coup
     def play_joueur(self, numJoueur) -> bool:
         tour_joueur = True
         while tour_joueur:
-
+            # changement de l'affichage en fonction du joueur.
             if numJoueur == 1:
                 os.system('cls')
                 input(f"Au tour du Joueur {self.pseudo_j1} (tapez 'entrer' pour continuer)\n")
@@ -179,6 +205,7 @@ class BatailleNavale:
     def play_ordinateur(self):
         tour_ordinateur = True
         while tour_ordinateur:
+            # tir sur des coordonnées aléatoires
             ligne = random.randint(0, len(self.modele_plateau[0]))
             colonne = random.randint(0, len(self.modele_plateau[1]))
             grille_adverse = self.grille_def_j1
@@ -202,6 +229,7 @@ class BatailleNavale:
 
         partie_en_cours = True
 
+        # cas d'une partie contre l'ordinateur
         if self.pseudo_j2 == "_Ordinateur":
             while partie_en_cours:
                 if self.play_joueur(1):
@@ -218,6 +246,7 @@ class BatailleNavale:
                     partie_en_cours = False
                     break
 
+        # cas d'une partie contre un autre joueur
         while partie_en_cours:
             if self.play_joueur(1):
                 os.system('cls')
